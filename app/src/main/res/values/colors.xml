@@ -7,4 +7,29 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Light Theme Color-->
+    <color name="toolbarColorLight">#FFF</color>
+    <color name="textViewMainColorLight">#000</color>
+    <color name="textViewSecondaryColorLight">#424242</color>
+    <color name="layoutColorLight">#D2D2D2</color>
+    <color name="cardColorLight">#FFF</color>
+    <color name="iconColorLight">#000</color>
+    <color name="bottomNavColorLight">#FFF</color>
+    <color name="bottomNavSelectedColorLight">#6c5ce7</color>
+    <color name="bottomNavUnselectedColorLight">#424242</color>
+
+
+    <!--Dark Theme Color-->
+    <color name="toolbarColorDark">#000</color>
+    <color name="textViewMainColorDark">#FFF</color>
+    <color name="textViewSecondaryColorDark">#424242</color>
+    <color name="layoutColorDark">#1B1B1B</color>
+    <color name="cardColorDark">#000</color>
+    <color name="iconColorDark">#FFF</color>
+    <color name="bottomNavColorDark">#000</color>
+    <color name="bottomNavSelectedColorDark">#a29bfe</color>
+    <color name="bottomNavUnselectedColorDark">#C8C8C8</color>
+
+
 </resources>

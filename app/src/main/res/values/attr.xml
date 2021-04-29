@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="toolbarColor" format="reference"/>
+    <attr name="textViewMainColor" format="reference"/>
+    <attr name="textViewSecondaryColor" format="reference"/>
+    <attr name="layoutColor" format="reference"/>
+    <attr name="cardColor" format="reference"/>
+    <attr name="iconColor" format="reference"/>
+    <attr name="bottomNavColor" format="reference"/>
+    <attr name="bottomNavSelectedColor" format="reference"/>
+    <attr name="bottomNavUnselectedColor" format="reference"/>
+
+</resources>
