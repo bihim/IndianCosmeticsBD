@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">IndianCosmeticsBD</string>
+
+
+    <!--Main Activity-->
+    <string name="toolbar_main">IndianCosmeticsBD</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+
+    <!--Bottom Nav Menu-->
+    <string name="home">Home</string>
+    <string name="wishList">Wishlist</string>
+    <string name="cart">Cart</string>
+    <string name="account">Account</string>
 </resources>
