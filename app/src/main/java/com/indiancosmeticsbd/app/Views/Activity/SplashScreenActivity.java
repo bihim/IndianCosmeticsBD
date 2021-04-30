@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.Views;
+package com.indiancosmeticsbd.app.Views.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

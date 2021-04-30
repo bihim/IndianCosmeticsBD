@@ -12,7 +12,7 @@
     <string name="wishList">Wishlist</string>
     <string name="cart">Cart</string>
     <string name="account">Account</string>
-    
+
     <!--Navigation Drawer-->
     <string name="nav_user_text">User Name</string>
     <string name="nav_orders">Orders</string>

@@ -5,8 +5,7 @@
     android:id="@+id/nav_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.MainActivity"
-    tools:openDrawer="start">
+    tools:context=".Views.Activity.MainActivity">
     <!--tools:openDrawer="start"-->
     <!--android:fitsSystemWindows="true"-->
 
@@ -78,7 +77,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
             </LinearLayout>
 
             <LinearLayout
@@ -196,50 +194,54 @@
                     app:iconTint="?textViewMainColor" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_order_helpline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center"
-                    android:text="@string/nav_orders"
+                    android:text="@string/nav_helpline"
                     android:textColor="?textViewMainColor"
                     android:textStyle="bold"
-                    app:icon="@drawable/ic_orders"
+                    app:icon="@drawable/ic_helpline"
                     app:iconPadding="@dimen/_20sdp"
                     app:iconTint="?textViewMainColor" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_privacy_policy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center"
-                    android:text="@string/nav_orders"
+                    android:text="@string/nav_privacy_policy"
                     android:textColor="?textViewMainColor"
                     android:textStyle="bold"
-                    app:icon="@drawable/ic_orders"
+                    app:icon="@drawable/ic_privacy_policy"
                     app:iconPadding="@dimen/_20sdp"
                     app:iconTint="?textViewMainColor" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_terms_condition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center"
-                    android:text="@string/nav_orders"
+                    android:text="@string/nav_terms_conditions"
                     android:textColor="?textViewMainColor"
                     android:textStyle="bold"
-                    app:icon="@drawable/ic_orders"
+                    app:icon="@drawable/ic_terms_and_conditions"
                     app:iconPadding="@dimen/_20sdp"
                     app:iconTint="?textViewMainColor" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_rate_us"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center"
-                    android:text="@string/nav_orders"
+                    android:text="@string/nav_rate_us"
                     android:textColor="?textViewMainColor"
                     android:textStyle="bold"
-                    app:icon="@drawable/ic_orders"
+                    app:icon="@drawable/ic_rate_us"
                     app:iconPadding="@dimen/_20sdp"
                     app:iconTint="?textViewMainColor" />
 

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.indiancosmeticsbd.app">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark">
-        <activity android:name=".Views.MainActivity"></activity>
-        <activity
-            android:name=".Views.SplashScreenActivity">
+        <activity android:name=".Views.Activity.AccountActivity"></activity>
+        <activity android:name=".Views.Activity.CartActivity" />
+        <activity android:name=".Views.Activity.WishListActivity" />
+        <activity android:name=".Views.Activity.MainActivity" />
+        <activity android:name=".Views.Activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
