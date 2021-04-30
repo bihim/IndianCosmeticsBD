@@ -21,7 +21,13 @@
         <!-- Customize your theme here. -->
         <item name="toolbarColor">@color/toolbarColorLight</item>
         <item name="textViewMainColor">@color/textViewMainColorLight</item>
+        <item name="textViewSecondaryColor">@color/textViewSecondaryColorLight</item>
         <item name="layoutColor">@color/layoutColorLight</item>
+        <item name="cardColor">@color/cardColorLight</item>
+        <item name="iconColor">@color/iconColorLight</item>
+        <item name="bottomNavSelectedColor">@color/bottomNavSelectedColorLight</item>
+        <item name="bottomNavUnselectedColor">@color/bottomNavUnselectedColorLight</item>
+        <item name="buttonColor">@color/buttonColorLight</item>
     </style>
 
     <style name="Theme.IndianCosmeticsBD.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -30,7 +36,13 @@
         <!-- Customize your theme here. -->
         <item name="toolbarColor">@color/toolbarColorDark</item>
         <item name="textViewMainColor">@color/textViewMainColorDark</item>
+        <item name="textViewSecondaryColor">@color/textViewSecondaryColorDark</item>
         <item name="layoutColor">@color/layoutColorDark</item>
+        <item name="cardColor">@color/cardColorDark</item>
+        <item name="iconColor">@color/iconColorDark</item>
+        <item name="bottomNavSelectedColor">@color/bottomNavSelectedColorDark</item>
+        <item name="bottomNavUnselectedColor">@color/bottomNavUnselectedColorDark</item>
+        <item name="buttonColor">@color/buttonColorDark</item>
     </style>
 
 

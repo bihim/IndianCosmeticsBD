@@ -9,5 +9,6 @@
     <attr name="bottomNavColor" format="reference"/>
     <attr name="bottomNavSelectedColor" format="reference"/>
     <attr name="bottomNavUnselectedColor" format="reference"/>
+    <attr name="buttonColor" format="reference"/>
 
 </resources>

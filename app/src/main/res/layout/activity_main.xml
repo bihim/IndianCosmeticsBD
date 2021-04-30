@@ -5,7 +5,8 @@
     android:id="@+id/nav_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.MainActivity">
+    tools:context=".Views.MainActivity"
+    tools:openDrawer="start">
     <!--tools:openDrawer="start"-->
     <!--android:fitsSystemWindows="true"-->
 
@@ -93,6 +94,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bottom_nav_card_round"
+                    app:itemIconTint="@color/bottom_nav_selector"
+                    app:itemTextColor="@color/bottom_nav_selector"
                     app:labelVisibilityMode="labeled"
                     app:menu="@menu/bottom_nav_menu" />
 
@@ -105,11 +108,144 @@
         android:id="@+id/navigation_main"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:background="?toolbarColor">
 
-        <com.google.android.material.button.MaterialButton
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/nav_user_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/nav_drawer_profile_image"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:backgroundTint="?iconColor"
+                        android:src="@drawable/ic_account" />
+
+                    <TextView
+                        android:id="@+id/nav_drawer_profile_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:text="@string/nav_user_text"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nav_no_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:src="@drawable/logo" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?buttonColor"
+                        android:text="Sign In" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_orders"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_orders"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nav_send_us_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_send_us_review"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_send_us_review"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_orders"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_orders"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_orders"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_orders"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_orders"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_orders"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center"
+                    android:text="@string/nav_orders"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_orders"
+                    app:iconPadding="@dimen/_20sdp"
+                    app:iconTint="?textViewMainColor" />
+
+
+            </LinearLayout>
+        </ScrollView>
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

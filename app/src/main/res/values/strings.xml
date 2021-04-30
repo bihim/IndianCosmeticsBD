@@ -12,4 +12,13 @@
     <string name="wishList">Wishlist</string>
     <string name="cart">Cart</string>
     <string name="account">Account</string>
+    
+    <!--Navigation Drawer-->
+    <string name="nav_user_text">User Name</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_send_us_review">Send Us Review</string>
+    <string name="nav_helpline">Helpline</string>
+    <string name="nav_privacy_policy">Privacy Policy</string>
+    <string name="nav_terms_conditions">Terms &amp; Conditions</string>
+    <string name="nav_rate_us">Rate Us</string>
 </resources>
