@@ -92,13 +92,16 @@ public class MainActivity extends AppCompatActivity {
                     //
                 }
                 else if(item.getItemId() == R.id.bottom_nav_wishlist){
-                    startActivity(new Intent(MainActivity.this, WishListActivity.class));
+                    startActivity(new Intent(MainActivity.this, WishListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_cart){
-                    startActivity(new Intent(MainActivity.this, CartActivity.class));
+                    startActivity(new Intent(MainActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_account){
-                    startActivity(new Intent(MainActivity.this, AccountActivity.class));
+                    startActivity(new Intent(MainActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    overridePendingTransition(0, 0);
                 }
                 return true;
             }
