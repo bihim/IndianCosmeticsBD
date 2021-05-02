@@ -32,18 +32,18 @@ public class WishListActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.bottom_nav_home){
-                    startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_wishlist){
                     //startActivity(new Intent(WishListActivity.this, WishListActivity.class));
                 }
                 else if(item.getItemId() == R.id.bottom_nav_cart){
-                    startActivity(new Intent(WishListActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(WishListActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_account){
-                    startActivity(new Intent(WishListActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(WishListActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 }
                 return true;
