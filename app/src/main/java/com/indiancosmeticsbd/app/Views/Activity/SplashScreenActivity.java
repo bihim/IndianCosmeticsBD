@@ -1,31 +1,20 @@
 package com.indiancosmeticsbd.app.Views.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.indiancosmeticsbd.app.Model.ContactInfo.ContactInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ContactInfoViewModel;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.ADDRESS;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.ADDRESS2;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CONTACT_INFO;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.EMAIL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.FACEBOOK;

@@ -8,13 +8,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -27,26 +25,13 @@ import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
+import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BANNER_SLIDER;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CONTACT_INFO;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.EMAIL;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_TOP;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -11,8 +11,8 @@ import android.widget.ImageButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButton;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 
 public class WishListActivity extends AppCompatActivity {
 
