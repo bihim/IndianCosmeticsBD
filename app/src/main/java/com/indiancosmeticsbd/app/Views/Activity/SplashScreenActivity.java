@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.indiancosmeticsbd.app.JsonPlaceHolderApi.JsonPlaceHolderApi;
 import com.indiancosmeticsbd.app.Model.ContactInfo.ContactInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ContactInfoViewModel;

@@ -1,8 +1,9 @@
-package com.indiancosmeticsbd.app.Network;
+package com.indiancosmeticsbd.app.Network.Contact;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.indiancosmeticsbd.app.Model.ContactInfo.ContactInfo;
+import com.indiancosmeticsbd.app.Network.RetrofitService;
 
 import retrofit2.Call;
 import retrofit2.Callback;

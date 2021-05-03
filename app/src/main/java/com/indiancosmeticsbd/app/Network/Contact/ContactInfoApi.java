@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.Network;
+package com.indiancosmeticsbd.app.Network.Contact;
 
 import com.indiancosmeticsbd.app.Model.ContactInfo.ContactInfo;
 
