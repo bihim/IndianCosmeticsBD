@@ -4,89 +4,164 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?cardColor"
+    android:background="@drawable/ic_login_background"
     android:orientation="vertical"
     tools:context=".Views.Activity.Account.SignInActivity">
+
+    <ImageButton
+        android:id="@+id/sign_in_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_close" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_login_background"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:src="@drawable/logo" />
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:gravity="start|center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/sign_in_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_close" />
-
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_20sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:background="?cardColor"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
 
-                <ImageView
-                    android:layout_width="@dimen/_140sdp"
-                    android:layout_height="@dimen/_140sdp"
-                    android:src="@drawable/logo" />
-
-                <com.google.android.material.card.MaterialCardView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_15sdp"
-                    app:cardElevation="@dimen/_20sdp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?cardColor"
-                        android:orientation="vertical"
-                        android:padding="@dimen/_10sdp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="0dp">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_height="match_parent"
+                            android:background="@color/bottomNavSelectedColorDark"
+                            android:padding="@dimen/_10sdp">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <com.google.android.material.button.MaterialButton
-                                android:layout_width="match_parent"
+                            <ImageView
+                                android:id="@+id/icon_email"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sign In" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                                android:src="@drawable/ic_email"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:textColorHint="@color/white"
+                                app:boxBackgroundColor="@color/bottomNavSelectedColorDark"
+                                app:boxStrokeWidth="0dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/icon_email"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:hint="@string/email"
+                                    android:inputType="textEmailAddress"
+                                    android:textCursorDrawable="@null"
+                                    app:hintTextColor="?textViewSecondaryColor" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        app:cardElevation="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/bottomNavSelectedColorDark"
+                            android:padding="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/icon_password"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_lock"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:textColorHint="@color/white"
+                                app:boxBackgroundColor="@color/bottomNavSelectedColorDark"
+                                app:boxStrokeWidth="0dp"
+                                app:endIconMode="password_toggle"
+                                app:endIconTint="@color/white"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/icon_password"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null"
+                                    android:hint="@string/password"
+                                    android:inputType="textPassword"
+                                    android:textCursorDrawable="@null"
+                                    app:hintTextColor="?textViewSecondaryColor" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sign In" />
+                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 
 </LinearLayout>

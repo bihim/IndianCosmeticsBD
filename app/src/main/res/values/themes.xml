@@ -33,6 +33,7 @@
     <style name="Theme.IndianCosmeticsBD.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/toolbarColorDark</item>
+        <item name="fontFamily">@font/quicksand_regular</item>
         <!-- Customize your theme here. -->
         <item name="toolbarColor">@color/toolbarColorDark</item>
         <item name="textViewMainColor">@color/textViewMainColorDark</item>

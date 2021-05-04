@@ -13,6 +13,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
+import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 
 public class WishListActivity extends AppCompatActivity {
 
@@ -43,7 +44,7 @@ public class WishListActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_account){
-                    startActivity(new Intent(WishListActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(WishListActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 }
                 return true;

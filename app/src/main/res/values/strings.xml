@@ -21,4 +21,8 @@
     <string name="nav_privacy_policy">Privacy Policy</string>
     <string name="nav_terms_conditions">Terms &amp; Conditions</string>
     <string name="nav_rate_us">Rate Us</string>
+    
+    <!--Sign in activity-->
+    <string name="email">Enter email address</string>
+    <string name="password">Enter password</string>
 </resources>

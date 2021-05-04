@@ -26,6 +26,7 @@ import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
+import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                     overridePendingTransition(0, 0);
                 } else if (item.getItemId() == R.id.bottom_nav_account) {
-                    startActivity(new Intent(MainActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(MainActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                     overridePendingTransition(0, 0);
                 }
                 return true;
