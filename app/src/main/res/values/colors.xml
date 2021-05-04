@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#464646</color>
 
     <!--Light Theme Color-->
     <color name="toolbarColorLight">#FFF</color>
@@ -19,6 +20,7 @@
     <color name="bottomNavSelectedColorLight">#7E6A50</color>
     <color name="bottomNavUnselectedColorLight">#919191</color>
     <color name="buttonColorLight">#B48A56</color>
+    <color name="forgotPassLight">#FF1A1A</color>
 
 
     <!--Dark Theme Color-->
@@ -32,6 +34,6 @@
     <color name="bottomNavSelectedColorDark">#d1b897</color>
     <color name="bottomNavUnselectedColorDark">#808080</color>
     <color name="buttonColorDark">#d1b897</color>
-
+    <color name="forgotPassDark">#FFA6A6</color>
 
 </resources>

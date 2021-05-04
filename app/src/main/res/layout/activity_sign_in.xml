@@ -53,49 +53,31 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
                         app:cardCornerRadius="@dimen/_10sdp"
                         app:cardElevation="0dp">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/emailTextInputField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/bottomNavSelectedColorDark"
-                            android:padding="@dimen/_10sdp">
+                            android:layout_height="wrap_content"
+                            android:background="@color/grey"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:hintEnabled="false">
 
-                            <ImageView
-                                android:id="@+id/icon_email"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_email"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
+                                android:drawableStart="@drawable/ic_email"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:gravity="start"
+                                android:hint="@string/email"
                                 android:textColorHint="@color/white"
-                                app:boxBackgroundColor="@color/bottomNavSelectedColorDark"
-                                app:boxStrokeWidth="0dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/icon_email"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:textCursorDrawable="@null" />
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@null"
-                                    android:hint="@string/email"
-                                    android:inputType="textEmailAddress"
-                                    android:textCursorDrawable="@null"
-                                    app:hintTextColor="?textViewSecondaryColor" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </com.google.android.material.card.MaterialCardView>
-
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -104,47 +86,49 @@
                         app:cardCornerRadius="@dimen/_10sdp"
                         app:cardElevation="0dp">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/passwordTextInputField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/bottomNavSelectedColorDark"
-                            android:padding="@dimen/_10sdp">
+                            android:layout_height="wrap_content"
+                            android:background="@color/grey"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp"
+                            app:endIconMode="password_toggle"
+                            app:endIconTint="@color/white"
+                            app:hintEnabled="false">
 
-                            <ImageView
-                                android:id="@+id/icon_password"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_lock"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
+                                android:drawableStart="@drawable/ic_lock"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:gravity="start"
+                                android:hint="@string/password"
                                 android:textColorHint="@color/white"
-                                app:boxBackgroundColor="@color/bottomNavSelectedColorDark"
-                                app:boxStrokeWidth="0dp"
-                                app:endIconMode="password_toggle"
-                                app:endIconTint="@color/white"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/icon_password"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:textCursorDrawable="@null" />
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@null"
-                                    android:hint="@string/password"
-                                    android:inputType="textPassword"
-                                    android:textCursorDrawable="@null"
-                                    app:hintTextColor="?textViewSecondaryColor" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/sign_in_forgot_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/forgot_pass"
+                        android:textColor="?forgot_password_color"
+                        android:textStyle="bold"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:backgroundTint="@color/bottomNavSelectedColorDark"
+                        android:text="@string/sign_in"
+                        android:textColor="@color/white"
+                        app:cornerRadius="@dimen/_10sdp"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 

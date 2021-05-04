@@ -25,4 +25,6 @@
     <!--Sign in activity-->
     <string name="email">Enter email address</string>
     <string name="password">Enter password</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="sign_in">Sign In</string>
 </resources>

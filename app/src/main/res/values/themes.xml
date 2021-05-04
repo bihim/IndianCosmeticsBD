@@ -28,6 +28,7 @@
         <item name="bottomNavSelectedColor">@color/bottomNavSelectedColorLight</item>
         <item name="bottomNavUnselectedColor">@color/bottomNavUnselectedColorLight</item>
         <item name="buttonColor">@color/buttonColorLight</item>
+        <item name="forgot_password_color">@color/forgotPassLight</item>
     </style>
 
     <style name="Theme.IndianCosmeticsBD.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -44,6 +45,7 @@
         <item name="bottomNavSelectedColor">@color/bottomNavSelectedColorDark</item>
         <item name="bottomNavUnselectedColor">@color/bottomNavUnselectedColorDark</item>
         <item name="buttonColor">@color/buttonColorDark</item>
+        <item name="forgot_password_color">@color/forgotPassDark</item>
     </style>
 
 
