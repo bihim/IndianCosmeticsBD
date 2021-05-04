@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.indiancosmeticsbd.app.GlobalValue.LoadingDialog;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
 
@@ -15,15 +18,29 @@ public class SignInActivity extends AppCompatActivity {
 
     private ImageButton closeButton;
     private MaterialButton gotoRegisterButton;
+    private MaterialButton signInButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         findViewById();
+        buttonClicks();
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadingDialog loadingDialog = new LoadingDialog(SignInActivity.this);
+                loadingDialog.showDialog();
+            }
+        });
+
+    }
+
+    private void buttonClicks(){
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(SignInActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                overridePendingTransition(0, 0);
                 finish();
             }
         });
@@ -34,11 +51,11 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void findViewById(){
         closeButton = findViewById(R.id.sign_in_close);
         gotoRegisterButton = findViewById(R.id.gotoRegister);
+        signInButton = findViewById(R.id.sign_in_button);
     }
 }
