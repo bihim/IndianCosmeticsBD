@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.IndianCosmeticsBD.Dark"
+        android:theme="@style/Theme.IndianCosmeticsBD.Light"
         android:windowSoftInputMode="stateVisible|adjustPan">
         <activity android:name=".Views.Activity.Account.RegisterActivity"></activity>
         <activity android:name=".Views.Activity.Account.SignInActivity" />

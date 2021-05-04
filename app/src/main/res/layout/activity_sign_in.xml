@@ -23,128 +23,129 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="@dimen/_140sdp"
-            android:layout_height="@dimen/_140sdp"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_130sdp"
             android:src="@drawable/logo" />
 
-        <com.google.android.material.card.MaterialCardView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_40sdp"
-            app:cardCornerRadius="@dimen/_15sdp"
-            app:cardElevation="@dimen/_20sdp">
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?cardColor"
-                android:orientation="vertical"
-                android:padding="@dimen/_10sdp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/emailTextInputField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="@dimen/_10sdp"
-                        app:cardElevation="0dp">
+                        android:background="?editBackground"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintEnabled="false">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/emailTextInputField"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_in_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/grey"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="0dp"
-                            app:hintEnabled="false">
+                            android:drawableStart="@drawable/ic_email"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:drawableTint="?editIcon"
+                            android:inputType="textEmailAddress"
+                            android:gravity="start"
+                            android:hint="@string/email"
+                            android:textColorHint="?editIcon"
+                            android:textCursorDrawable="@null" />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_email"
-                                android:drawablePadding="@dimen/_10sdp"
-                                android:gravity="start"
-                                android:hint="@string/email"
-                                android:textColorHint="@color/white"
-                                android:textCursorDrawable="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordTextInputField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        app:cardCornerRadius="@dimen/_10sdp"
-                        app:cardElevation="0dp">
+                        android:background="?editBackground"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="?editIcon"
+                        app:hintEnabled="false">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/passwordTextInputField"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_in_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/grey"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="0dp"
-                            app:endIconMode="password_toggle"
-                            app:endIconTint="@color/white"
-                            app:hintEnabled="false">
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:drawableTint="?editIcon"
+                            android:gravity="start"
+                            android:inputType="textPassword"
+                            android:hint="@string/password"
+                            android:textColorHint="?editIcon"
+                            android:textCursorDrawable="@null" />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_lock"
-                                android:drawablePadding="@dimen/_10sdp"
-                                android:gravity="start"
-                                android:hint="@string/password"
-                                android:textColorHint="@color/white"
-                                android:textCursorDrawable="@null" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_in_forgot_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/forgot_pass"
+                    android:textColor="?forgot_password_color"
+                    android:textStyle="bold" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/sign_in_forgot_pass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:background="?attr/selectableItemBackground"
-                        android:text="@string/forgot_pass"
-                        android:textColor="?forgot_password_color"
-                        android:textStyle="bold"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_45sdp"
-                        android:backgroundTint="@color/bottomNavSelectedColorDark"
-                        android:text="@string/sign_in"
-                        android:textColor="@color/white"
-                        app:cornerRadius="@dimen/_10sdp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
-
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_in_button"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone">
+                    android:layout_height="@dimen/_45sdp"
+                    android:backgroundTint="@color/bottomNavSelectedColorDark"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:cornerRadius="@dimen/_10sdp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sign In" />
-                </LinearLayout>
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:gravity="bottom">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gotoRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/gotoRegister"
+                    android:textColor="?textViewMainColor"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

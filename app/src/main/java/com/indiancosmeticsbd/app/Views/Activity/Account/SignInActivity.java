@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.android.material.button.MaterialButton;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
 
 public class SignInActivity extends AppCompatActivity {
 
     private ImageButton closeButton;
+    private MaterialButton gotoRegisterButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +27,18 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
+        gotoRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignInActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
+        });
+
     }
 
     private void findViewById(){
         closeButton = findViewById(R.id.sign_in_close);
+        gotoRegisterButton = findViewById(R.id.gotoRegister);
     }
 }

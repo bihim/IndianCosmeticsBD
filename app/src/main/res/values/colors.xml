@@ -21,6 +21,8 @@
     <color name="bottomNavUnselectedColorLight">#919191</color>
     <color name="buttonColorLight">#B48A56</color>
     <color name="forgotPassLight">#FF1A1A</color>
+    <color name="editTextBackLight">#E0E0E0</color>
+    <color name="editIconLight">#6E6E6E</color>
 
 
     <!--Dark Theme Color-->
@@ -35,5 +37,7 @@
     <color name="bottomNavUnselectedColorDark">#808080</color>
     <color name="buttonColorDark">#d1b897</color>
     <color name="forgotPassDark">#FFA6A6</color>
+    <color name="editTextBackDark">#464646</color>
+    <color name="editIconDark">#FFF</color>
 
 </resources>

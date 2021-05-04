@@ -11,5 +11,7 @@
     <attr name="bottomNavUnselectedColor" format="reference"/>
     <attr name="buttonColor" format="reference"/>
     <attr name="forgot_password_color" format="reference"/>
+    <attr name="editBackground" format="reference"/>
+    <attr name="editIcon" format="reference"/>
 
 </resources>

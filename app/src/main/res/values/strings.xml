@@ -23,8 +23,20 @@
     <string name="nav_rate_us">Rate Us</string>
     
     <!--Sign in activity-->
-    <string name="email">Enter email address</string>
-    <string name="password">Enter password</string>
+    <string name="email">Enter Email</string>
+    <string name="password">Enter Password</string>
     <string name="forgot_pass">Forgot Password?</string>
     <string name="sign_in">Sign In</string>
+    <string name="gotoRegister">DON\'T HAVE ACCOUNT? REGISTER</string>
+
+    <!--Register-->
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="address">Enter Address</string>
+    <string name="city">Enter City</string>
+    <string name="district">Enter District</string>
+    <string name="postalCode">Enter Postal Code</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="mobileNumber">Enter Mobile Number</string>
+    <string name="gotoSignIn">ALREADY HAVE AN ACCOUNT? SIGN IN</string>
 </resources>
