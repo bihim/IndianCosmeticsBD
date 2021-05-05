@@ -13,14 +13,13 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CONTACT_INFO;
 public class ContactInfoViewModel extends ViewModel
 {
     private MutableLiveData<ContactInfo> mutableLiveData;
-    private ContactRepository contactRepository;
 
     public void init(){
         if (mutableLiveData!=null){
             return;
         }
 
-        contactRepository = ContactRepository.getInstance();
+        ContactRepository contactRepository = ContactRepository.getInstance();
         mutableLiveData = contactRepository.getContactInfo(API_TOKEN, CONTACT_INFO);
     }
 

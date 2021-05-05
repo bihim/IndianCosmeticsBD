@@ -32,6 +32,9 @@ public class GlobalValue {
     public static final String YAHOO = "yahoo";
     public static final String SKYPE = "skype";
 
-
+    /*User Info and User Validate*/
+    public static final String USER_INFO = "userInfo";
+    public static final String COLUMN_TYPE = "username";
+    public static final String USER_VALIDATE = "userValidate";
 
 }

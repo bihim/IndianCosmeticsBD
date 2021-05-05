@@ -61,7 +61,7 @@ public class UserInfo {
         this.content = content;
     }
 
-    static class Content {
+    public static class Content {
 
         @SerializedName("id")
         @Expose
@@ -242,7 +242,7 @@ public class UserInfo {
 
 
     }
-    static class CustomerOrder {
+    public static class CustomerOrder {
 
         @SerializedName("order_no")
         @Expose
@@ -269,7 +269,7 @@ public class UserInfo {
 
 
     }
-    static class Notification {
+    public static class Notification {
 
         @SerializedName("notificationType")
         @Expose

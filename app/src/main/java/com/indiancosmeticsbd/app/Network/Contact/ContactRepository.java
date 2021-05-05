@@ -11,7 +11,7 @@ import retrofit2.Response;
 
 public class ContactRepository {
     private static ContactRepository contactRepository;
-    private ContactInfoApi contactInfoApi;
+    private final ContactInfoApi contactInfoApi;
 
 
     public static ContactRepository getInstance(){
