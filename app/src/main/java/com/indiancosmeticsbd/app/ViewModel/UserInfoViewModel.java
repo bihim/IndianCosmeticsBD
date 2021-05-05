@@ -12,12 +12,12 @@ import com.indiancosmeticsbd.app.Network.User.UserValidateInfoRepository;
 public class UserInfoViewModel extends ViewModel {
     private MutableLiveData<UserInfo> mutableLiveData;
 
-    public void init(String emailAddress, String password, Activity activity) {
+    public void init() {
         if (mutableLiveData!=null) {
             return;
         }
-        UserValidateInfoRepository userValidateInfoRepository = UserValidateInfoRepository.getInstance();
-        mutableLiveData = userValidateInfoRepository.getUserInfo(activity, emailAddress, password);
+        /*UserValidateInfoRepository userValidateInfoRepository = UserValidateInfoRepository.getInstance();
+        mutableLiveData = userValidateInfoRepository.getUserInfo(activity, emailAddress, password);*/
     }
 
     /*public void init(){
@@ -28,7 +28,12 @@ public class UserInfoViewModel extends ViewModel {
         mutableLiveData = userValidateInfoRepository.getUserInfo(emailAddress.getValue(), password.getValue());
     }*/
 
-    public LiveData<UserInfo> getUserInfo(){
+    public LiveData<UserInfo> getUserInfo(String emailAddress, String password, Activity activity){
+        /*if (mutableLiveData!=null) {
+            return;
+        }*/
+        UserValidateInfoRepository userValidateInfoRepository = UserValidateInfoRepository.getInstance();
+        mutableLiveData = userValidateInfoRepository.getUserInfo(activity, emailAddress, password);
         return mutableLiveData;
     }
 }

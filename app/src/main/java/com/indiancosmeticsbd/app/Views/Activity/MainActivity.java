@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
             for (BannerSliderModel.Content content : contents) {
                 SliderItem sliderItem = new SliderItem();
-                sliderItem.setImageUrl(content.getImageLink() + content.getImage());
+                String mainImage = content.getImage().replace("PROTOCOLHTTP_HOSTPROJECT_FOLDERimages/slider/", "");
+                sliderItem.setImageUrl("https://indiancosmeticsbd.com/images/slider/"+mainImage);
                 sliderAdapterExample.addItem(sliderItem);
                 Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
             }

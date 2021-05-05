@@ -25,12 +25,14 @@ public class SignInActivity extends AppCompatActivity {
     private MaterialButton gotoRegisterButton;
     private MaterialButton signInButton;
     private TextInputEditText emailEditText, passwordEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         findViewById();
         buttonClicks();
+
         /*signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,6 +46,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setSignInButton();
+                Log.d("LOGININFO", "onClick: Clicked Hereee");
             }
         });
     }
@@ -52,10 +55,9 @@ public class SignInActivity extends AppCompatActivity {
         String emailAddress = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
-        userInfoViewModel.init(emailAddress, password, this);
-        userInfoViewModel.getUserInfo().observe(this, userInfo -> {
+        userInfoViewModel.init();
+        userInfoViewModel.getUserInfo(emailAddress, password, this).observe(this, userInfo -> {
             UserInfo.Content userInfoContent = userInfo.getContent();
-            Log.d("LOGININFO", "setSignInButton: "+userInfoContent.getFirstName());
         });
     }
 

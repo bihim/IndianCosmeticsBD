@@ -1,6 +1,8 @@
 package com.indiancosmeticsbd.app.Network.User;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,6 +11,7 @@ import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.Model.SignIn.UserValidate;
 import com.indiancosmeticsbd.app.Network.RetrofitService;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +59,8 @@ public class UserValidateInfoRepository {
                                             String status = userInfo.getStatus();
                                             if (status.equals("SUCCESS")){
                                                 userInfoLiveData.setValue(response.body());
+                                                Log.d("LOGININFO", "onResponse: I am here success");
+                                                Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
                                             }
                                             else{
                                                 userInfoLiveData.setValue(null);
@@ -71,6 +76,10 @@ public class UserValidateInfoRepository {
                                     userInfoLiveData.setValue(null);
                                 }
                             });
+                        }
+                        else{
+                            Toasty.error(activity, "Username or Password is not valid", Toasty.LENGTH_LONG).show();
+                            Log.d("LOGININFO", "onResponse: I am here success");
                         }
                     }
                 } else {
