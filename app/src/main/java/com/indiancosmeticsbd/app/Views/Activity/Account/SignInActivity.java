@@ -38,6 +38,7 @@ public class SignInActivity extends AppCompatActivity {
                 loadingDialog.showDialog();
             }
         });*/
+        //Hello
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
