@@ -15,6 +15,21 @@ public class GlobalValue {
     /*Contact Info*/
     public static final String CONTACT_INFO = "contactInfo";
 
+    /*User Info*/
+    public static final String SHARED_PREF_USER = "userInfo";
+    public static final String id = "id";
+    public static final String username = "username";
+    public static final String token = "token";
+    public static final String first_name = "first_name";
+    public static final String last_name = "last_name";
+    public static final String email = "email";
+    public static final String address = "address";
+    public static final String city = "city";
+    public static final String district = "district";
+    public static final String country = "country";
+    public static final String postalcode = "postalcode";
+    public static final String mobile_number = "mobile_number";
+
     /*Shared Pref*/
     public static final String ADDRESS = "address";
     public static final String ADDRESS2 = "address2";

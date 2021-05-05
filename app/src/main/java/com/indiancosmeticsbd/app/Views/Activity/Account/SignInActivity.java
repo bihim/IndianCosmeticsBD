@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,6 +20,20 @@ import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.UserInfoViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_USER;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.address;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.city;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.country;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.district;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.email;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.first_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.id;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.last_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.mobile_number;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.postalcode;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.token;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.username;
+
 public class SignInActivity extends AppCompatActivity {
 
     private ImageButton closeButton;
@@ -33,22 +48,6 @@ public class SignInActivity extends AppCompatActivity {
         findViewById();
         buttonClicks();
 
-        /*signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoadingDialog loadingDialog = new LoadingDialog(SignInActivity.this);
-                loadingDialog.showDialog();
-            }
-        });*/
-        //Hello
-
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSignInButton();
-                Log.d("LOGININFO", "onClick: Clicked Hereee");
-            }
-        });
     }
 
     private void setSignInButton(){
@@ -57,7 +56,25 @@ public class SignInActivity extends AppCompatActivity {
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this).observe(this, userInfo -> {
-            UserInfo.Content userInfoContent = userInfo.getContent();
+            UserInfo.Content value = userInfo.getContent();
+            //String username = userInfoContent.getFirstName()+" "+userInfoContent.getLastName();
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USER, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(id, value.getId());
+            editor.putString(username, value.getUsername());
+            editor.putString(token, value.getToken());
+            editor.putString(first_name, value.getFirstName());
+            editor.putString(last_name, value.getLastName());
+            editor.putString(email, value.getEmail());
+            editor.putString(address, value.getAddress());
+            editor.putString(city, value.getCity());
+            editor.putString(district, value.getDistrict());
+            editor.putString(country, value.getCountry());
+            editor.putString(postalcode, value.getPostalcode());
+            editor.putString(mobile_number, value.getMobileNumber());
+            //editor.putString(id, value.getId());
+            editor.apply();
+            startActivity(new Intent(this, AccountActivity.class));
         });
     }
 
@@ -75,6 +92,14 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SignInActivity.this, RegisterActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
+            }
+        });
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSignInButton();
+                Log.d("LOGININFO", "onClick: Clicked Hereee");
             }
         });
     }
