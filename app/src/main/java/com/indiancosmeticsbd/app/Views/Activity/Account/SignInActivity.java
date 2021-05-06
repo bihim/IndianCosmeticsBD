@@ -20,19 +20,20 @@ import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.UserInfoViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
 
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_USER;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.address;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.city;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.country;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.district;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.email;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.first_name;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.id;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.last_name;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.mobile_number;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.postalcode;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.token;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.username;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_country;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_district;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_email;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_id;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_mobile_number;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_postalcode;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_token;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
+
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -57,24 +58,21 @@ public class SignInActivity extends AppCompatActivity {
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
-            //String username = userInfoContent.getFirstName()+" "+userInfoContent.getLastName();
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_USER, MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(id, value.getId());
-            editor.putString(username, value.getUsername());
-            editor.putString(token, value.getToken());
-            editor.putString(first_name, value.getFirstName());
-            editor.putString(last_name, value.getLastName());
-            editor.putString(email, value.getEmail());
-            editor.putString(address, value.getAddress());
-            editor.putString(city, value.getCity());
-            editor.putString(district, value.getDistrict());
-            editor.putString(country, value.getCountry());
-            editor.putString(postalcode, value.getPostalcode());
-            editor.putString(mobile_number, value.getMobileNumber());
-            //editor.putString(id, value.getId());
+            editor.putString(user_id, value.getId());
+            editor.putString(user_username, value.getUsername());
+            editor.putString(user_token, value.getToken());
+            editor.putString(user_first_name, value.getFirstName());
+            editor.putString(user_last_name, value.getLastName());
+            editor.putString(user_email, value.getEmail());
+            editor.putString(user_address, value.getAddress());
+            editor.putString(user_city, value.getCity());
+            editor.putString(user_district, value.getDistrict());
+            editor.putString(user_country, value.getCountry());
+            editor.putString(user_postalcode, value.getPostalcode());
+            editor.putString(user_mobile_number, value.getMobileNumber());
             editor.apply();
-            startActivity(new Intent(this, AccountActivity.class));
         });
     }
 

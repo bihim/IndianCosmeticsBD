@@ -12,40 +12,42 @@ public class GlobalValue {
     public static final String HOME_PAGE_MIDDLE = "home_page_middle_banner";
     public static final String HOME_PAGE_BOTTOM = "home_page_bottom";
 
+    /*SharedPrefName*/
+    public static final String SHARED_PREF_NAME = "indiancosmeticsbd";
+
     /*Contact Info*/
     public static final String CONTACT_INFO = "contactInfo";
 
     /*User Info*/
-    public static final String SHARED_PREF_USER = "userInfo";
-    public static final String id = "id";
-    public static final String username = "username";
-    public static final String token = "token";
-    public static final String first_name = "first_name";
-    public static final String last_name = "last_name";
-    public static final String email = "email";
-    public static final String address = "address";
-    public static final String city = "city";
-    public static final String district = "district";
-    public static final String country = "country";
-    public static final String postalcode = "postalcode";
-    public static final String mobile_number = "mobile_number";
+    public static final String user_id = "user_id";
+    public static final String user_username = "user_username";
+    public static final String user_token = "user_token";
+    public static final String user_first_name = "user_first_name";
+    public static final String user_last_name = "user_last_name";
+    public static final String user_email = "user_email";
+    public static final String user_address = "user_address";
+    public static final String user_city = "user_city";
+    public static final String user_district = "user_district";
+    public static final String user_country = "user_country";
+    public static final String user_postalcode = "user_postalcode";
+    public static final String user_mobile_number = "user_mobile_number";
 
-    /*Shared Pref*/
-    public static final String ADDRESS = "address";
-    public static final String ADDRESS2 = "address2";
-    public static final String MOBILE_1 = "mobile1";
-    public static final String MOBILE_2 = "mobile2";
-    public static final String MOBILE_3 = "mobile3";
-    public static final String PHONE = "phone";
-    public static final String EMAIL = "email";
-    public static final String FACEBOOK = "facebook";
-    public static final String TWITTER = "twitter";
-    public static final String INSTAGRAM = "instagram";
-    public static final String LINKEDIN = "linkedin";
-    public static final String GMAIL = "gmail";
-    public static final String YOUTUBE = "youtube";
-    public static final String YAHOO = "yahoo";
-    public static final String SKYPE = "skype";
+    /*Company*/
+    public static final String COMPANY_ADDRESS = "company_address";
+    public static final String COMPANY_ADDRESS2 = "company_address2";
+    public static final String COMPANY_MOBILE_1 = "company_mobile1";
+    public static final String COMPANY_MOBILE_2 = "company_mobile2";
+    public static final String COMPANY_MOBILE_3 = "company_mobile3";
+    public static final String COMPANY_PHONE = "company_phone";
+    public static final String COMPANY_EMAIL = "company_email";
+    public static final String COMPANY_FACEBOOK = "company_facebook";
+    public static final String COMPANY_TWITTER = "company_twitter";
+    public static final String COMPANY_INSTAGRAM = "company_instagram";
+    public static final String COMPANY_LINKEDIN = "company_linkedin";
+    public static final String COMPANY_GMAIL = "company_gmail";
+    public static final String COMPANY_YOUTUBE = "company_youtube";
+    public static final String COMPANY_YAHOO = "company_yahoo";
+    public static final String COMPANY_SKYPE = "company_skype";
 
     /*User Info and User Validate*/
     public static final String USER_INFO = "userInfo";

@@ -1,6 +1,7 @@
 package com.indiancosmeticsbd.app.Network.User;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import com.indiancosmeticsbd.app.GlobalValue.LoadingDialog;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.Model.SignIn.UserValidate;
 import com.indiancosmeticsbd.app.Network.RetrofitService;
+import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -61,6 +63,8 @@ public class UserValidateInfoRepository {
                                                 userInfoLiveData.setValue(response.body());
                                                 Log.d("LOGININFO", "onResponse: I am here success");
                                                 Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
+                                                activity.startActivity(new Intent(activity, AccountActivity.class));
+                                                activity.finish();
                                             }
                                             else{
                                                 userInfoLiveData.setValue(null);
