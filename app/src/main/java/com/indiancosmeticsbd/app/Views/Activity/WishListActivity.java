@@ -22,8 +22,8 @@ public class WishListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wish_list);
-        setToolbar(R.id.toolbar_wish, R.id.back_button);
-        setBottomNavigation(R.id.bottom_navigation_wish);
+        setToolbar(R.id.toolbar_top, R.id.back_button);
+        setBottomNavigation(R.id.bottom_navigation);
     }
 
 

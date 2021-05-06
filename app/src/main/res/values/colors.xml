@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#464646</color>
+    <color name="greyLight">#C9C9C9</color>
 
     <!--Light Theme Color-->
     <color name="toolbarColorLight">#FFF</color>

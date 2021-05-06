@@ -39,4 +39,11 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="mobileNumber">Enter Mobile Number</string>
     <string name="gotoSignIn">ALREADY HAVE AN ACCOUNT? SIGN IN</string>
+
+    <!--Account-->
+    <string name="account_name">Name</string>
+    <string name="account_email">Email</string>
+    <string name="account_mobile">Mobile</string>
+    <string name="account_address">Address</string>
+    <string name="lorem_ipsum">ASdasdasdasdkkasjfklsdlfhdhskjfhfhsdfhkjhdskfjksdfjkgsdfgdsgfhgsdfgjhsdgfhgsdhjfgdsf sdjgfhjds fhjgsd fhjg sdjhf jsdh fhjsdg fhj sdjhf ghjsdgfjhsgdfjhsdg jfhg sdhjfg jsdhgf jhgfjhsdg fhjsdg fjhsdg fhjgsd fhj </string>
 </resources>
