@@ -6,6 +6,8 @@
     <string name="toolbar_main">IndianCosmeticsBD</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
+    <string name="our_categories">Our Categories</string>
+    <string name="categories">Categories</string>
 
     <!--Bottom Nav Menu-->
     <string name="home">Home</string>

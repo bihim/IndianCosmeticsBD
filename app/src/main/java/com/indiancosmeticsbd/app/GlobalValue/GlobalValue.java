@@ -54,4 +54,7 @@ public class GlobalValue {
     public static final String COLUMN_TYPE = "username";
     public static final String USER_VALIDATE = "userValidate";
 
+    /*Product Categories*/
+    public static final String PRODUCT_CATEGORIES = "productCategories";
+
 }
