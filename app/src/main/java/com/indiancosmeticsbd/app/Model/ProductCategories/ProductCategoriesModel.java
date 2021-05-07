@@ -2,6 +2,8 @@ package com.indiancosmeticsbd.app.Model.ProductCategories;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoriesModel {
@@ -19,7 +21,7 @@ public class ProductCategoriesModel {
     private String description;
     @SerializedName("content")
     @Expose
-    private List<Content> content = null;
+    private ArrayList<Content> content = null;
 
     public String getStatus() {
         return status;
@@ -53,11 +55,11 @@ public class ProductCategoriesModel {
         this.description = description;
     }
 
-    public List<Content> getContent() {
+    public ArrayList<Content> getContent() {
         return content;
     }
 
-    public void setContent(List<Content> content) {
+    public void setContent(ArrayList<Content> content) {
         this.content = content;
     }
     public class Content {

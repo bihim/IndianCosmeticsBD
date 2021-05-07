@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,11 +24,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
+import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
+import com.indiancosmeticsbd.app.Network.ProductCategories.ProductCategoriesModelAdapter;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
+import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -55,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
     /*Nav Drawer*/
     private MaterialButton signInButton;
 
+    /*Product Categories*/
+    private ArrayList<ProductCategoriesModelAdapter> productCategoriesModelAdapterArrayList;
+    private ProductCategoriesAdapter productCategoriesAdapter;
+    private MaterialCardView materialCardViewProductCategories;
+    private LottieAnimationView lottieAnimationViewProductCategories;
+    private RecyclerView recyclerViewProductCategories;
+    private ProductCategoriesViewModel productCategoriesViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +79,40 @@ public class MainActivity extends AppCompatActivity {
         setNavDrawer();
         setBottomNavigationView();
         setSliderView();
+        setRecyclerViewProductCategories();
+    }
+
+    private void setRecyclerViewProductCategories(){
+        productCategoriesModelAdapterArrayList = new ArrayList<>();
+        recyclerViewProductCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewProductCategories.setHasFixedSize(true);
+        productCategoriesAdapter = new ProductCategoriesAdapter(productCategoriesModelAdapterArrayList, this);
+        productCategoriesViewModel = new ViewModelProvider(this).get(ProductCategoriesViewModel.class);
+        productCategoriesViewModel.init();
+        productCategoriesViewModel.getProductCategories().observe(this, productCategoriesModel -> {
+            ArrayList<ProductCategoriesModel.Content> content = productCategoriesModel.getContent();
+            ArrayList<String> productChecking = new ArrayList<>();
+            /*Here contents.main has multiple repeat. That is why it is filtered with productChecking*/
+            for (ProductCategoriesModel.Content contents: content){
+                String title = contents.getMain();
+                if (!productChecking.contains(title)){
+                    productChecking.add(title);
+                }
+            }
+            for (String items: productChecking){
+                productCategoriesModelAdapterArrayList.add(new ProductCategoriesModelAdapter(items));
+            }
+
+            if (productCategoriesModelAdapterArrayList.isEmpty()){
+                materialCardViewProductCategories.setVisibility(View.GONE);
+            }
+            else{
+                materialCardViewProductCategories.setVisibility(View.VISIBLE);
+                lottieAnimationViewProductCategories.setVisibility(View.GONE);
+                recyclerViewProductCategories.setVisibility(View.VISIBLE);
+            }
+            recyclerViewProductCategories.setAdapter(productCategoriesAdapter);
+        });
     }
 
     private void getBannerSlider() {
@@ -146,6 +195,10 @@ public class MainActivity extends AppCompatActivity {
         lottieAnimationView = findViewById(R.id.animationView);
         cardViewBannerTop = findViewById(R.id.banner_slider);
         signInButton = findViewById(R.id.sign_in_main);
+
+        materialCardViewProductCategories = findViewById(R.id.product_categories_main);
+        lottieAnimationViewProductCategories = findViewById(R.id.animationView_products);
+        recyclerViewProductCategories = findViewById(R.id.recyclerview_product_categories);
     }
 
     @Override
