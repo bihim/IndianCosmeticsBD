@@ -56,4 +56,7 @@ public class GlobalValue {
 
     /*Product Categories*/
     public static final String PRODUCT_CATEGORIES = "productCategories";
+
+    /*Product List*/
+    public static final String PRODUCT_LIST = "products";
 }

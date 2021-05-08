@@ -14,6 +14,13 @@
     <string name="product_click">slimming products</string>
     <string name="no_data">No Data Available</string>
 
+    <!--Product List-->
+    <string name="product_list_name">Soumi\'s Can Faire 30 Sunscreen Lotion</string>
+    <string name="product_brand_name">by The Soumi\'s Can Product</string>
+    <string name="product_price">250৳</string>
+    <string name="product_stock">250pc Left</string>
+    <string name="product_view">170</string>
+
     <!--Bottom Nav Menu-->
     <string name="home">Home</string>
     <string name="wishList">Wishlist</string>

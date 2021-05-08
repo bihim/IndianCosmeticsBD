@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_107sdp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:layout_margin="@dimen/_5sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?cardColor"
+        android:orientation="vertical"
+        android:gravity="start">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test_product"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="start"
+            android:layout_margin="@dimen/_5sdp">
+            <TextView
+                android:id="@+id/recyclerview_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_list_name"
+                android:textColor="?textViewMainColor"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/recyclerview_product_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/product_brand_name"
+                android:textSize="@dimen/_8ssp"
+                android:textColor="?textViewSecondaryColor"/>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="match_parent"
+                   android:orientation="vertical">
+                   <TextView
+                       android:id="@+id/recyclerview_product_discount"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="@dimen/_10ssp"
+                       android:background="@drawable/textview_strike"
+                       android:text="@string/product_price"
+                       android:textColor="?textViewSecondaryColor"/>
+                   <TextView
+                       android:id="@+id/recyclerview_product_price"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/product_price"
+                       android:textStyle="bold"
+                       android:textSize="@dimen/_11ssp"
+                       android:textColor="?forgot_password_color"/>
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="match_parent"
+                   android:orientation="vertical"
+                   android:gravity="end">
+                   <TextView
+                       android:id="@+id/recyclerview_product_views"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="@dimen/_10ssp"
+                       app:drawableStartCompat="@drawable/ic_eye"
+                       android:drawableTint="?textViewSecondaryColor"
+                       android:drawablePadding="@dimen/_5sdp"
+                       android:text="@string/product_view"
+                       android:textColor="?textViewSecondaryColor"/>
+                   <TextView
+                       android:id="@+id/recyclerview_product_stock"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="@string/product_stock"
+                       android:textSize="@dimen/_10ssp"
+                       android:textColor="?textViewMainColor"/>
+               </LinearLayout>
+
+           </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

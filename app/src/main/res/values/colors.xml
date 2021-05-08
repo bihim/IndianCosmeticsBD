@@ -29,7 +29,7 @@
     <!--Dark Theme Color-->
     <color name="toolbarColorDark">#1A1815</color>
     <color name="textViewMainColorDark">#FFF</color>
-    <color name="textViewSecondaryColorDark">#424242</color>
+    <color name="textViewSecondaryColorDark">#C7C7C7</color>
     <color name="layoutColorDark">#242424</color>
     <color name="cardColorDark">#000</color>
     <color name="iconColorDark">#FFF</color>
