@@ -1,103 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_107sdp"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="0dp"
+    android:layout_width="@dimen/_97sdp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_10sdp"
-    android:layout_margin="@dimen/_5sdp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?cardColor"
-        android:orientation="vertical"
-        android:gravity="start">
+        android:gravity="start"
+        android:orientation="vertical">
+
         <ImageView
+            android:id="@+id/recyclerview_product_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_97sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/test_product"/>
+            android:src="@drawable/test_product" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_margin="@dimen/_5sdp"
             android:gravity="start"
-            android:layout_margin="@dimen/_5sdp">
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/recyclerview_product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/product_list_name"
                 android:textColor="?textViewMainColor"
-                android:textSize="@dimen/_10ssp"
-                android:textStyle="bold"/>
+                android:textSize="@dimen/_9ssp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/recyclerview_product_brand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/product_brand_name"
-                android:textSize="@dimen/_8ssp"
-                android:textColor="?textViewSecondaryColor"/>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="horizontal">
+                android:textColor="?textViewSecondaryColor"
+                android:textSize="@dimen/_8ssp" />
 
-               <LinearLayout
-                   android:layout_width="0dp"
-                   android:layout_weight="1"
-                   android:layout_height="match_parent"
-                   android:orientation="vertical">
-                   <TextView
-                       android:id="@+id/recyclerview_product_discount"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="@dimen/_10ssp"
-                       android:background="@drawable/textview_strike"
-                       android:text="@string/product_price"
-                       android:textColor="?textViewSecondaryColor"/>
-                   <TextView
-                       android:id="@+id/recyclerview_product_price"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/product_price"
-                       android:textStyle="bold"
-                       android:textSize="@dimen/_11ssp"
-                       android:textColor="?forgot_password_color"/>
-               </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:gravity="bottom"
+                android:orientation="horizontal">
 
-               <LinearLayout
-                   android:layout_width="0dp"
-                   android:layout_weight="1"
-                   android:layout_height="match_parent"
-                   android:orientation="vertical"
-                   android:gravity="end">
-                   <TextView
-                       android:id="@+id/recyclerview_product_views"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:textSize="@dimen/_10ssp"
-                       app:drawableStartCompat="@drawable/ic_eye"
-                       android:drawableTint="?textViewSecondaryColor"
-                       android:drawablePadding="@dimen/_5sdp"
-                       android:text="@string/product_view"
-                       android:textColor="?textViewSecondaryColor"/>
-                   <TextView
-                       android:id="@+id/recyclerview_product_stock"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/product_stock"
-                       android:textSize="@dimen/_10ssp"
-                       android:textColor="?textViewMainColor"/>
-               </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="bottom">
 
-           </LinearLayout>
+                    <TextView
+                        android:id="@+id/recyclerview_product_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_strike"
+                        android:text="@string/product_price"
+                        android:textColor="?textViewSecondaryColor"
+                        android:textSize="@dimen/_9ssp" />
 
+                    <TextView
+                        android:id="@+id/recyclerview_product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_price"
+                        android:textColor="?forgot_password_color"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end|bottom"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/recyclerview_product_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:drawableTint="?textViewSecondaryColor"
+                        android:text="@string/product_view"
+                        android:textColor="?textViewSecondaryColor"
+                        android:textSize="@dimen/_8ssp"
+                        app:drawableStartCompat="@drawable/ic_eye" />
+
+                    <TextView
+                        android:id="@+id/recyclerview_product_stock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_stock"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_8ssp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

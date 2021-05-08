@@ -1,6 +1,7 @@
 package com.indiancosmeticsbd.app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.indiancosmeticsbd.app.Model.Category.CategoryAdapterModel;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.ProductListActivity;
 
 import java.util.ArrayList;
 
@@ -42,7 +44,10 @@ public class CategoriesSelectedAdapter extends RecyclerView.Adapter<CategoriesSe
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, ProductListActivity.class);
+                intent.putExtra("id", selectedItem.getId());
+                intent.putExtra("name", categoryName);
+                context.startActivity(intent);
             }
         });
     }

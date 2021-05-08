@@ -63,7 +63,7 @@ public class Products {
         this.content = content;
     }
 
-    public class Content {
+    public static class Content {
 
         @SerializedName("id")
         @Expose
@@ -104,6 +104,17 @@ public class Products {
         @SerializedName("thumbnail")
         @Expose
         private String thumbnail;
+
+        public Content(Integer id, String name, String brand, Integer price, Integer views, Integer stock, Integer discount, String thumbnail) {
+            this.id = id;
+            this.name = name;
+            this.brand = brand;
+            this.price = price;
+            this.views = views;
+            this.stock = stock;
+            this.discount = discount;
+            this.thumbnail = thumbnail;
+        }
 
         public Integer getId() {
             return id;

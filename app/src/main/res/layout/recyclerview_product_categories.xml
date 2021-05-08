@@ -16,7 +16,7 @@
         android:id="@+id/recyclerview_categories_textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"
+        android:gravity="bottom|center"
         android:text="@string/lorem_ipsum"
         android:maxLines="3"
         android:ellipsize="end"
