@@ -8,8 +8,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/recyclerview_categories_imageView"
-        android:layout_width="@dimen/_86sdp"
-        android:layout_height="@dimen/_86sdp"
+        android:layout_width="@dimen/_76sdp"
+        android:layout_height="@dimen/_76sdp"
         android:src="@drawable/india"/>
 
     <TextView
@@ -20,7 +20,8 @@
         android:text="@string/lorem_ipsum"
         android:maxLines="3"
         android:ellipsize="end"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="?textViewMainColor"
         android:layout_marginTop="@dimen/_5sdp"/>
 
 </LinearLayout>

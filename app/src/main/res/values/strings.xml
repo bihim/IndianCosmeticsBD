@@ -10,6 +10,10 @@
     <string name="categories">Categories</string>
     <string name="category_name">The Soumi\'s Can Products</string>
 
+    <!--Product Click-->
+    <string name="product_click">slimming products</string>
+    <string name="no_data">No Data Available</string>
+
     <!--Bottom Nav Menu-->
     <string name="home">Home</string>
     <string name="wishList">Wishlist</string>
@@ -24,7 +28,7 @@
     <string name="nav_privacy_policy">Privacy Policy</string>
     <string name="nav_terms_conditions">Terms &amp; Conditions</string>
     <string name="nav_rate_us">Rate Us</string>
-    
+
     <!--Sign in activity-->
     <string name="email">Enter Email</string>
     <string name="password">Enter Password</string>

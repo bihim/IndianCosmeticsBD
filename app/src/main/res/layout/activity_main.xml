@@ -131,7 +131,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/product_categories_main"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_190sdp"
+                        android:layout_height="@dimen/_170sdp"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -168,7 +168,7 @@
                                 android:visibility="gone"
                                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                                 android:orientation="horizontal"
-                                tools:listitem="@layout/recyclerview_categories"
+                                tools:listitem="@layout/recyclerview_product_categories"
                                 android:layout_marginHorizontal="@dimen/_10sdp"
                                 android:layout_marginBottom="@dimen/_5sdp"/>
 

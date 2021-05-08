@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5sdp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="@dimen/_8sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?editBackground">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?cardColor"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/recyclerview_category_click_imageview"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_skin_products"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recyclerview_category_click_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/product_click"
+            android:textSize="@dimen/_12ssp"
+            android:padding="@dimen/_5sdp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="?textViewMainColor"/>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,8 +27,9 @@ import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
+import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
-import com.indiancosmeticsbd.app.Network.ProductCategories.ProductCategoriesModelAdapter;
+import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
@@ -63,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton signInButton;
 
     /*Product Categories*/
-    private ArrayList<ProductCategoriesModelAdapter> productCategoriesModelAdapterArrayList;
+    private ArrayList<ProductCategoriesAdapterModel> productCategoriesModelAdapterArrayList;
     private ProductCategoriesAdapter productCategoriesAdapter;
     private MaterialCardView materialCardViewProductCategories;
     private LottieAnimationView lottieAnimationViewProductCategories;
     private RecyclerView recyclerViewProductCategories;
     private ProductCategoriesViewModel productCategoriesViewModel;
+    private ArrayList<CategorySelectedModel> categories;
 
 
     @Override
@@ -83,10 +84,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewProductCategories(){
+        /*Summery
+        * Here I have taken an extra arraylist in order to get all the header of one main category
+        * That means the json is like this..
+        * {
+      "id": "1",
+      "main": "indian products",
+      "header": "skin products",
+      "sub": "",
+      "position": "1"
+    },
+    {
+      "id": "2",
+      "main": "thai products",
+      "header": "skin products",
+      "sub": "",
+      "position": "2"
+    },
+    {
+      "id": "3",
+      "main": "the soumi's can products",
+      "header": "skin products",
+      "sub": "",
+      "position": "3"
+    },
+    {
+      "id": "18",
+      "main": "indian products",
+      "header": "slimming products",
+      "sub": "",
+      "position": "1"
+    }
+    * you can see that header repeats. And the api which I have got is not good. It didn't give me image and category searching is weird.
+    * Another thing is I need id to get products. Urrrgh!!
+    * Whatever have fun*/
         productCategoriesModelAdapterArrayList = new ArrayList<>();
+        categories = new ArrayList<>();
         recyclerViewProductCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewProductCategories.setHasFixedSize(true);
-        productCategoriesAdapter = new ProductCategoriesAdapter(productCategoriesModelAdapterArrayList, this);
+        productCategoriesAdapter = new ProductCategoriesAdapter(productCategoriesModelAdapterArrayList, categories, this);
         productCategoriesViewModel = new ViewModelProvider(this).get(ProductCategoriesViewModel.class);
         productCategoriesViewModel.init();
         productCategoriesViewModel.getProductCategories().observe(this, productCategoriesModel -> {
@@ -95,12 +131,14 @@ public class MainActivity extends AppCompatActivity {
             /*Here contents.main has multiple repeat. That is why it is filtered with productChecking*/
             for (ProductCategoriesModel.Content contents: content){
                 String title = contents.getMain();
+                String header = contents.getHeader();
+                categories.add(new CategorySelectedModel(title, header, contents.getId()));
                 if (!productChecking.contains(title)){
                     productChecking.add(title);
                 }
             }
             for (String items: productChecking){
-                productCategoriesModelAdapterArrayList.add(new ProductCategoriesModelAdapter(items));
+                productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
             }
 
             if (productCategoriesModelAdapterArrayList.isEmpty()){
