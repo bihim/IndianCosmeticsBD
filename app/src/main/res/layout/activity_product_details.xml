@@ -36,7 +36,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back"
+                    android:src="@drawable/ic_back_product_details"
                     android:background="?attr/selectableItemBackground"/>
             </com.google.android.material.appbar.MaterialToolbar>
 
