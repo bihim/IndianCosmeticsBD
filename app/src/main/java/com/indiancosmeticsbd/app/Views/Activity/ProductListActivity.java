@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.indiancosmeticsbd.app.ViewModel.ProductListViewModel;
 
 import java.util.ArrayList;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+
 public class ProductListActivity extends AppCompatActivity {
 
     private String categoryName;
@@ -33,6 +36,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ProductListViewModel productListViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
         setToolbar(R.id.toolbar_top, R.id.back_button);
@@ -41,6 +45,12 @@ public class ProductListActivity extends AppCompatActivity {
         categoryId = getIntent().getStringExtra("id");
         toolbarText.setText(categoryName);
         setRecyclerView();
+    }
+
+    private void setTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
     private void setRecyclerView(){

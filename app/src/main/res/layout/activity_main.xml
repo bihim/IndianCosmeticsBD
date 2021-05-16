@@ -313,7 +313,7 @@
                     android:layout_marginHorizontal="@dimen/_12sdp">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imageView_theme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_moon"
@@ -330,10 +330,10 @@
                         android:textColor="?textViewMainColor"
                         android:layout_marginStart="@dimen/_20sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintStart_toEndOf="@+id/imageView_theme"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/nav_theme_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

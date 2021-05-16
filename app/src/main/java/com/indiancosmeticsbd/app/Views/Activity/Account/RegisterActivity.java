@@ -3,6 +3,7 @@ package com.indiancosmeticsbd.app.Views.Activity.Account;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -11,6 +12,8 @@ import com.google.android.material.button.MaterialButton;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private MaterialButton gotoSignInButton;
@@ -18,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         findViewById();
@@ -35,6 +39,11 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private void setTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
     private void findViewById(){

@@ -13,7 +13,7 @@
     <!--Light Theme Color-->
     <color name="toolbarColorLight">#FFF</color>
     <color name="textViewMainColorLight">#000</color>
-    <color name="textViewSecondaryColorLight">#424242</color>
+    <color name="textViewSecondaryColorLight">#9E9E9E</color>
     <color name="layoutColorLight">#D2D2D2</color>
     <color name="cardColorLight">#FFF</color>
     <color name="iconColorLight">#000</color>
@@ -22,7 +22,7 @@
     <color name="bottomNavUnselectedColorLight">#919191</color>
     <color name="buttonColorLight">#B48A56</color>
     <color name="forgotPassLight">#FF1A1A</color>
-    <color name="editTextBackLight">#E0E0E0</color>
+    <color name="editTextBackLight">#FFFFFF</color>
     <color name="editIconLight">#6E6E6E</color>
 
 

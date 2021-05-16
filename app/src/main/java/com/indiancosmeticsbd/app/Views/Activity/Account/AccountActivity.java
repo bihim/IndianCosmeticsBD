@@ -35,12 +35,19 @@ public class AccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         setToolbar(R.id.toolbar_top, R.id.back_button);
         setBottomNavigation(R.id.bottom_navigation);
         findViewById();
         settingAccountInfo();
+    }
+
+    private void setTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
     private void settingAccountInfo(){

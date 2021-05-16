@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.indiancosmeticsbd.app.R;
 
 import java.util.ArrayList;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+
 public class ProductCategoryItemActivity extends AppCompatActivity {
     private TextView textViewNoData;
     private RecyclerView recyclerViewCategory;
@@ -29,6 +32,7 @@ public class ProductCategoryItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_category_item);
         setToolbar(R.id.toolbar_top, R.id.back_button);
@@ -37,6 +41,11 @@ public class ProductCategoryItemActivity extends AppCompatActivity {
         toolbarText.setText(categoryName);
         categories = new ArrayList<>(getIntent().getStringArrayListExtra("categories"));
         setRecyclerViewCategory();
+    }
+    private void setTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
     private void setRecyclerViewCategory(){

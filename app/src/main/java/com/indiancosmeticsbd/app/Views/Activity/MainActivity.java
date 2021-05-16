@@ -1,5 +1,14 @@
 package com.indiancosmeticsbd.app.Views.Activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,30 +19,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.Toast;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
-import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
+import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
@@ -46,15 +44,12 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.dmoral.toasty.Toasty;
-
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class MainActivity extends AppCompatActivity {
 
     private MaterialToolbar toolbar;
-    private ActionBarDrawerToggle toggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
@@ -67,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
     /*Nav Drawer*/
     private MaterialButton signInButton;
-    private SwitchMaterial switchCompatTheme;
+    private SwitchCompat switchCompatTheme;
+    private ImageView imageViewTheme;
 
     /*Product Categories*/
     private ArrayList<ProductCategoriesAdapterModel> productCategoriesModelAdapterArrayList;
@@ -81,9 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String theme = sharedPreferences.getString("theme", "light");
-        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
+        setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById();
@@ -94,46 +88,51 @@ public class MainActivity extends AppCompatActivity {
         themeSwitch();
     }
 
+    private void setTheme(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
+    }
+
     private void themeSwitch(){
         /*False == Light Theme
         * True == Dark Theme*/
-
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         switchCompatTheme.setChecked(!theme.equals("light"));
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        switchCompatTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        boolean drawerOpen = getIntent().getBooleanExtra("drawer_open", false);
+        if (drawerOpen){
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
+        if (theme.equals("light")){
+            switchCompatTheme.setChecked(false);
+            imageViewTheme.setImageResource(R.drawable.ic_sun);
+        }
+        else{
+            switchCompatTheme.setChecked(true);
+            imageViewTheme.setImageResource(R.drawable.ic_moon);
+        }
+        switchCompatTheme.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+            public void onClick(View v) {
+                if (theme.equals("light")){
                     editor.putString("theme", "dark");
+                    switchCompatTheme.setChecked(false);
                 }
                 else{
                     editor.putString("theme", "light");
+                    switchCompatTheme.setChecked(true);
                 }
-                finish();
-                startActivity(new Intent(MainActivity.this, MainActivity.this.getClass()));
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                /*Intent i = getIntent();
-                i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                overridePendingTransition(0, 0);
-                startActivity(i);
-                overridePendingTransition(0, 0);
-                finish();*/
+
                 editor.apply();
-                Toasty.info(MainActivity.this, isChecked+"", Toasty.LENGTH_SHORT).show();
+                Intent intent = new Intent(getIntent());
+                intent.putExtra("drawer_open", true);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
             }
         });
-    }
-
-    public void reCreate() {
-        Bundle savedInstanceState = new Bundle();
-        //this is important to save all your open states/fragment states
-        onSaveInstanceState(savedInstanceState);
-        //this is needed to release the resources
-        super.onDestroy();
-        //call on create where new theme is applied
-        onCreate(savedInstanceState);//you can pass bundle arguments to skip your code/flows on this scenario
     }
 
     private void setRecyclerViewProductCategories(){
@@ -272,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setNavDrawer() {
         setSupportActionBar(toolbar);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -292,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewProductCategories = findViewById(R.id.recyclerview_product_categories);
 
         switchCompatTheme = findViewById(R.id.nav_theme_switch);
+        imageViewTheme = findViewById(R.id.imageView_theme);
     }
 
     @Override

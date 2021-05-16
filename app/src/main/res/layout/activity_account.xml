@@ -87,7 +87,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_name"
-                            android:textColor="@color/greyLight"
+                            android:textColor="?textViewSecondaryColor"
                             android:textSize="@dimen/_10ssp"
                             android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_name"
-                            android:textColor="@color/white"
+                            android:textColor="?textViewMainColor"
                             android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
@@ -120,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_email"
-                            android:textColor="@color/greyLight"
+                            android:textColor="?textViewSecondaryColor"
                             android:textSize="@dimen/_10ssp"
                             android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_email"
-                            android:textColor="@color/white"
+                            android:textColor="?textViewMainColor"
                             android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
@@ -153,7 +153,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_mobile"
-                            android:textColor="@color/greyLight"
+                            android:textColor="?textViewSecondaryColor"
                             android:textSize="@dimen/_10ssp"
                             android:textStyle="bold" />
 
@@ -162,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_mobile"
-                            android:textColor="@color/white"
+                            android:textColor="?textViewMainColor"
                             android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_address"
-                            android:textColor="@color/greyLight"
+                            android:textColor="?textViewSecondaryColor"
                             android:textSize="@dimen/_10ssp"
                             android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/account_address"
-                            android:textColor="@color/white"
+                            android:textColor="?textViewMainColor"
                             android:textSize="@dimen/_14ssp" />
 
                     </LinearLayout>
