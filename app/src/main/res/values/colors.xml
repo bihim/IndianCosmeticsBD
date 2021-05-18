@@ -24,6 +24,7 @@
     <color name="forgotPassLight">#FF1A1A</color>
     <color name="editTextBackLight">#FFFFFF</color>
     <color name="editIconLight">#6E6E6E</color>
+    <color name="collapsingColorLight">#00FFFFFF</color>
 
 
     <!--Dark Theme Color-->
@@ -40,5 +41,6 @@
     <color name="forgotPassDark">#FFA6A6</color>
     <color name="editTextBackDark">#464646</color>
     <color name="editIconDark">#FFF</color>
+    <color name="collapsingColorDark">#6D1A1815</color>
 
 </resources>

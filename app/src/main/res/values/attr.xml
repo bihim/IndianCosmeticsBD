@@ -13,6 +13,7 @@
     <attr name="forgot_password_color" format="reference"/>
     <attr name="editBackground" format="reference"/>
     <attr name="editIcon" format="reference"/>
+    <attr name="collapsingToolColor" format="reference"/>
 
 
 </resources>

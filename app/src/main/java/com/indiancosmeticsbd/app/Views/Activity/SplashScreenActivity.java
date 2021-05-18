@@ -47,27 +47,29 @@ public class SplashScreenActivity extends AppCompatActivity {
         ContactInfoViewModel contactInfoViewModel = new ViewModelProvider(this).get(ContactInfoViewModel.class);
         contactInfoViewModel.init();
         contactInfoViewModel.getContactInfo().observe(this, contactInfo -> {
-            ContactInfo.Content content = contactInfo.getContent();
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(COMPANY_ADDRESS, content.getAddress());
-            editor.putString(COMPANY_ADDRESS2, content.getAddress2());
-            editor.putString(COMPANY_MOBILE_1, content.getMobile1());
-            editor.putString(COMPANY_MOBILE_2, content.getMobile2());
-            editor.putString(COMPANY_MOBILE_3, content.getMobile3());
-            editor.putString(COMPANY_PHONE, content.getPhone());
-            editor.putString(COMPANY_EMAIL, content.getEmail());
-            editor.putString(COMPANY_FACEBOOK, content.getFacebook());
-            editor.putString(COMPANY_TWITTER, content.getTwitter());
-            editor.putString(COMPANY_INSTAGRAM, content.getInstagram());
-            editor.putString(COMPANY_LINKEDIN, content.getLinkedin());
-            editor.putString(COMPANY_GMAIL, content.getGmail());
-            editor.putString(COMPANY_YOUTUBE, content.getYoutube());
-            editor.putString(COMPANY_YAHOO, content.getYahoo());
-            editor.putString(COMPANY_SKYPE, content.getSkype());
-            editor.apply();
-            startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
-            finish();
+            if(contactInfo!=null){
+                ContactInfo.Content content = contactInfo.getContent();
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(COMPANY_ADDRESS, content.getAddress());
+                editor.putString(COMPANY_ADDRESS2, content.getAddress2());
+                editor.putString(COMPANY_MOBILE_1, content.getMobile1());
+                editor.putString(COMPANY_MOBILE_2, content.getMobile2());
+                editor.putString(COMPANY_MOBILE_3, content.getMobile3());
+                editor.putString(COMPANY_PHONE, content.getPhone());
+                editor.putString(COMPANY_EMAIL, content.getEmail());
+                editor.putString(COMPANY_FACEBOOK, content.getFacebook());
+                editor.putString(COMPANY_TWITTER, content.getTwitter());
+                editor.putString(COMPANY_INSTAGRAM, content.getInstagram());
+                editor.putString(COMPANY_LINKEDIN, content.getLinkedin());
+                editor.putString(COMPANY_GMAIL, content.getGmail());
+                editor.putString(COMPANY_YOUTUBE, content.getYoutube());
+                editor.putString(COMPANY_YAHOO, content.getYahoo());
+                editor.putString(COMPANY_SKYPE, content.getSkype());
+                editor.apply();
+                startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
+                finish();
+            }
         });
     }
 }
