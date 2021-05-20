@@ -244,7 +244,7 @@ public class ProductInfo {
 
     }
 
-    public static class Category {
+    static class Category {
 
         @SerializedName("category_id")
         @Expose

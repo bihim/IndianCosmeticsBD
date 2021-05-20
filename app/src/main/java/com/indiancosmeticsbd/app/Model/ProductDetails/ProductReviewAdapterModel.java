@@ -4,9 +4,8 @@ public class ProductReviewAdapterModel
 {
     private String username, email, date, description;
 
-    public ProductReviewAdapterModel(String username, String email, String date, String description) {
+    public ProductReviewAdapterModel(String username, String date, String description) {
         this.username = username;
-        this.email = email;
         this.date = date;
         this.description = description;
     }
@@ -17,14 +16,6 @@ public class ProductReviewAdapterModel
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDate() {

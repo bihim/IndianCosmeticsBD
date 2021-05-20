@@ -36,7 +36,6 @@ public class ProductReviewAdapter extends RecyclerView.Adapter<ProductReviewAdap
     public void onBindViewHolder(@NonNull ProductReviewVewHolder holder, int position) {
         ProductReviewAdapterModel selectedItem = productReviewList.get(position);
         holder.textViewUserName.setText(selectedItem.getUsername());
-        holder.textViewEmail.setText(selectedItem.getEmail());
         holder.textViewDate.setText(selectedItem.getDate());
         holder.textViewDescription.setText(selectedItem.getDescription());
     }
@@ -47,11 +46,10 @@ public class ProductReviewAdapter extends RecyclerView.Adapter<ProductReviewAdap
     }
 
     public class ProductReviewVewHolder extends RecyclerView.ViewHolder {
-        TextView textViewUserName, textViewEmail, textViewDate, textViewDescription;
+        TextView textViewUserName, textViewDate, textViewDescription;
         public ProductReviewVewHolder(@NonNull View itemView) {
             super(itemView);
             textViewUserName = itemView.findViewById(R.id.recyclerview_review_username);
-            textViewEmail = itemView.findViewById(R.id.recyclerview_review_mail);
             textViewDate = itemView.findViewById(R.id.recyclerview_review_date);
             textViewDescription = itemView.findViewById(R.id.recyclerview_review_description);
         }

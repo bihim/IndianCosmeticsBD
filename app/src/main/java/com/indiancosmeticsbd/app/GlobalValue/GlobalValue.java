@@ -6,6 +6,9 @@ public class GlobalValue {
 
     public static final String API_TOKEN = "aHR0cHN+aW5kaWFuY29zbWV0aWNzYmQuY29tfmFwaQ";
 
+    public static final String WEBSITE_URL = "https://www.indiancosmeticsbd.com/";
+    public static final String PRODUCT_IMAGE_BASE_URL = "https://indiancosmeticsbd.com/proimg/";
+
     /*Banner Slider*/
     public static final String BANNER_SLIDER = "bannerSlider";
     public static final String HOME_PAGE_TOP = "home_page_top";
@@ -59,4 +62,7 @@ public class GlobalValue {
 
     /*Product List*/
     public static final String PRODUCT_LIST = "products";
+
+    /*Product Info*/
+    public static final String PRODUCT_INFO = "productInfo";
 }

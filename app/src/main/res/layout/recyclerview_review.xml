@@ -32,13 +32,6 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/_14ssp"/>
 
-            <TextView
-                android:id="@+id/recyclerview_review_mail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/demo_mail"
-                android:textSize="@dimen/_12ssp"/>
-
         </LinearLayout>
 
     </LinearLayout>
