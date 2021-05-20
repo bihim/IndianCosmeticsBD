@@ -33,6 +33,10 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
+
+    /*Id and product name*/
+    private String id;
+
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private TextView textViewBrandName, textViewPrice, textViewDiscount, textViewDescription;
@@ -53,19 +57,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
-        recyclerViewSize = findViewById(R.id.product_sizes_recyclerview);
-        recyclerViewRating = findViewById(R.id.product_details_review);
+        findViewById();
+        setToolbar(R.id.toolbar, R.id.back_button);
         setRecyclerViewSize();
         setRecyclerViewRating();
-        MaterialButton materialButton = findViewById(R.id.add_cart);
-        materialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addToCart();
-            }
-        });
     }
+
 
     private void viewCart(){
         SharedPreferences sharedPreferences = getSharedPreferences("CartOnly", MODE_PRIVATE);
@@ -133,9 +130,36 @@ public class ProductDetailsActivity extends AppCompatActivity {
         recyclerViewSize.setAdapter(productSizesAdapter);
     }
 
+    private void setToolbar(int toolbarId, int backButtonId){
+        MaterialToolbar toolbar = findViewById(toolbarId);
+        setSupportActionBar(toolbar);
+        ImageButton backButton = findViewById(backButtonId);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        String toolbarName = getIntent().getStringExtra("name");
+        Log.d("PRODUCT_DETAILS", "setToolbar: Product name: "+toolbarName);
+        id = getIntent().getStringExtra("id");
+        collapsingToolbarLayout.setTitle(toolbarName);
+    }
+
+    private void findViewById(){
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        recyclerViewSize = findViewById(R.id.product_sizes_recyclerview);
+        recyclerViewRating = findViewById(R.id.product_details_review);
+    }
+
     private void setTheme(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
