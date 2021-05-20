@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark"
         android:windowSoftInputMode="stateVisible|adjustPan">
-        <activity android:name=".Views.Activity.ProductDetailsActivity"></activity>
+        <activity android:name=".Views.Activity.ProductDetails.PhotoViewActivity"></activity>
+        <activity android:name=".Views.Activity.ProductDetails.ProductDetailsActivity" />
         <activity android:name=".Views.Activity.ProductListActivity" />
         <activity android:name=".Views.Activity.ProductCategoryItemActivity" />
         <activity android:name=".Views.Activity.Account.RegisterActivity" />

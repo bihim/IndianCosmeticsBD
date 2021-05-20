@@ -93,4 +93,7 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="tk">৳</string>
+    <string name="product_quantity">1</string>
+    <string name="snackbar_text">Cart Added</string>
+    <string name="continue_cart">Continue Shopping</string>
 </resources>

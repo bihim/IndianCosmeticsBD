@@ -14,9 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.indiancosmeticsbd.app.Model.ProductList.ProductListModel;
-import com.indiancosmeticsbd.app.Model.ProductList.Products;
 import com.indiancosmeticsbd.app.R;
-import com.indiancosmeticsbd.app.Views.Activity.ProductDetailsActivity;
+import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.util.ArrayList;
 

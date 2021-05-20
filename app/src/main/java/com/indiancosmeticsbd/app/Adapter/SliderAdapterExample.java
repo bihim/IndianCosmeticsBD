@@ -1,15 +1,16 @@
 package com.indiancosmeticsbd.app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.PhotoViewActivity;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
@@ -59,7 +60,8 @@ public class SliderAdapterExample extends
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, PhotoViewActivity.class).putExtra("image_url", sliderItem.getImageUrl()));
+                //Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

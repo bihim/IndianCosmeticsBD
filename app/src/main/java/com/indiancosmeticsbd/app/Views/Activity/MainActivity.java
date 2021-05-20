@@ -178,30 +178,35 @@ public class MainActivity extends AppCompatActivity {
         productCategoriesViewModel = new ViewModelProvider(this).get(ProductCategoriesViewModel.class);
         productCategoriesViewModel.init();
         productCategoriesViewModel.getProductCategories().observe(this, productCategoriesModel -> {
-            ArrayList<ProductCategoriesModel.Content> content = productCategoriesModel.getContent();
-            ArrayList<String> productChecking = new ArrayList<>();
-            /*Here contents.main has multiple repeat. That is why it is filtered with productChecking*/
-            for (ProductCategoriesModel.Content contents: content){
-                String title = contents.getMain();
-                String header = contents.getHeader();
-                categories.add(new CategorySelectedModel(title, header, contents.getId()));
-                if (!productChecking.contains(title)){
-                    productChecking.add(title);
-                }
-            }
-            for (String items: productChecking){
-                productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
-            }
-
-            if (productCategoriesModelAdapterArrayList.isEmpty()){
-                materialCardViewProductCategories.setVisibility(View.GONE);
+            if (productCategoriesModel == null){
+                setRecyclerViewProductCategories();
             }
             else{
-                materialCardViewProductCategories.setVisibility(View.VISIBLE);
-                lottieAnimationViewProductCategories.setVisibility(View.GONE);
-                recyclerViewProductCategories.setVisibility(View.VISIBLE);
+                ArrayList<ProductCategoriesModel.Content> content = productCategoriesModel.getContent();
+                ArrayList<String> productChecking = new ArrayList<>();
+                /*Here contents.main has multiple repeat. That is why it is filtered with productChecking*/
+                for (ProductCategoriesModel.Content contents: content){
+                    String title = contents.getMain();
+                    String header = contents.getHeader();
+                    categories.add(new CategorySelectedModel(title, header, contents.getId()));
+                    if (!productChecking.contains(title)){
+                        productChecking.add(title);
+                    }
+                }
+                for (String items: productChecking){
+                    productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
+                }
+
+                if (productCategoriesModelAdapterArrayList.isEmpty()){
+                    materialCardViewProductCategories.setVisibility(View.GONE);
+                }
+                else{
+                    materialCardViewProductCategories.setVisibility(View.VISIBLE);
+                    lottieAnimationViewProductCategories.setVisibility(View.GONE);
+                    recyclerViewProductCategories.setVisibility(View.VISIBLE);
+                }
+                recyclerViewProductCategories.setAdapter(productCategoriesAdapter);
             }
-            recyclerViewProductCategories.setAdapter(productCategoriesAdapter);
         });
     }
 
@@ -209,20 +214,25 @@ public class MainActivity extends AppCompatActivity {
         BannerSliderTopViewModel bannerSliderTopViewModel = new ViewModelProvider(this).get(BannerSliderTopViewModel.class);
         bannerSliderTopViewModel.init();
         bannerSliderTopViewModel.getBannerSlider().observe(this, bannerSliderModel -> {
-            List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
-            for (BannerSliderModel.Content content : contents) {
-                SliderItem sliderItem = new SliderItem();
-                String mainImage = content.getImage().replace("PROTOCOLHTTP_HOSTPROJECT_FOLDERimages/slider/", "");
-                sliderItem.setImageUrl("https://indiancosmeticsbd.com/images/slider/"+mainImage);
-                sliderAdapterExample.addItem(sliderItem);
-                Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
+            if (bannerSliderModel == null){
+                getBannerSlider();
             }
-            if (contents.isEmpty()) {
-                cardViewBannerTop.setVisibility(View.GONE);
-            } else {
-                cardViewBannerTop.setVisibility(View.VISIBLE);
-                lottieAnimationView.setVisibility(View.GONE);
-                sliderView.setVisibility(View.VISIBLE);
+            else{
+                List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
+                for (BannerSliderModel.Content content : contents) {
+                    SliderItem sliderItem = new SliderItem();
+                    String mainImage = content.getImage().replace("PROTOCOLHTTP_HOSTPROJECT_FOLDERimages/slider/", "");
+                    sliderItem.setImageUrl("https://indiancosmeticsbd.com/images/slider/"+mainImage);
+                    sliderAdapterExample.addItem(sliderItem);
+                    Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
+                }
+                if (contents.isEmpty()) {
+                    cardViewBannerTop.setVisibility(View.GONE);
+                } else {
+                    cardViewBannerTop.setVisibility(View.VISIBLE);
+                    lottieAnimationView.setVisibility(View.GONE);
+                    sliderView.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

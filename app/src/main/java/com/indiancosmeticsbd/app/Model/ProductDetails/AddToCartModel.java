@@ -2,19 +2,19 @@ package com.indiancosmeticsbd.app.Model.ProductDetails;
 
 public class AddToCartModel
 {
-    private String productId, size, color, quantity, price, imageUrl;
+    private String productId, brandName, productName, price, quantity, discount, size, imageUrl;
 
-    public AddToCartModel(String productId, String size, String color, String quantity, String price, String imageUrl) {
+    public AddToCartModel(String productId, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
         this.productId = productId;
-        this.size = size;
-        this.color = color;
-        this.quantity = quantity;
+        this.brandName = brandName;
+        this.productName = productName;
         this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.size = size;
         this.imageUrl = imageUrl;
     }
 
-    public AddToCartModel() {
-    }
 
     public String getProductId() {
         return productId;
@@ -24,20 +24,28 @@ public class AddToCartModel
         this.productId = productId;
     }
 
-    public String getSize() {
-        return size;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 
-    public String getColor() {
-        return color;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getQuantity() {
@@ -48,12 +56,20 @@ public class AddToCartModel
         this.quantity = quantity;
     }
 
-    public String getPrice() {
-        return price;
+    public String getDiscount() {
+        return discount;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getImageUrl() {

@@ -17,6 +17,7 @@ public class GlobalValue {
 
     /*SharedPrefName*/
     public static final String SHARED_PREF_NAME = "indiancosmeticsbd";
+    public static final String CART = "cart";
 
     /*Contact Info*/
     public static final String CONTACT_INFO = "contactInfo";

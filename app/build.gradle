@@ -59,4 +59,6 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Rating bar
     implementation 'com.github.giswangsj:AndRatingBar:1.0.5'
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }
