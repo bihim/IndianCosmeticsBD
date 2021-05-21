@@ -6,17 +6,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Model.ProductDetails.AddToCartModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 
 public class WishListActivity extends AppCompatActivity {
 
@@ -28,6 +37,21 @@ public class WishListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wish_list);
         setToolbar(R.id.toolbar_top, R.id.back_button);
         setBottomNavigation(R.id.bottom_navigation);
+        viewWishList();
+    }
+
+    private void viewWishList() {
+        SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(WISHLIST, "");
+
+        Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
+        ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+        int i = 1;
+        for (AddToCartModel addToCartModel : addToCartModels) {
+            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + addToCartModel.getProductId() +" and quantity: "+addToCartModel.getQuantity());
+            i++;
+        }
     }
 
     private void setTheme(){

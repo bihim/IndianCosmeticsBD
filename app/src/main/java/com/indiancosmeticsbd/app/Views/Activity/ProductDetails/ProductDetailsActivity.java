@@ -35,12 +35,15 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.ProductInfo;
 import com.indiancosmeticsbd.app.Model.ProductDetails.ProductReviewAdapterModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ProductInfoViewModel;
+import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
+import com.indiancosmeticsbd.app.Views.Activity.SpeechTestActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import es.dmoral.toasty.Toasty;
 import per.wsj.library.AndRatingBar;
@@ -49,6 +52,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.PRODUCT_IMAGE_BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WEBSITE_URL;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -79,6 +83,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView imageViewProduct;
 
+    private boolean isWishlistAdded= false;
+
     /*Banner Slider Top*/
     private SliderView sliderView;
     private SliderAdapterExample sliderAdapterExample;
@@ -106,6 +112,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             }
         }
+        setImageButtonWishList();
+        //isWishlistAdded = productExistsWishList();
     }
 
 
@@ -210,6 +218,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         }).show();
                     }
                 });
+                imageButtonWishList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addToWishList(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url);
+                        setImageButtonWishList();
+                    }
+                });
             }
         });
     }
@@ -274,6 +289,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
+    private boolean productExistsWishList(){
+        SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(WISHLIST, "");
+        if (json.equals("")){
+            return false;
+        }
+        else{
+            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
+            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+            ArrayList<String> productIds = new ArrayList<>();
+            for (AddToCartModel addToCartModel : addToCartModels) {
+                productIds.add(addToCartModel.getProductId());
+            }
+            return productIds.contains(id);
+        }
+
+    }
+
     private void addToCart(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -320,6 +354,54 @@ public class ProductDetailsActivity extends AppCompatActivity {
         editor.apply();
 
         //AddToCartModel addToCartModel = new AddToCartModel("100101", "200ml", "red", "100", "200tk", "www.facebook.com");
+    }
+
+    private void addToWishList(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
+        SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (productExistsWishList()){
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString(WISHLIST, "");
+            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
+            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+
+            for (int i = addToCartModels.size()-1; i >= 0; i--){
+                if (addToCartModels.get(i).getProductId().equals(id)){
+                    addToCartModels.remove(i);
+                }
+            }
+            String updatedJson = gson.toJson(addToCartModels);
+            editor.putString(WISHLIST, updatedJson);
+        }
+        else{
+            String cartExists = sharedPreferences.getString(WISHLIST, "");
+            if (cartExists.equals("")){
+                ArrayList<AddToCartModel> addToCartModels = new ArrayList<>();
+                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                Gson gson = new Gson();
+                String json = gson.toJson(addToCartModels);
+                editor.putString(WISHLIST, json);
+            }
+            else{
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString(WISHLIST, "");
+                Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
+                ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                String addedJson = gson.toJson(addToCartModels);
+                editor.putString(WISHLIST, addedJson);
+            }
+        }
+        editor.apply();
+    }
+
+    private void setImageButtonWishList(){
+        if (productExistsWishList()){
+            imageButtonWishList.setImageResource(R.drawable.ic_wish_red);
+        }
+        else{
+            imageButtonWishList.setImageResource(R.drawable.ic_wish_outlined);
+        }
     }
 
     private void updateCart(){
