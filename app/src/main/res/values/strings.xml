@@ -95,5 +95,14 @@
     <string name="tk">৳</string>
     <string name="product_quantity">1</string>
     <string name="snackbar_text">Cart Added</string>
+    <string name="snackbar_text_updated">Cart Updated</string>
     <string name="continue_cart">Continue Shopping</string>
+
+    <!--Cart-->
+    <string name="cart_price">৳1200 x 1</string>
+    <string name="cart_price_after_discount">৳1000</string>
+    <string name="cart_price_discount"><strike>৳200</strike></string>
+    <string name="total">Total: </string>
+    <string name="checkout">Checkout</string>
+    <string name="cart_total">৳12000</string>
 </resources>

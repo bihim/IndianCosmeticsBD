@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private MaterialCardView cardViewBannerTop;
     private SliderView sliderView;
     private SliderAdapterExample sliderAdapterExample;
-    private LottieAnimationView lottieAnimationView;
 
     /*Nav Drawer*/
     private MaterialButton signInButton;
@@ -230,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                     cardViewBannerTop.setVisibility(View.GONE);
                 } else {
                     cardViewBannerTop.setVisibility(View.VISIBLE);
-                    lottieAnimationView.setVisibility(View.GONE);
                     sliderView.setVisibility(View.VISIBLE);
                 }
             }
@@ -292,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         sliderView = findViewById(R.id.imageSlider);
-        lottieAnimationView = findViewById(R.id.animationView);
         cardViewBannerTop = findViewById(R.id.banner_slider);
         signInButton = findViewById(R.id.sign_in_main);
 

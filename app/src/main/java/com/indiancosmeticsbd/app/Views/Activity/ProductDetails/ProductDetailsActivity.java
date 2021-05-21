@@ -30,20 +30,17 @@ import com.indiancosmeticsbd.app.Adapter.ProductDetails.ProductReviewAdapter;
 import com.indiancosmeticsbd.app.Adapter.ProductDetails.ProductSizesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
-import com.indiancosmeticsbd.app.Model.ProductDetails.AddToCartModel;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.Model.ProductDetails.ProductInfo;
 import com.indiancosmeticsbd.app.Model.ProductDetails.ProductReviewAdapterModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ProductInfoViewModel;
-import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
-import com.indiancosmeticsbd.app.Views.Activity.SpeechTestActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import es.dmoral.toasty.Toasty;
 import per.wsj.library.AndRatingBar;
@@ -83,7 +80,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView imageViewProduct;
 
-    private boolean isWishlistAdded= false;
+    private boolean isProductExists = false;
 
     /*Banner Slider Top*/
     private SliderView sliderView;
@@ -100,15 +97,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         getProductDetails();
         if (productExists()){
             buttonAddToCart.setText("UPDATE CART");
+            isProductExists = true;
             SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
             Gson gson = new Gson();
             String json = sharedPreferences.getString(CART, "");
-            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
-            for (AddToCartModel addToCartModel : addToCartModels) {
-                if (id.equals(addToCartModel.getProductId())){
-                    quantity = Integer.parseInt(addToCartModel.getQuantity());
-                    textViewCartText.setText(addToCartModel.getQuantity());
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
+            for (Cart cart : carts) {
+                if (id.equals(cart.getProductId())){
+                    quantity = Integer.parseInt(cart.getQuantity());
+                    textViewCartText.setText(cart.getQuantity());
                 }
             }
         }
@@ -210,7 +208,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         addToCart(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url);
-                        Snackbar.make(v, R.string.snackbar_text, Snackbar.LENGTH_LONG).setAction(R.string.continue_cart, new View.OnClickListener() {
+                        Snackbar.make(v, isProductExists ? R.string.snackbar_text_updated: R.string.snackbar_text, Snackbar.LENGTH_LONG).setAction(R.string.continue_cart, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 onBackPressed();
@@ -262,11 +260,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("cart", "");
 
-        Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-        ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+        ArrayList<Cart> carts = gson.fromJson(json, type);
         int i = 0;
-        for (AddToCartModel addToCartModel : addToCartModels) {
-            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + addToCartModel.getProductId());
+        for (Cart cart : carts) {
+            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + cart.getProductId());
         }
     }
 
@@ -278,11 +276,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             return false;
         }
         else{
-            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
             ArrayList<String> productIds = new ArrayList<>();
-            for (AddToCartModel addToCartModel : addToCartModels) {
-                productIds.add(addToCartModel.getProductId());
+            for (Cart cart : carts) {
+                productIds.add(cart.getProductId());
             }
             return productIds.contains(id);
         }
@@ -297,11 +295,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
             return false;
         }
         else{
-            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
             ArrayList<String> productIds = new ArrayList<>();
-            for (AddToCartModel addToCartModel : addToCartModels) {
-                productIds.add(addToCartModel.getProductId());
+            for (Cart cart : carts) {
+                productIds.add(cart.getProductId());
             }
             return productIds.contains(id);
         }
@@ -314,40 +312,40 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (productExists()){
             Gson gson = new Gson();
             String json = sharedPreferences.getString(CART, "");
-            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
-            for (int i = 0; i < addToCartModels.size(); i++){
-                if (addToCartModels.get(i).getProductId().equals(id)){
-                    String updatedId = addToCartModels.get(i).getProductId();
-                    String updatedProductName = addToCartModels.get(i).getProductName();
-                    String updatedBrandName = addToCartModels.get(i).getBrandName();
-                    String updatedPrice = addToCartModels.get(i).getPrice();
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
+            for (int i = 0; i < carts.size(); i++){
+                if (carts.get(i).getProductId().equals(id)){
+                    String updatedId = carts.get(i).getProductId();
+                    String updatedProductName = carts.get(i).getProductName();
+                    String updatedBrandName = carts.get(i).getBrandName();
+                    String updatedPrice = carts.get(i).getPrice();
                     String updateQuantity = String.valueOf(quantity);
-                    String updatedDiscount = addToCartModels.get(i).getDiscount();
-                    String updatedSize = addToCartModels.get(i).getSize();
-                    String updatedImageUrl = addToCartModels.get(i).getImageUrl();
-                    addToCartModels.set(i, new AddToCartModel(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl));
+                    String updatedDiscount = carts.get(i).getDiscount();
+                    String updatedSize = carts.get(i).getSize();
+                    String updatedImageUrl = carts.get(i).getImageUrl();
+                    carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl));
                 }
             }
-            String updatedJson = gson.toJson(addToCartModels);
+            String updatedJson = gson.toJson(carts);
             editor.putString(CART, updatedJson);
         }
         else{
             String cartExists = sharedPreferences.getString(CART, "");
             if (cartExists.equals("")){
-                ArrayList<AddToCartModel> addToCartModels = new ArrayList<>();
-                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                ArrayList<Cart> carts = new ArrayList<>();
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
                 Gson gson = new Gson();
-                String json = gson.toJson(addToCartModels);
+                String json = gson.toJson(carts);
                 editor.putString(CART, json);
             }
             else{
                 Gson gson = new Gson();
                 String json = sharedPreferences.getString(CART, "");
-                Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-                ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
-                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
-                String addedJson = gson.toJson(addToCartModels);
+                Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+                ArrayList<Cart> carts = gson.fromJson(json, type);
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                String addedJson = gson.toJson(carts);
                 editor.putString(CART, addedJson);
             }
         }
@@ -362,33 +360,33 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (productExistsWishList()){
             Gson gson = new Gson();
             String json = sharedPreferences.getString(WISHLIST, "");
-            Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-            ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
 
-            for (int i = addToCartModels.size()-1; i >= 0; i--){
-                if (addToCartModels.get(i).getProductId().equals(id)){
-                    addToCartModels.remove(i);
+            for (int i = carts.size()-1; i >= 0; i--){
+                if (carts.get(i).getProductId().equals(id)){
+                    carts.remove(i);
                 }
             }
-            String updatedJson = gson.toJson(addToCartModels);
+            String updatedJson = gson.toJson(carts);
             editor.putString(WISHLIST, updatedJson);
         }
         else{
             String cartExists = sharedPreferences.getString(WISHLIST, "");
             if (cartExists.equals("")){
-                ArrayList<AddToCartModel> addToCartModels = new ArrayList<>();
-                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                ArrayList<Cart> carts = new ArrayList<>();
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
                 Gson gson = new Gson();
-                String json = gson.toJson(addToCartModels);
+                String json = gson.toJson(carts);
                 editor.putString(WISHLIST, json);
             }
             else{
                 Gson gson = new Gson();
                 String json = sharedPreferences.getString(WISHLIST, "");
-                Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-                ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
-                addToCartModels.add(new AddToCartModel(id, brandName, productName, price, quantity, discount, size, imageUrl));
-                String addedJson = gson.toJson(addToCartModels);
+                Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+                ArrayList<Cart> carts = gson.fromJson(json, type);
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                String addedJson = gson.toJson(carts);
                 editor.putString(WISHLIST, addedJson);
             }
         }
@@ -408,19 +406,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(CART, "");
-        Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-        ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
-        for (int i = 0; i < addToCartModels.size(); i++){
-            if (addToCartModels.get(i).getProductId().equals(id)){
-                String id = addToCartModels.get(i).getProductId();
-                String productName = addToCartModels.get(i).getProductName();
-                String brandName = addToCartModels.get(i).getBrandName();
-                String price = addToCartModels.get(i).getPrice();
+        Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+        ArrayList<Cart> carts = gson.fromJson(json, type);
+        for (int i = 0; i < carts.size(); i++){
+            if (carts.get(i).getProductId().equals(id)){
+                String id = carts.get(i).getProductId();
+                String productName = carts.get(i).getProductName();
+                String brandName = carts.get(i).getBrandName();
+                String price = carts.get(i).getPrice();
                 String updateQuantity = String.valueOf(quantity);
-                String discount = addToCartModels.get(i).getDiscount();
-                String size = addToCartModels.get(i).getSize();
-                String imageUrl = addToCartModels.get(i).getImageUrl();
-                addToCartModels.set(i, new AddToCartModel(id, brandName, productName, price, updateQuantity, discount, size, imageUrl));
+                String discount = carts.get(i).getDiscount();
+                String size = carts.get(i).getSize();
+                String imageUrl = carts.get(i).getImageUrl();
+                carts.set(i, new Cart(id, brandName, productName, price, updateQuantity, discount, size, imageUrl));
             }
         }
     }

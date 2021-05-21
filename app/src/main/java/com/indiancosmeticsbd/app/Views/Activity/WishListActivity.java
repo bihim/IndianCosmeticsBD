@@ -15,21 +15,19 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.indiancosmeticsbd.app.Model.ProductDetails.AddToCartModel;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
-import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 
 public class WishListActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme();
@@ -45,11 +43,11 @@ public class WishListActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString(WISHLIST, "");
 
-        Type type = new TypeToken<ArrayList<AddToCartModel>>() {}.getType();
-        ArrayList<AddToCartModel> addToCartModels = gson.fromJson(json, type);
+        Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+        ArrayList<Cart> carts = gson.fromJson(json, type);
         int i = 1;
-        for (AddToCartModel addToCartModel : addToCartModels) {
-            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + addToCartModel.getProductId() +" and quantity: "+addToCartModel.getQuantity());
+        for (Cart cart : carts) {
+            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + cart.getProductId() +" and quantity: "+ cart.getQuantity());
             i++;
         }
     }

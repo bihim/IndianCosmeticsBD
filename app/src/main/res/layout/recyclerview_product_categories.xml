@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_100sdp"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="@dimen/_10sdp"
     android:gravity="center">
@@ -10,7 +11,9 @@
         android:id="@+id/recyclerview_categories_imageView"
         android:layout_width="@dimen/_76sdp"
         android:layout_height="@dimen/_76sdp"
-        android:src="@drawable/india"/>
+        android:src="@drawable/india"
+        app:civ_border_width="@dimen/_1sdp"
+        app:civ_border_color="@color/greyLight"/>
 
     <TextView
         android:id="@+id/recyclerview_categories_textView"
