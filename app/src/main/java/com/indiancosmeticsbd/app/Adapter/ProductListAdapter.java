@@ -50,7 +50,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         }
         else{
             holder.textViewProductDiscount.setVisibility(View.VISIBLE);
-            holder.textViewProductDiscount.setText("৳"+selectedItem.getDiscount());
+            double actualPrice = selectedItem.getDiscount();
+            double discount = selectedItem.getPrice()*(actualPrice/100);
+            double discountPrice = selectedItem.getPrice()-discount;
+            holder.textViewProductDiscount.setText("৳"+discountPrice);
         }
         if (selectedItem.getViews() == 0){
             holder.textViewProductViews.setVisibility(View.GONE);

@@ -1,5 +1,19 @@
 package com.indiancosmeticsbd.app.GlobalValue;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class GlobalValue {
     public static final String BASE_URL = "https://indiancosmeticsbd.com";
     public static final String END_POINT = "/graph/api/v2/";
@@ -67,4 +81,31 @@ public class GlobalValue {
 
     /*Product Info*/
     public static final String PRODUCT_INFO = "productInfo";
+
+    public static void SHOWBADGE(Activity activity, String sharedPrefName, int menuId, BottomNavigationView bottomNavigationView){
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(sharedPrefName, MODE_PRIVATE);
+        String json = sharedPreferences.getString(sharedPrefName, "");
+        Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+        ArrayList<Cart> carts = gson.fromJson(json, type);
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(menuId);
+        badgeDrawable.setVisible(true);
+        if (json.equals(""))
+        {
+            //return 0;
+            badgeDrawable.setVisible(false);
+            //badgeDrawable.setNumber(0);
+        }
+        else{
+            if (carts.isEmpty()){
+                //return 0;
+                badgeDrawable.setVisible(false);
+                //badgeDrawable.setNumber(0);
+            }
+            else{
+                badgeDrawable.setNumber(carts.size());
+                //return carts.size();
+            }
+        }
+    }
 }

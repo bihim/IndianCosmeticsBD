@@ -2,6 +2,8 @@ package com.indiancosmeticsbd.app.Views.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,22 +14,35 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Adapter.CartAdapter;
+import com.indiancosmeticsbd.app.Adapter.WishListAdapter;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 
 public class WishListActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private SharedPreferences sharedPreferences;
+
+    private ArrayList<Cart> wishListArrayList;
+    private RecyclerView recyclerView;
+    private WishListAdapter wishListAdapter;
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme();
@@ -35,20 +50,67 @@ public class WishListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wish_list);
         setToolbar(R.id.toolbar_top, R.id.back_button);
         setBottomNavigation(R.id.bottom_navigation);
-        viewWishList();
+        recyclerView = findViewById(R.id.wishlist_recyclerview);
+        sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
+        wishListArrayList = viewWishList();
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        if (!wishListArrayList.isEmpty())
+        {
+            setRecyclerview();
+        }
     }
 
-    private void viewWishList() {
-        SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
+    private void setRecyclerview(){
+        wishListAdapter = new WishListAdapter(wishListArrayList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(wishListAdapter);
+        wishListAdapter.setOnItemClickListener(new WishListAdapter.OnItemClickListener() {
+            @Override
+            public void onDeleteClicked(int position) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                String id = wishListArrayList.get(position).getProductId();
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString(WISHLIST, "");
+                Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+                ArrayList<Cart> carts = gson.fromJson(json, type);
+                for (int i = carts.size() - 1; i >= 0; i--) {
+                    if (carts.get(i).getProductId().equals(id)) {
+                        carts.remove(i);
+                    }
+                }
+                String updatedJson = gson.toJson(carts);
+                editor.putString(WISHLIST, updatedJson);
+                editor.apply();
+                wishListArrayList.remove(position);
+                wishListAdapter.notifyItemRemoved(position);
+                SHOWBADGE(WishListActivity.this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+            }
+
+            @Override
+            public void onItemClicked(int position) {
+                Cart cart = wishListArrayList.get(position);
+                Intent intent = new Intent(WishListActivity.this, ProductDetailsActivity.class);
+                Log.d("PRODUCT_DETAILS_CART", "onClick: id: "+cart.getProductId());
+                intent.putExtra("id", Integer.parseInt(cart.getProductId()));
+                intent.putExtra("name", cart.getProductName());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private ArrayList<Cart> viewWishList() {
         Gson gson = new Gson();
         String json = sharedPreferences.getString(WISHLIST, "");
-
         Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
         ArrayList<Cart> carts = gson.fromJson(json, type);
-        int i = 1;
-        for (Cart cart : carts) {
-            Log.d("CartsListItems", "viewCart: Item No " + i + ": " + cart.getProductId() +" and quantity: "+ cart.getQuantity());
-            i++;
+        if (json.equals(""))
+        {
+            return new ArrayList<>();
+        }
+        else{
+            return carts;
         }
     }
 
@@ -107,5 +169,11 @@ public class WishListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_wishlist);
+        if (!wishListArrayList.isEmpty())
+        {
+            setRecyclerview();
+        }
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 }

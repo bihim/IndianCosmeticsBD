@@ -21,10 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
@@ -32,6 +35,7 @@ import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
@@ -41,10 +45,14 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private ProductCategoriesViewModel productCategoriesViewModel;
     private ArrayList<CategorySelectedModel> categories;
 
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         setSliderView();
         setRecyclerViewProductCategories();
         themeSwitch();
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 
     private void setTheme(){
@@ -315,5 +327,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 }

@@ -174,6 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_details_discount"
+                        android:background="@drawable/textview_strike"
                         android:textColor="?forgot_password_color"
                         android:textSize="@dimen/_12ssp"
                         android:layout_marginBottom="@dimen/_3sdp"/>
@@ -377,7 +378,7 @@
                 android:gravity="center"
                 android:text="@string/minus"
                 android:textColor="@color/white"
-                app:backgroundTint="?buttonColor"
+                app:backgroundTint="@color/greyLight"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -397,7 +398,7 @@
                 android:gravity="center"
                 android:text="@string/plus"
                 android:textColor="@color/white"
-                app:backgroundTint="?buttonColor"
+                app:backgroundTint="@color/buttonColorLight"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 

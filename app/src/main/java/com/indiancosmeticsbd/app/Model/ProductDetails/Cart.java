@@ -2,9 +2,9 @@ package com.indiancosmeticsbd.app.Model.ProductDetails;
 
 public class Cart
 {
-    private String productId, brandName, productName, price, quantity, discount, size, imageUrl;
+    private String productId, brandName, productName, price, quantity, discount, size, imageUrl, stock;
 
-    public Cart(String productId, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
+    public Cart(String productId, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl, String stock) {
         this.productId = productId;
         this.brandName = brandName;
         this.productName = productName;
@@ -13,8 +13,8 @@ public class Cart
         this.discount = discount;
         this.size = size;
         this.imageUrl = imageUrl;
+        this.stock = stock;
     }
-
 
     public String getProductId() {
         return productId;
@@ -78,5 +78,13 @@ public class Cart
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 }

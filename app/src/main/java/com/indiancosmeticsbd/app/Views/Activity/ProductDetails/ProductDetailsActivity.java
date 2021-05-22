@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -125,11 +126,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     textViewCartText.setText(String.valueOf(quantity));
                     buttonPlus.setEnabled(true);
                     buttonMinus.setEnabled(true);
+                    buttonPlus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
+                    buttonMinus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
                 } else {
                     textViewCartText.setText(String.valueOf(quantity));
                     buttonPlus.setEnabled(false);
                     buttonMinus.setEnabled(true);
-                    Toasty.info(ProductDetailsActivity.this, "Can not add more product: " + quantity, Toast.LENGTH_SHORT).show();
+                    buttonPlus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greyLight)));
+                    buttonMinus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
+                    //Toasty.info(ProductDetailsActivity.this, "Can not add more product", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -141,18 +146,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     textViewCartText.setText(String.valueOf(quantity));
                     buttonMinus.setEnabled(false);
                     buttonPlus.setEnabled(true);
-                    Toasty.info(ProductDetailsActivity.this, "Can not remove more product: " + quantity, Toast.LENGTH_SHORT).show();
+                    buttonPlus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
+                    buttonMinus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greyLight)));
+                    Toasty.info(ProductDetailsActivity.this, "Can not remove more product", Toast.LENGTH_SHORT).show();
                 } else {
                     quantity--;
                     if (quantity > 1) {
                         textViewCartText.setText(String.valueOf(quantity));
                         buttonMinus.setEnabled(true);
                         buttonPlus.setEnabled(true);
+                        buttonPlus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
+                        buttonMinus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
                     } else {
                         textViewCartText.setText(String.valueOf(quantity));
                         buttonMinus.setEnabled(false);
                         buttonPlus.setEnabled(true);
-                        Toasty.info(ProductDetailsActivity.this, "Can not remove more product: " + quantity, Toast.LENGTH_SHORT).show();
+                        buttonPlus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.buttonColorLight)));
+                        buttonMinus.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.greyLight)));
+                        Toasty.info(ProductDetailsActivity.this, "Can not remove more product", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -183,13 +194,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     }
                 });
                 textViewBrandName.setText("By " + content.getBrand());
-                textViewPrice.setText("৳" + content.getPrice());
                 textViewStock.setText(content.getStock() + " pieces left");
                 if (content.getDiscount() == 0) {
                     textViewDiscount.setVisibility(View.GONE);
+                    textViewPrice.setText("৳" + content.getPrice());
                 } else {
                     textViewDiscount.setVisibility(View.VISIBLE);
-                    textViewDiscount.setText("৳" + content.getDiscount() + " off!");
+                    double discount = content.getDiscount();
+                    double discountPrice = content.getPrice()*(discount/100);
+                    double actualPrice = content.getPrice() - discountPrice;
+                    textViewDiscount.setText("৳"+content.getPrice());
+                    textViewPrice.setText("৳" + actualPrice);
                 }
                 setRecyclerViewSize(content.getAvailableSizes());
                 String url = PRODUCT_IMAGE_BASE_URL + "/" + id + "/1.jpg";
@@ -207,7 +222,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 buttonAddToCart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addToCart(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url);
+                        addToCart(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url, String.valueOf(content.getStock()));
                         Snackbar.make(v, isProductExists ? R.string.snackbar_text_updated: R.string.snackbar_text, Snackbar.LENGTH_LONG).setAction(R.string.continue_cart, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -219,7 +234,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 imageButtonWishList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addToWishList(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url);
+                        addToWishList(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url, String.valueOf(content.getStock()));
                         setImageButtonWishList();
                     }
                 });
@@ -306,7 +321,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void addToCart(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
+    private void addToCart(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl, String stock) {
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (productExists()){
@@ -324,7 +339,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     String updatedDiscount = carts.get(i).getDiscount();
                     String updatedSize = carts.get(i).getSize();
                     String updatedImageUrl = carts.get(i).getImageUrl();
-                    carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl));
+                    String updatedStock = carts.get(i).getStock();
+                    carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl, updatedStock));
                 }
             }
             String updatedJson = gson.toJson(carts);
@@ -334,7 +350,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             String cartExists = sharedPreferences.getString(CART, "");
             if (cartExists.equals("")){
                 ArrayList<Cart> carts = new ArrayList<>();
-                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
                 Gson gson = new Gson();
                 String json = gson.toJson(carts);
                 editor.putString(CART, json);
@@ -344,7 +360,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String json = sharedPreferences.getString(CART, "");
                 Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
                 ArrayList<Cart> carts = gson.fromJson(json, type);
-                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
                 String addedJson = gson.toJson(carts);
                 editor.putString(CART, addedJson);
             }
@@ -354,7 +370,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         //AddToCartModel addToCartModel = new AddToCartModel("100101", "200ml", "red", "100", "200tk", "www.facebook.com");
     }
 
-    private void addToWishList(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl) {
+    private void addToWishList(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl, String stock) {
         SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (productExistsWishList()){
@@ -375,7 +391,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             String cartExists = sharedPreferences.getString(WISHLIST, "");
             if (cartExists.equals("")){
                 ArrayList<Cart> carts = new ArrayList<>();
-                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
                 Gson gson = new Gson();
                 String json = gson.toJson(carts);
                 editor.putString(WISHLIST, json);
@@ -385,7 +401,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String json = sharedPreferences.getString(WISHLIST, "");
                 Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
                 ArrayList<Cart> carts = gson.fromJson(json, type);
-                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl));
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
                 String addedJson = gson.toJson(carts);
                 editor.putString(WISHLIST, addedJson);
             }
@@ -402,7 +418,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void updateCart(){
+    /*private void updateCart(){
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(CART, "");
@@ -421,7 +437,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 carts.set(i, new Cart(id, brandName, productName, price, updateQuantity, discount, size, imageUrl));
             }
         }
-    }
+    }*/
 
     private void setRecyclerViewRating(ArrayList<ProductInfo.ProductReview> productReviewArrayList) {
         productReviewAdapterModelArrayList = new ArrayList<>();

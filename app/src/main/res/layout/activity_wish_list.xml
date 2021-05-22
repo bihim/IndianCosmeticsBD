@@ -57,9 +57,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wishlist_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/recyclerview_cart"/>
+                android:layout_marginBottom="@dimen/_5sdp"
+                tools:listitem="@layout/recyclerview_wishlist"/>
 
         </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.indiancosmeticsbd.app.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,8 @@ import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>
 {
@@ -58,17 +62,51 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Glide.with(context.getApplicationContext()).load(cart.getImageUrl()).into(holder.imageView);
         int price = Integer.parseInt(cart.getPrice());
         int quantity = Integer.parseInt(cart.getQuantity());
-        holder.priceXquantity.setText("৳"+price+" x "+quantity);
-        holder.totalPrice.setText("৳"+(price*quantity));
+        int stock = Integer.parseInt(cart.getStock());
         if (cart.getDiscount().equals("0")){
             holder.discount.setVisibility(View.GONE);
+            holder.priceXquantity.setText("৳"+price+" x "+quantity);
+            holder.totalPrice.setText("৳"+(price*quantity));
         }
         else{
+            double discount = price*(Double.parseDouble(cart.getDiscount())/100);
+            double actualPrice = price-discount;
+            holder.priceXquantity.setText("৳"+actualPrice+" x "+quantity);
+            holder.totalPrice.setText("৳"+(actualPrice*quantity));
             holder.discount.setVisibility(View.VISIBLE);
-            holder.discount.setText(cart.getDiscount());
+            holder.discount.setText(price);
         }
         holder.size.setText(cart.getSize());
         holder.quantity.setText(cart.getQuantity());
+        if (quantity < stock) {
+            holder.plus.setEnabled(true);
+            holder.minus.setEnabled(true);
+            holder.plus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+            holder.minus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+        } else {
+            holder.plus.setEnabled(false);
+            holder.minus.setEnabled(true);
+            holder.plus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.greyLight)));
+            holder.minus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+        }
+        if (quantity == 1) {
+            holder.minus.setEnabled(false);
+            holder.plus.setEnabled(true);
+            holder.plus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+            holder.minus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.greyLight)));
+        } else {
+            if (quantity > 1) {
+                holder.minus.setEnabled(true);
+                holder.plus.setEnabled(true);
+                holder.plus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+                holder.minus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+            } else {
+                holder.minus.setEnabled(false);
+                holder.plus.setEnabled(true);
+                holder.plus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.greyLight)));
+                holder.minus.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.buttonColorLight)));
+            }
+        }
     }
 
     @Override

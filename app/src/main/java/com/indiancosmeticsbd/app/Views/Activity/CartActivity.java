@@ -3,6 +3,7 @@ package com.indiancosmeticsbd.app.Views.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +31,8 @@ import java.util.ArrayList;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -52,15 +56,7 @@ public class CartActivity extends AppCompatActivity {
         textViewTotal = findViewById(R.id.cart_total);
         constraintLayoutCheckout = findViewById(R.id.checkout_card);
         sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
-        cartArrayList = viewCart();
-        if (!cartArrayList.isEmpty()){
-            setRecyclerview();
-            totalPrice();
-            constraintLayoutCheckout.setVisibility(View.VISIBLE);
-        }
-        else{
-            constraintLayoutCheckout.setVisibility(View.GONE);
-        }
+        setCommonThings();
     }
 
     private void setRecyclerview(){
@@ -74,6 +70,7 @@ public class CartActivity extends AppCompatActivity {
                 editor = sharedPreferences.edit();
                 int quantity = Integer.parseInt(cartArrayList.get(position).getQuantity());
                 String id = cartArrayList.get(position).getProductId();
+                //int stock = Integer.parseInt(cartArrayList.get(position).getStock());
                 quantity++;
                 cartArrayList.get(position).setQuantity(String.valueOf(quantity));
                 cartAdapter.notifyItemChanged(position);
@@ -91,7 +88,8 @@ public class CartActivity extends AppCompatActivity {
                         String updatedDiscount = carts.get(i).getDiscount();
                         String updatedSize = carts.get(i).getSize();
                         String updatedImageUrl = carts.get(i).getImageUrl();
-                        carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl));
+                        String updatedStock = carts.get(i).getStock();
+                        carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl, updatedStock));
                     }
                 }
                 String updatedJson = gson.toJson(carts);
@@ -123,7 +121,8 @@ public class CartActivity extends AppCompatActivity {
                         String updatedDiscount = carts.get(i).getDiscount();
                         String updatedSize = carts.get(i).getSize();
                         String updatedImageUrl = carts.get(i).getImageUrl();
-                        carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl));
+                        String updatedStock = carts.get(i).getStock();
+                        carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl, updatedStock));
                     }
                 }
                 String updatedJson = gson.toJson(carts);
@@ -155,12 +154,16 @@ public class CartActivity extends AppCompatActivity {
                 totalPrice();
                 if (!cartArrayList.isEmpty()){
                     constraintLayoutCheckout.setVisibility(View.VISIBLE);
+                    constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_round));
+                    bottomNavigationView.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_not_round));
                 }
                 else{
                     constraintLayoutCheckout.setVisibility(View.GONE);
+                    constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_not_round));
+                    bottomNavigationView.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_round));
                 }
+                SHOWBADGE(CartActivity.this, CART, R.id.bottom_nav_cart, bottomNavigationView);
             }
-
             @Override
             public void onItemClicked(int position) {
                 Cart cart = cartArrayList.get(position);
@@ -200,7 +203,6 @@ public class CartActivity extends AppCompatActivity {
         else{
             return carts;
         }
-
     }
 
     private void setBottomNavigation(int bottomNavigationId){
@@ -241,6 +243,24 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+    private void setCommonThings(){
+        cartArrayList = viewCart();
+        if (!cartArrayList.isEmpty()){
+            setRecyclerview();
+            totalPrice();
+            constraintLayoutCheckout.setVisibility(View.VISIBLE);
+            constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_round));
+            bottomNavigationView.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_not_round));
+        }
+        else{
+            constraintLayoutCheckout.setVisibility(View.GONE);
+            constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_not_round));
+            bottomNavigationView.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_round));
+        }
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -250,14 +270,6 @@ public class CartActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_cart);
-        cartArrayList = viewCart();
-        if (!cartArrayList.isEmpty()){
-            setRecyclerview();
-            totalPrice();
-            constraintLayoutCheckout.setVisibility(View.VISIBLE);
-        }
-        else{
-            constraintLayoutCheckout.setVisibility(View.GONE);
-        }
+        setCommonThings();
     }
 }
