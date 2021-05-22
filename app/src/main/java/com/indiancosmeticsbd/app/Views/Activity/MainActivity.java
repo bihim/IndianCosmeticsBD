@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     private ProductCategoriesViewModel productCategoriesViewModel;
     private ArrayList<CategorySelectedModel> categories;
 
+    private ImageButton searchButton;
+
     private SharedPreferences sharedPreferences;
 
 
@@ -144,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        searchButton.setOnClickListener(v-> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
     }
 
     private void setRecyclerViewProductCategories(){
@@ -311,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
         switchCompatTheme = findViewById(R.id.nav_theme_switch);
         imageViewTheme = findViewById(R.id.imageView_theme);
+        searchButton = findViewById(R.id.searchButton);
     }
 
     @Override

@@ -61,7 +61,7 @@ public class ProductListActivity extends AppCompatActivity {
         productListAdapter = new ProductListAdapter(contentArrayList, this);
         productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
         productListViewModel.init();
-        productListViewModel.getProductList(this, "header", categoryId, "", "", "", "", "").observe(this, products -> {
+        productListViewModel.getProductList(this, "header", categoryId, "", "", "", "", "", false).observe(this, products -> {
             ArrayList<Products.Content> content = products.getContent();
             for (Products.Content contents: content){
                 Log.d("PRODUCTLISTTING", "setRecyclerView: "+contents.getName());

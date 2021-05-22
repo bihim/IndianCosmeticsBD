@@ -31,10 +31,13 @@ public class ProductRepository {
         productApi = RetrofitService.createService(ProductApi.class);
     }
 
-    public MutableLiveData<Products> getProductList(Activity activity, String fetchScope, String categoryId, String sort, String search, String productLimit, String productOffset, String filters) {
+    public MutableLiveData<Products> getProductList(Activity activity, String fetchScope, String categoryId, String sort, String search, String productLimit, String productOffset, String filters, boolean isSearch) {
         MutableLiveData<Products> productsMutableLiveData = new MutableLiveData<>();
         LoadingDialog loadingDialog = new LoadingDialog(activity);
-        loadingDialog.showDialog();
+        if (!isSearch){
+            loadingDialog.showDialog();
+        }
+
         productApi.getProductsList(API_TOKEN, PRODUCT_LIST, fetchScope, categoryId, sort, search, productLimit, productOffset, filters).enqueue(new Callback<Products>() {
             @Override
             public void onResponse(Call<Products> call, Response<Products> response) {
@@ -43,7 +46,9 @@ public class ProductRepository {
                     {
                         String status = response.body().getStatus();
                         if (status.equals("SUCCESS")){
-                            loadingDialog.dismissDialog();
+                            if (!isSearch){
+                                loadingDialog.dismissDialog();
+                            }
                             productsMutableLiveData.setValue(response.body());
                         }
                         else {
@@ -60,13 +65,19 @@ public class ProductRepository {
                     Toasty.error(activity, "Response not successful", Toasty.LENGTH_SHORT).show();
                     productsMutableLiveData.setValue(null);
                 }
-                loadingDialog.dismissDialog();
+                if (!isSearch)
+                {
+                    loadingDialog.dismissDialog();
+                }
             }
             @Override
             public void onFailure(Call<Products> call, Throwable t) {
                 productsMutableLiveData.setValue(null);
                 Toasty.error(activity, "ERROR OCCURRED", Toasty.LENGTH_SHORT).show();
-                loadingDialog.dismissDialog();
+                if (isSearch){
+                    loadingDialog.dismissDialog();
+                }
+
             }
         });
         return productsMutableLiveData;

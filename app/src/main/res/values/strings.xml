@@ -107,4 +107,9 @@
     <string name="cart_total">৳12000</string>
     <string name="cart_empty">Nothing is added to shopping cart</string>
     <string name="wishlist_empty">Nothing is added to wishlist</string>
+
+    <!--Search-->
+    <string name="search">Search</string>
+    <string name="search_text">Search by Product or Brand name</string>
+    <string name="search_error">No Search Item Found</string>
 </resources>

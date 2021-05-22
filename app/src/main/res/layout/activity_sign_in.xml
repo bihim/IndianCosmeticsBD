@@ -46,7 +46,6 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/_10sdp"
                     app:cardElevation="0dp">
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/emailTextInputField"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
