@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.badge.BadgeDrawable;
@@ -41,7 +42,8 @@ public class WishListActivity extends AppCompatActivity {
     private ArrayList<Cart> wishListArrayList;
     private RecyclerView recyclerView;
     private WishListAdapter wishListAdapter;
-    
+
+    private LinearLayout empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class WishListActivity extends AppCompatActivity {
         setToolbar(R.id.toolbar_top, R.id.back_button);
         setBottomNavigation(R.id.bottom_navigation);
         recyclerView = findViewById(R.id.wishlist_recyclerview);
+        empty = findViewById(R.id.empty_image);
         sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
         wishListArrayList = viewWishList();
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
@@ -59,6 +62,7 @@ public class WishListActivity extends AppCompatActivity {
         {
             setRecyclerview();
         }
+        isCartEmpty(wishListArrayList.isEmpty());
     }
 
     private void setRecyclerview(){
@@ -66,6 +70,7 @@ public class WishListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(wishListAdapter);
+        isCartEmpty(false);
         wishListAdapter.setOnItemClickListener(new WishListAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClicked(int position) {
@@ -85,6 +90,7 @@ public class WishListActivity extends AppCompatActivity {
                 editor.apply();
                 wishListArrayList.remove(position);
                 wishListAdapter.notifyItemRemoved(position);
+                isCartEmpty(wishListArrayList.isEmpty());
                 SHOWBADGE(WishListActivity.this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
             }
 
@@ -98,6 +104,17 @@ public class WishListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void isCartEmpty(boolean value){
+        if (value){
+            empty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        else{
+            empty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private ArrayList<Cart> viewWishList() {
@@ -173,6 +190,7 @@ public class WishListActivity extends AppCompatActivity {
         {
             setRecyclerview();
         }
+        isCartEmpty(wishListArrayList.isEmpty());
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }

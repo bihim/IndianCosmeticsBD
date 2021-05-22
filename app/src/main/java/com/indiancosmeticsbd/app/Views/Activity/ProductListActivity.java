@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -28,12 +29,12 @@ public class ProductListActivity extends AppCompatActivity {
     private String categoryName;
     private String categoryId;
     private TextView toolbarText;
-    private TextView textViewNoData;
-
     private RecyclerView recyclerView;
     private ProductListAdapter productListAdapter;
     private ArrayList<ProductListModel> contentArrayList;
     private ProductListViewModel productListViewModel;
+
+    private LinearLayout empty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme();
@@ -68,11 +69,11 @@ public class ProductListActivity extends AppCompatActivity {
             }
             if (contentArrayList.isEmpty()){
                 recyclerView.setVisibility(View.GONE);
-                textViewNoData.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.VISIBLE);
             }
             else{
                 recyclerView.setVisibility(View.VISIBLE);
-                textViewNoData.setVisibility(View.GONE);
+                empty.setVisibility(View.GONE);
             }
             recyclerView.setAdapter(productListAdapter);
         });
@@ -81,7 +82,7 @@ public class ProductListActivity extends AppCompatActivity {
     private void findViewById(){
         toolbarText = findViewById(R.id.toolbar_text);
         recyclerView = findViewById(R.id.recyclerview_product_list);
-        textViewNoData = findViewById(R.id.no_data);
+        empty = findViewById(R.id.empty_image);
     }
 
     private void setToolbar(int toolbarId, int backButtonId){

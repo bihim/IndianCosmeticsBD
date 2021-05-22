@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -44,6 +46,7 @@ public class CartActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private ConstraintLayout constraintLayoutCheckout;
     private TextView textViewTotal;
+    private LinearLayout empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class CartActivity extends AppCompatActivity {
         setBottomNavigation(R.id.bottom_navigation);
         recyclerView = findViewById(R.id.cart_recyclerview);
         textViewTotal = findViewById(R.id.cart_total);
+        empty = findViewById(R.id.empty_image);
         constraintLayoutCheckout = findViewById(R.id.checkout_card);
         sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         setCommonThings();
@@ -64,6 +68,7 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(cartAdapter);
+        isCartEmpty(false);
         cartAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
             @Override
             public void plusClick(int position) {
@@ -158,6 +163,7 @@ public class CartActivity extends AppCompatActivity {
                     bottomNavigationView.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_not_round));
                 }
                 else{
+                    isCartEmpty(true);
                     constraintLayoutCheckout.setVisibility(View.GONE);
                     constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_not_round));
                     bottomNavigationView.setBackground(ContextCompat.getDrawable(CartActivity.this, R.drawable.bottom_nav_card_round));
@@ -174,6 +180,17 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void isCartEmpty(boolean value){
+        if (value){
+            empty.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        else{
+            empty.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void totalPrice(){
@@ -248,11 +265,13 @@ public class CartActivity extends AppCompatActivity {
         if (!cartArrayList.isEmpty()){
             setRecyclerview();
             totalPrice();
+            isCartEmpty(false);
             constraintLayoutCheckout.setVisibility(View.VISIBLE);
             constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_round));
             bottomNavigationView.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_not_round));
         }
         else{
+            isCartEmpty(true);
             constraintLayoutCheckout.setVisibility(View.GONE);
             constraintLayoutCheckout.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_not_round));
             bottomNavigationView.setBackground(ContextCompat.getDrawable(this, R.drawable.bottom_nav_card_round));

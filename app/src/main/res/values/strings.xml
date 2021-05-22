@@ -105,4 +105,6 @@
     <string name="total">Total: </string>
     <string name="checkout">Checkout</string>
     <string name="cart_total">৳12000</string>
+    <string name="cart_empty">Nothing is added to shopping cart</string>
+    <string name="wishlist_empty">Nothing is added to wishlist</string>
 </resources>
