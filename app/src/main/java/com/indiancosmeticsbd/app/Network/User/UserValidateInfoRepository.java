@@ -48,9 +48,9 @@ public class UserValidateInfoRepository {
                 if (response.isSuccessful()) {
                     if (response.body()!=null){
                         UserValidate userValidate = response.body();
-                        boolean content = userValidate.getContent();
+                        //boolean content = userValidate.getContent();
                         String status = userValidate.getStatus();
-                        if (content && status.equals("SUCCESS")){
+                        if (status.equals("SUCCESS")){
                             userValidateInfoApi.getUserInfo(API_TOKEN, USER_INFO, COLUMN_TYPE, username).enqueue(new Callback<UserInfo>() {
                                 @Override
                                 public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {

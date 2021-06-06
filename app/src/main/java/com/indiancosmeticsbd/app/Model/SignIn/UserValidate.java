@@ -17,9 +17,6 @@ public class UserValidate {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("content")
-    @Expose
-    private Boolean content;
 
     public String getStatus() {
         return status;
@@ -51,14 +48,6 @@ public class UserValidate {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean getContent() {
-        return content;
-    }
-
-    public void setContent(Boolean content) {
-        this.content = content;
     }
 
 }

@@ -100,7 +100,7 @@ public class ProductInfo {
         private String thumnailImage;
         @SerializedName("all_images")
         @Expose
-        private AllImages allImages;
+        private ArrayList<String> allImages = null;
         @SerializedName("total_views")
         @Expose
         private Integer totalViews;
@@ -194,20 +194,20 @@ public class ProductInfo {
             this.availableColors = availableColors;
         }
 
+        public ArrayList<String> getAllImages() {
+            return allImages;
+        }
+
+        public void setAllImages(ArrayList<String> allImages) {
+            this.allImages = allImages;
+        }
+
         public String getThumnailImage() {
             return thumnailImage;
         }
 
         public void setThumnailImage(String thumnailImage) {
             this.thumnailImage = thumnailImage;
-        }
-
-        public AllImages getAllImages() {
-            return allImages;
-        }
-
-        public void setAllImages(AllImages allImages) {
-            this.allImages = allImages;
         }
 
         public Integer getTotalViews() {
@@ -293,21 +293,21 @@ public class ProductInfo {
 
     }
 
-    public static class AllImages {
-
-        @SerializedName("")
-        @Expose
-        private ArrayList<String> _default = null;
-
-        public ArrayList<String> getDefault() {
-            return _default;
-        }
-
-        public void setDefault(ArrayList<String> _default) {
-            this._default = _default;
-        }
-
-    }
+//    public static class AllImages {
+//
+//        @SerializedName("")
+//        @Expose
+//        private ArrayList<String> _default = null;
+//
+//        public ArrayList<String> getDefault() {
+//            return _default;
+//        }
+//
+//        public void setDefault(ArrayList<String> _default) {
+//            this._default = _default;
+//        }
+//
+//    }
 
     public static class Rating {
 

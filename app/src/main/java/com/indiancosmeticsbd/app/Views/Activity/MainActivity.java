@@ -17,6 +17,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,17 +30,25 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
+import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter2;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
+import com.indiancosmeticsbd.app.Adapter.ProductListAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
+import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewModel;
+import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewModel2;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
+import com.indiancosmeticsbd.app.Model.ProductList.ProductListModel;
+import com.indiancosmeticsbd.app.Model.ProductList.Products;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.BannerSliderTopViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
+import com.indiancosmeticsbd.app.ViewModel.ProductListViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -86,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
+    /*Recyclerview withing recyclerview*/
+    private ArrayList<CategoryWiseViewModel> categoryWiseViewModelArrayList = new ArrayList<>();
+    private RecyclerView recyclerViewCategoryWiseView;
+    private CategoriesByViewAdapter categoriesByViewAdapter;
+    private ArrayList<ProductListModel> contentArrayList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,39 +117,113 @@ public class MainActivity extends AppCompatActivity {
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 
-    private void setTheme(){
+    private void setRecyclerViewCategoryWiseView(String id, String title) {
+        ArrayList<CategoryWiseViewModel> categoryWiseViewModels = new ArrayList<>();
+        categoryWiseViewModels.add(new CategoryWiseViewModel(id, title));
+        ProductListViewModel productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
+        productListViewModel.init();
+        productListViewModel.getProductList(this, "main", id, "", "", "", "", "", true).observe(this, products -> {
+            recyclerViewCategoryWiseView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerViewCategoryWiseView.setHasFixedSize(true);
+            categoriesByViewAdapter = new CategoriesByViewAdapter(categoryWiseViewModels, contentArrayList, this);
+            categoriesByViewAdapter.setOnItemClickListener(new CategoriesByViewAdapter.OnItemClickListener() {
+                @Override
+                public void onViewAllClicked(int position) {
+                    CategoryWiseViewModel selectedItem = categoryWiseViewModels.get(position);
+                    Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
+                    intent.putExtra("id", selectedItem.getId());
+                    intent.putExtra("name", selectedItem.getName());
+                    startActivity(intent);
+                }
+            });
+            recyclerViewCategoryWiseView.setAdapter(categoriesByViewAdapter);
+
+            ArrayList<Products.Content> content = products.getContent();
+            //contentArrayList.clear();
+            Log.d("PRODUCTLISTTING", "setRecyclerView: " + title);
+            for (Products.Content contents : content) {
+                //Log.d("PRODUCTLISTTING", "setRecyclerView: "+categoryWiseViewModel.getName()+" brand: "+contents.getBrand());
+                contentArrayList.add(new ProductListModel(contents.getId(), contents.getName(), contents.getBrand(), contents.getPrice(), contents.getViews(), contents.getStock(), contents.getDiscount(), contents.getThumbnail()));
+            }
+            if (contentArrayList.isEmpty()) {
+                recyclerViewCategoryWiseView.setVisibility(View.GONE);
+            } else {
+                recyclerViewCategoryWiseView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void setRecyclerViewCategoryWiseView2(ArrayList<CategoryWiseViewModel> categoryWiseView2) {
+        recyclerViewCategoryWiseView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewCategoryWiseView.setHasFixedSize(true);
+        ArrayList<CategoryWiseViewModel2> categoryWiseViewModel2s = new ArrayList<>();
+        CategoriesByViewAdapter2 categoriesByViewAdapter2 = new CategoriesByViewAdapter2(categoryWiseViewModel2s, this);
+        categoriesByViewAdapter2.setOnItemClickListener(new CategoriesByViewAdapter2.OnItemClickListener() {
+            @Override
+            public void onViewAllClicked(int position) {
+                CategoryWiseViewModel2 selectedItem = categoryWiseViewModel2s.get(position);
+                Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
+                intent.putExtra("id", selectedItem.getId());
+                intent.putExtra("name", selectedItem.getName());
+                startActivity(intent);
+            }
+        });
+        for (CategoryWiseViewModel getCategoryWiseView: categoryWiseView2){
+            ProductListViewModel productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
+            productListViewModel.init();
+            productListViewModel.getProductList(this, "main", getCategoryWiseView.getId(), "", "", "", "", "", true).observe(this, products -> {
+
+                recyclerViewCategoryWiseView.setAdapter(categoriesByViewAdapter2);
+                ArrayList<Products.Content> content = products.getContent();
+                ArrayList<ProductListModel> contentArrayList = new ArrayList<>();
+                //contentArrayList.clear();
+                Log.d("PRODUCTLISTTING", "setRecyclerView: " + getCategoryWiseView.getName());
+                for (Products.Content contents : content) {
+                    //Log.d("PRODUCTLISTTING", "setRecyclerView: "+categoryWiseViewModel.getName()+" brand: "+contents.getBrand());
+                    contentArrayList.add(new ProductListModel(contents.getId(), contents.getName(), contents.getBrand(), contents.getPrice(), contents.getViews(), contents.getStock(), contents.getDiscount(), contents.getThumbnail()));
+                }
+                categoryWiseViewModel2s.add(new CategoryWiseViewModel2(getCategoryWiseView.getId(), getCategoryWiseView.getName(), contentArrayList));
+                if (contentArrayList.isEmpty()) {
+                    recyclerViewCategoryWiseView.setVisibility(View.GONE);
+                } else {
+                    recyclerViewCategoryWiseView.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+    }
+
+    private void setTheme() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
-    private void themeSwitch(){
+    private void themeSwitch() {
         /*False == Light Theme
-        * True == Dark Theme*/
+         * True == Dark Theme*/
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         switchCompatTheme.setChecked(!theme.equals("light"));
         SharedPreferences.Editor editor = sharedPreferences.edit();
         boolean drawerOpen = getIntent().getBooleanExtra("drawer_open", false);
-        if (drawerOpen){
+        if (drawerOpen) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
-        if (theme.equals("light")){
+        if (theme.equals("light")) {
             switchCompatTheme.setChecked(false);
             imageViewTheme.setImageResource(R.drawable.ic_sun);
-        }
-        else{
+        } else {
             switchCompatTheme.setChecked(true);
             imageViewTheme.setImageResource(R.drawable.ic_moon);
         }
         switchCompatTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (theme.equals("light")){
+                if (theme.equals("light")) {
                     editor.putString("theme", "dark");
                     switchCompatTheme.setChecked(false);
-                }
-                else{
+                } else {
                     editor.putString("theme", "light");
                     switchCompatTheme.setChecked(true);
                 }
@@ -147,10 +236,10 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        searchButton.setOnClickListener(v-> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
+        searchButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
     }
 
-    private void setRecyclerViewProductCategories(){
+    private void setRecyclerViewProductCategories() {
         /*Summery
         * Here I have taken an extra arraylist in order to get all the header of one main category
         * That means the json is like this..
@@ -193,29 +282,31 @@ public class MainActivity extends AppCompatActivity {
         productCategoriesViewModel = new ViewModelProvider(this).get(ProductCategoriesViewModel.class);
         productCategoriesViewModel.init();
         productCategoriesViewModel.getProductCategories().observe(this, productCategoriesModel -> {
-            if (productCategoriesModel == null){
+            if (productCategoriesModel == null) {
                 setRecyclerViewProductCategories();
-            }
-            else{
+            } else {
                 ArrayList<ProductCategoriesModel.Content> content = productCategoriesModel.getContent();
                 ArrayList<String> productChecking = new ArrayList<>();
                 /*Here contents.main has multiple repeat. That is why it is filtered with productChecking*/
-                for (ProductCategoriesModel.Content contents: content){
+                for (ProductCategoriesModel.Content contents : content) {
                     String title = contents.getMain();
                     String header = contents.getHeader();
                     categories.add(new CategorySelectedModel(title, header, contents.getId()));
-                    if (!productChecking.contains(title)){
+                    if (!productChecking.contains(title)) {
                         productChecking.add(title);
+                        categoryWiseViewModelArrayList.add(new CategoryWiseViewModel(contents.getId(), title));
+                        Log.d("GETIDSALONGWITH", "setRecyclerViewProductCategories: title: " + title + " id: " + contents.getId());
                     }
                 }
-                for (String items: productChecking){
+                setRecyclerViewCategoryWiseView2(categoryWiseViewModelArrayList);
+
+                for (String items : productChecking) {
                     productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
                 }
 
-                if (productCategoriesModelAdapterArrayList.isEmpty()){
+                if (productCategoriesModelAdapterArrayList.isEmpty()) {
                     materialCardViewProductCategories.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     materialCardViewProductCategories.setVisibility(View.VISIBLE);
                     lottieAnimationViewProductCategories.setVisibility(View.GONE);
                     recyclerViewProductCategories.setVisibility(View.VISIBLE);
@@ -229,15 +320,14 @@ public class MainActivity extends AppCompatActivity {
         BannerSliderTopViewModel bannerSliderTopViewModel = new ViewModelProvider(this).get(BannerSliderTopViewModel.class);
         bannerSliderTopViewModel.init();
         bannerSliderTopViewModel.getBannerSlider().observe(this, bannerSliderModel -> {
-            if (bannerSliderModel == null){
+            if (bannerSliderModel == null) {
                 getBannerSlider();
-            }
-            else{
+            } else {
                 List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
                 for (BannerSliderModel.Content content : contents) {
                     SliderItem sliderItem = new SliderItem();
                     String mainImage = content.getImage().replace("PROTOCOLHTTP_HOSTPROJECT_FOLDERimages/slider/", "");
-                    sliderItem.setImageUrl("https://indiancosmeticsbd.com/images/slider/"+mainImage);
+                    sliderItem.setImageUrl("https://indiancosmeticsbd.com/images/slider/" + mainImage);
                     sliderAdapterExample.addItem(sliderItem);
                     Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
                 }
@@ -280,10 +370,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.bottom_nav_account) {
 
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-                    if (sharedPreferences.contains(user_username)){
+                    if (sharedPreferences.contains(user_username)) {
                         startActivity(new Intent(MainActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                    }
-                    else{
+                    } else {
                         startActivity(new Intent(MainActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                     }
                     overridePendingTransition(0, 0);
@@ -316,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
         switchCompatTheme = findViewById(R.id.nav_theme_switch);
         imageViewTheme = findViewById(R.id.imageView_theme);
         searchButton = findViewById(R.id.searchButton);
+        recyclerViewCategoryWiseView = findViewById(R.id.main_category_wise_recyclerview);
     }
 
     @Override

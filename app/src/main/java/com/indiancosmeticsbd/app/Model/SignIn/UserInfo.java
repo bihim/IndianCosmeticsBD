@@ -105,9 +105,6 @@ public class UserInfo {
         @SerializedName("wishlists")
         @Expose
         private List<String> wishlists = null;
-        @SerializedName("notifications")
-        @Expose
-        private List<Notification> notifications = null;
         @SerializedName("customer_orders")
         @Expose
         private List<CustomerOrder> customerOrders = null;
@@ -222,14 +219,6 @@ public class UserInfo {
 
         public void setWishlists(List<String> wishlists) {
             this.wishlists = wishlists;
-        }
-
-        public List<Notification> getNotifications() {
-            return notifications;
-        }
-
-        public void setNotifications(List<Notification> notifications) {
-            this.notifications = notifications;
         }
 
         public List<CustomerOrder> getCustomerOrders() {

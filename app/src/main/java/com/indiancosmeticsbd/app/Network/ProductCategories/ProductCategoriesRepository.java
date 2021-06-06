@@ -15,7 +15,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.PRODUCT_CATEGORI
 public class ProductCategoriesRepository
 {
     private static ProductCategoriesRepository productCategoriesRepository;
-    private  final ProductCategoriesApi productCategoriesApi;
+    private final ProductCategoriesApi productCategoriesApi;
 
     public static ProductCategoriesRepository getInstance(){
         if (productCategoriesRepository == null) {
@@ -30,7 +30,7 @@ public class ProductCategoriesRepository
 
     public MutableLiveData<ProductCategoriesModel> getProductCategories(String main, String header){
         MutableLiveData<ProductCategoriesModel> productCategoriesLiveData = new MutableLiveData<>();
-        productCategoriesApi.getProductCategories(API_TOKEN, PRODUCT_CATEGORIES, main, header).enqueue(new Callback<ProductCategoriesModel>() {
+        productCategoriesApi.getProductCategories(API_TOKEN, PRODUCT_CATEGORIES, main, header, true).enqueue(new Callback<ProductCategoriesModel>() {
             @Override
             public void onResponse(Call<ProductCategoriesModel> call, Response<ProductCategoriesModel> response) {
                 if (response.isSuccessful()){

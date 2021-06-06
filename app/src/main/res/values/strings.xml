@@ -112,4 +112,7 @@
     <string name="search">Search</string>
     <string name="search_text">Search by Product or Brand name</string>
     <string name="search_error">No Search Item Found</string>
+
+    <!--Categories By View-->
+    <string name="view_all">View All</string>
 </resources>

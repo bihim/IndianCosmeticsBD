@@ -209,7 +209,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 setRecyclerViewSize(content.getAvailableSizes());
                 String url = PRODUCT_IMAGE_BASE_URL + "/" + id + "/1.jpg";
                 Glide.with(this).load(url).into(imageViewProduct);
-                Log.d("PRODUCT_DETAILS", "getProductDetails: " + content.getAllImages().getDefault().size());
+                Log.d("PRODUCT_DETAILS", "getProductDetails: " + content.getAllImages().size());
                 textViewTotalViews.setText(content.getTotalViews() + "");
                 ProductInfo.Rating rating = content.getRating();
                 textViewTotalRating.setText("(" + rating.getTotalReviewer() + ")");
@@ -217,7 +217,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 textViewDescription.setText(Html.fromHtml(content.getDescription()));
                 textViewProductRating.setText(String.valueOf(content.getRating().getAverageRating()));
                 setRecyclerViewRating(content.getProductReviews());
-                setSliderView(content.getAllImages().getDefault());
+                setSliderView(content.getAllImages());
                 setQuantity(content.getStock());
                 buttonAddToCart.setOnClickListener(new View.OnClickListener() {
                     @Override

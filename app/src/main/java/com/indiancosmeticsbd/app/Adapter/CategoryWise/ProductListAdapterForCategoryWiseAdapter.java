@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.Adapter;
+package com.indiancosmeticsbd.app.Adapter.CategoryWise;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,21 +11,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.RecycledViewPool;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
+import com.indiancosmeticsbd.app.Adapter.CartAdapter;
 import com.indiancosmeticsbd.app.Model.ProductList.ProductListModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.util.ArrayList;
 
-public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>
+public class ProductListAdapterForCategoryWiseAdapter extends RecyclerView.Adapter<ProductListAdapterForCategoryWiseAdapter.ProductListViewHolder>
 {
-    private ArrayList<ProductListModel> productsArrayList;
+    private final ArrayList<ProductListModel> productsArrayList;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
-    public ProductListAdapter(ArrayList<ProductListModel> productsArrayList, Context context) {
+    public interface OnItemClickListener {
+        void onItemClicked(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public ProductListAdapterForCategoryWiseAdapter(ArrayList<ProductListModel> productsArrayList, Context context) {
         this.productsArrayList = productsArrayList;
         this.context = context;
     }
@@ -33,14 +43,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @NonNull
     @Override
     public ProductListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_product_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_product_list_for_category_wise, parent, false);
         return new ProductListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         ProductListModel selectedItem = productsArrayList.get(position);
-        //String getUrl = "https://indiancosmeticsbd.com/"+selectedItem.getThumbnail().replace("thumbnail", "1");
         String getUrl = "https://indiancosmeticsbd.com/proimg/"+selectedItem.getId()+"/1.jpg";
         Glide.with(context.getApplicationContext()).load(getUrl).placeholder(R.drawable.ic_no_image).into(holder.imageViewProductView);
         holder.textViewProductName.setText(selectedItem.getName());
@@ -71,17 +80,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.textViewProductStock.setText(selectedItem.getStock()+"pc left");
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ProductDetailsActivity.class);
-                intent.putExtra("id", selectedItem.getId());
-                Log.d("PRODUCT_LIST", "onClick: id; "+selectedItem.getId());
-                intent.putExtra("name", selectedItem.getName());
-                context.startActivity(intent);
-            }
-        });
-
     }
 
     @Override
@@ -89,7 +87,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         return productsArrayList.size();
     }
 
-    public static class ProductListViewHolder extends RecyclerView.ViewHolder {
+    public class ProductListViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewProductView;
         TextView textViewProductName, textViewProductBrand, textViewProductPrice, textViewProductDiscount, textViewProductViews, textViewProductStock;
         public ProductListViewHolder(@NonNull View itemView) {
@@ -101,6 +99,15 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             textViewProductDiscount = itemView.findViewById(R.id.recyclerview_product_discount);
             textViewProductViews = itemView.findViewById(R.id.recyclerview_product_views);
             textViewProductStock = itemView.findViewById(R.id.recyclerview_product_stock);
+
+            itemView.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onItemClicked(position);
+                    }
+                }
+            });
         }
     }
 }
