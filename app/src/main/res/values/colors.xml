@@ -25,6 +25,7 @@
     <color name="editTextBackLight">#C0C0C0</color>
     <color name="editIconLight">#4B4B4B</color>
     <color name="collapsingColorLight">#00FFFFFF</color>
+    <color name="halkaColorLight">#F8F8F8</color>
 
 
     <!--Dark Theme Color-->
@@ -42,5 +43,13 @@
     <color name="editTextBackDark">#464646</color>
     <color name="editIconDark">#FFF</color>
     <color name="collapsingColorDark">#6D1A1815</color>
+    <color name="halkaColorDark">#191919</color>
 
+    <!--Some random colors-->
+    <color name="color_1">#27ae60</color>
+    <color name="color_2">#9b59b6</color>
+    <color name="color_3">#f1c40f</color>
+    <color name="color_4">#34495e</color>
+    <color name="color_5">#e67e22</color>
+    <color name="color_6">#7f8c8d</color>
 </resources>

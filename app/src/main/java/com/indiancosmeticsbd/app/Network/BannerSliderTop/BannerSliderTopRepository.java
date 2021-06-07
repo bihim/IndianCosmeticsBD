@@ -1,5 +1,6 @@
 package com.indiancosmeticsbd.app.Network.BannerSliderTop;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -34,15 +35,18 @@ public class BannerSliderTopRepository
             public void onResponse(Call<BannerSliderModel> call, Response<BannerSliderModel> response) {
                 if (response.isSuccessful()){
                     bannerSliderModelMutableLiveData.setValue(response.body());
+                    Log.d("BANNER_SLIDER", "onResponse: "+response.body().getStatus());
                 }
                 else{
                     bannerSliderModelMutableLiveData.setValue(null);
+                    Log.d("BANNER_SLIDER", "onResponse: "+response.body().getStatus());
                 }
             }
 
             @Override
             public void onFailure(Call<BannerSliderModel> call, Throwable t) {
                 bannerSliderModelMutableLiveData.setValue(null);
+                Log.d("BANNER_SLIDER", "onResponse: "+t.getMessage());
             }
         });
         return bannerSliderModelMutableLiveData;

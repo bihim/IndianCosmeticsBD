@@ -17,23 +17,17 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
-import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter2;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
-import com.indiancosmeticsbd.app.Adapter.ProductListAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
@@ -42,7 +36,6 @@ import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewMod
 import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewModel2;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesModel;
-import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.Model.ProductList.ProductListModel;
 import com.indiancosmeticsbd.app.Model.ProductList.Products;
 import com.indiancosmeticsbd.app.R;
@@ -55,11 +48,11 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_TOP;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
@@ -98,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
     /*Recyclerview withing recyclerview*/
     private ArrayList<CategoryWiseViewModel> categoryWiseViewModelArrayList = new ArrayList<>();
     private RecyclerView recyclerViewCategoryWiseView;
-    private CategoriesByViewAdapter categoriesByViewAdapter;
-    private ArrayList<ProductListModel> contentArrayList = new ArrayList<>();
 
 
     @Override
@@ -117,48 +108,12 @@ public class MainActivity extends AppCompatActivity {
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 
-    private void setRecyclerViewCategoryWiseView(String id, String title) {
-        ArrayList<CategoryWiseViewModel> categoryWiseViewModels = new ArrayList<>();
-        categoryWiseViewModels.add(new CategoryWiseViewModel(id, title));
-        ProductListViewModel productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
-        productListViewModel.init();
-        productListViewModel.getProductList(this, "main", id, "", "", "", "", "", true).observe(this, products -> {
-            recyclerViewCategoryWiseView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerViewCategoryWiseView.setHasFixedSize(true);
-            categoriesByViewAdapter = new CategoriesByViewAdapter(categoryWiseViewModels, contentArrayList, this);
-            categoriesByViewAdapter.setOnItemClickListener(new CategoriesByViewAdapter.OnItemClickListener() {
-                @Override
-                public void onViewAllClicked(int position) {
-                    CategoryWiseViewModel selectedItem = categoryWiseViewModels.get(position);
-                    Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
-                    intent.putExtra("id", selectedItem.getId());
-                    intent.putExtra("name", selectedItem.getName());
-                    startActivity(intent);
-                }
-            });
-            recyclerViewCategoryWiseView.setAdapter(categoriesByViewAdapter);
-
-            ArrayList<Products.Content> content = products.getContent();
-            //contentArrayList.clear();
-            Log.d("PRODUCTLISTTING", "setRecyclerView: " + title);
-            for (Products.Content contents : content) {
-                //Log.d("PRODUCTLISTTING", "setRecyclerView: "+categoryWiseViewModel.getName()+" brand: "+contents.getBrand());
-                contentArrayList.add(new ProductListModel(contents.getId(), contents.getName(), contents.getBrand(), contents.getPrice(), contents.getViews(), contents.getStock(), contents.getDiscount(), contents.getThumbnail()));
-            }
-            if (contentArrayList.isEmpty()) {
-                recyclerViewCategoryWiseView.setVisibility(View.GONE);
-            } else {
-                recyclerViewCategoryWiseView.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
     private void setRecyclerViewCategoryWiseView2(ArrayList<CategoryWiseViewModel> categoryWiseView2) {
         recyclerViewCategoryWiseView.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCategoryWiseView.setHasFixedSize(true);
         ArrayList<CategoryWiseViewModel2> categoryWiseViewModel2s = new ArrayList<>();
-        CategoriesByViewAdapter2 categoriesByViewAdapter2 = new CategoriesByViewAdapter2(categoryWiseViewModel2s, this);
-        categoriesByViewAdapter2.setOnItemClickListener(new CategoriesByViewAdapter2.OnItemClickListener() {
+        CategoriesByViewAdapter categoriesByViewAdapter2 = new CategoriesByViewAdapter(categoryWiseViewModel2s, this);
+        categoriesByViewAdapter2.setOnItemClickListener(new CategoriesByViewAdapter.OnItemClickListener() {
             @Override
             public void onViewAllClicked(int position) {
                 CategoryWiseViewModel2 selectedItem = categoryWiseViewModel2s.get(position);

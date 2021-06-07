@@ -135,7 +135,7 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:gravity="center"
-                            android:background="?cardColor">
+                            android:background="?halka_color">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -173,8 +173,44 @@
                         android:id="@+id/main_category_wise_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_5sdp"
                         tools:listitem="@layout/recyclerview_categorywise_view"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/banner_slider_mid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        app:cardCornerRadius="@dimen/_15sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_130sdp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.smarteist.autoimageslider.SliderView
+                                android:id="@+id/imageSlider_mid"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:sliderAnimationDuration="600"
+                                app:sliderAutoCycleDirection="back_and_forth"
+                                app:sliderAutoCycleEnabled="true"
+                                app:sliderIndicatorAnimationDuration="600"
+                                app:sliderIndicatorGravity="center_horizontal|bottom"
+                                app:sliderIndicatorMargin="@dimen/_15sdp"
+                                app:sliderIndicatorOrientation="horizontal"
+                                app:sliderIndicatorPadding="@dimen/_3sdp"
+                                app:sliderIndicatorRadius="@dimen/_2sdp"
+                                app:sliderIndicatorSelectedColor="#5A5A5A"
+                                app:sliderIndicatorUnselectedColor="#FFF"
+                                app:sliderScrollTimeInSec="1"
+                                app:sliderStartAutoCycle="true" />
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 

@@ -6,31 +6,35 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.RecycledViewPool;
 
 import com.google.android.material.button.MaterialButton;
-import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewModel;
+import com.indiancosmeticsbd.app.Model.CategoryWiseViewModel.CategoryWiseViewModel2;
 import com.indiancosmeticsbd.app.Model.ProductList.ProductListModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 
 public class CategoriesByViewAdapter extends RecyclerView.Adapter<CategoriesByViewAdapter.CategoriesByViewHolder> {
-    final private ArrayList<CategoryWiseViewModel> categoryWiseViewModelArrayList;
-    final private ArrayList<ProductListModel> productsArrayList;
-    private Context context;
-    private OnItemClickListener onItemClickListener;
-    //private RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
 
-    public CategoriesByViewAdapter(ArrayList<CategoryWiseViewModel> categoryWiseViewModelArrayList, ArrayList<ProductListModel> productsArrayList, Context context) {
+    private final ArrayList<CategoryWiseViewModel2> categoryWiseViewModelArrayList;
+    private final Context context;
+    private OnItemClickListener onItemClickListener;
+    private final RecyclerView.RecycledViewPool recycledViewPool = new RecyclerView.RecycledViewPool();
+    private ArrayList<Integer> colorList = new ArrayList<>();
+    private Random random = new Random();
+
+    public CategoriesByViewAdapter(ArrayList<CategoryWiseViewModel2> categoryWiseViewModelArrayList, Context context) {
         this.categoryWiseViewModelArrayList = categoryWiseViewModelArrayList;
-        this.productsArrayList = productsArrayList;
         this.context = context;
     }
 
@@ -47,15 +51,32 @@ public class CategoriesByViewAdapter extends RecyclerView.Adapter<CategoriesByVi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesByViewAdapter.CategoriesByViewHolder holder, int position) {
-        CategoryWiseViewModel categoryWiseViewModel = categoryWiseViewModelArrayList.get(position);
+        CategoryWiseViewModel2 categoryWiseViewModel = categoryWiseViewModelArrayList.get(position);
         holder.textView.setText(categoryWiseViewModel.getName());
 
+        colorList.add(R.color.color_1);
+        colorList.add(R.color.color_2);
+        colorList.add(R.color.color_3);
+        colorList.add(R.color.color_4);
+        colorList.add(R.color.color_5);
+        colorList.add(R.color.color_6);
 
-        ProductListAdapterForCategoryWiseAdapter productListAdapterForCategoryWiseAdapter = new ProductListAdapterForCategoryWiseAdapter(productsArrayList, context);
+        if (position < colorList.size()){
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(colorList.get(position)));
+        }
+        else{
+            holder.linearLayout.setBackgroundColor(context.getResources().getColor(colorList.get(random.nextInt(colorList.size()))));
+        }
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        linearLayoutManager.setInitialPrefetchItemCount(categoryWiseViewModel.getProductListModels().size());
+
+
+        ProductListAdapterForCategoryWiseAdapter productListAdapterForCategoryWiseAdapter = new ProductListAdapterForCategoryWiseAdapter(categoryWiseViewModel.getProductListModels(), context);
         productListAdapterForCategoryWiseAdapter.setOnItemClickListener(new ProductListAdapterForCategoryWiseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(int position) {
-                ProductListModel selectedItem = productsArrayList.get(position);
+                ProductListModel selectedItem = categoryWiseViewModel.getProductListModels().get(position);
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra("id", selectedItem.getId());
                 Log.d("PRODUCT_LIST", "onClick: id; " + selectedItem.getId());
@@ -63,10 +84,11 @@ public class CategoriesByViewAdapter extends RecyclerView.Adapter<CategoriesByVi
                 context.startActivity(intent);
             }
         });
-        holder.recyclerView.setHasFixedSize(true);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+        holder.recyclerView.setLayoutManager(linearLayoutManager);
         holder.recyclerView.setAdapter(productListAdapterForCategoryWiseAdapter);
-      //  holder.recyclerView.setRecycledViewPool(recycledViewPool);
+        holder.recyclerView.setRecycledViewPool(recycledViewPool);
+
     }
 
     @Override
@@ -82,12 +104,14 @@ public class CategoriesByViewAdapter extends RecyclerView.Adapter<CategoriesByVi
         TextView textView;
         MaterialButton materialButton;
         RecyclerView recyclerView;
+        LinearLayout linearLayout;
 
         public CategoriesByViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.recyclerview_category_by_view_item_name);
             materialButton = itemView.findViewById(R.id.recyclerview_category_by_view_item_button);
             recyclerView = itemView.findViewById(R.id.recyclerview_category_by_view_item_recyclerview);
+            linearLayout = itemView.findViewById(R.id.recyclerview_category_by_view_item_color);
 
             materialButton.setOnClickListener(v -> {
                 if (onItemClickListener != null) {
