@@ -22,9 +22,9 @@
         <activity android:name=".Views.Activity.Account.RegisterActivity" />
         <activity android:name=".Views.Activity.Account.SignInActivity" />
         <activity android:name=".Views.Activity.Account.AccountActivity" />
-        <activity android:name=".Views.Activity.CartActivity" />
-        <activity android:name=".Views.Activity.WishListActivity" />
-        <activity android:name=".Views.Activity.MainActivity" />
+        <activity android:name=".Views.Activity.BottomNavActivities.CartActivity" />
+        <activity android:name=".Views.Activity.BottomNavActivities.WishListActivity" />
+        <activity android:name=".Views.Activity.BottomNavActivities.MainActivity" />
         <activity android:name=".Views.Activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

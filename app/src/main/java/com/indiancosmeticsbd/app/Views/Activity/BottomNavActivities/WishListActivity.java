@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.Views.Activity;
+package com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,11 +15,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.indiancosmeticsbd.app.Adapter.CartAdapter;
 import com.indiancosmeticsbd.app.Adapter.WishListAdapter;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
@@ -144,8 +142,9 @@ public class WishListActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.bottom_nav_home){
-                    startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    overridePendingTransition(0, 0);
+                    /*startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);*/
+                    onBackPressed();
                 }
                 else if(item.getItemId() == R.id.bottom_nav_wishlist){
                     //startActivity(new Intent(WishListActivity.this, WishListActivity.class));
@@ -180,6 +179,7 @@ public class WishListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 
     @Override

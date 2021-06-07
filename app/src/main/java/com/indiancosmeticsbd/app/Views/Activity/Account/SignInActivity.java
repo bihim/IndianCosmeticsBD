@@ -6,19 +6,16 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.indiancosmeticsbd.app.GlobalValue.LoadingDialog;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.UserInfoViewModel;
-import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;

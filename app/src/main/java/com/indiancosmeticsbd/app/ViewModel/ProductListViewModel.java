@@ -18,7 +18,7 @@ public class ProductListViewModel extends ViewModel {
         }
     }
 
-    public LiveData<Products> getProductList(Activity activity, String fetchScope, String categoryId, String sort, String search, String productLimit, String productOffset, String filters, boolean isSearch){
+    public LiveData<Products> getProductList(Activity activity, String fetchScope, String categoryId, String sort, String search, String productLimit, String productOffset, String filters, boolean isSearch) {
         ProductRepository productRepository = ProductRepository.getInstance();
         mutableLiveData = productRepository.getProductList(activity, fetchScope, categoryId, sort, search, productLimit, productOffset, filters, isSearch);
         return mutableLiveData;

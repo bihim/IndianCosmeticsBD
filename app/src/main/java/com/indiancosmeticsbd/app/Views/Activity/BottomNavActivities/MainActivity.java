@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.Views.Activity;
+package com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +44,8 @@ import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductListViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.ProductListActivity;
+import com.indiancosmeticsbd.app.Views.Activity.SearchActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -52,6 +54,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_BOTTOM;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_MIDDLE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_TOP;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
@@ -64,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
-
-    /*Banner Slider Top*/
-    private MaterialCardView cardViewBannerTop;
-    private SliderView sliderView;
-    private SliderAdapterExample sliderAdapterExample;
 
     /*Nav Drawer*/
     private MaterialButton signInButton;
@@ -90,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
     /*Recyclerview withing recyclerview*/
     private ArrayList<CategoryWiseViewModel> categoryWiseViewModelArrayList = new ArrayList<>();
-    private RecyclerView recyclerViewCategoryWiseView;
 
+    private MaterialCardView dummyCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,16 +100,20 @@ public class MainActivity extends AppCompatActivity {
         findViewById();
         setNavDrawer();
         setBottomNavigationView();
-        setSliderView();
+        setSliderView(HOME_PAGE_TOP, R.id.imageSlider, R.id.banner_slider);
+        setSliderView(HOME_PAGE_MIDDLE, R.id.imageSlider_mid, R.id.banner_slider_mid);
+        setSliderView(HOME_PAGE_BOTTOM, R.id.imageSlider_bottom, R.id.banner_slider_bottom);
         setRecyclerViewProductCategories();
         themeSwitch();
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
     }
 
-    private void setRecyclerViewCategoryWiseView2(ArrayList<CategoryWiseViewModel> categoryWiseView2) {
+    private void setRecyclerViewCategoryWiseView2(List<CategoryWiseViewModel> categoryWiseView2, int recyclerviewID) {
+        RecyclerView recyclerViewCategoryWiseView = findViewById(recyclerviewID);
         recyclerViewCategoryWiseView.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCategoryWiseView.setHasFixedSize(true);
+        recyclerViewCategoryWiseView.setNestedScrollingEnabled(false);
         ArrayList<CategoryWiseViewModel2> categoryWiseViewModel2s = new ArrayList<>();
         CategoriesByViewAdapter categoriesByViewAdapter2 = new CategoriesByViewAdapter(categoryWiseViewModel2s, this);
         categoriesByViewAdapter2.setOnItemClickListener(new CategoriesByViewAdapter.OnItemClickListener() {
@@ -123,10 +126,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        for (CategoryWiseViewModel getCategoryWiseView: categoryWiseView2){
+        for (CategoryWiseViewModel getCategoryWiseView : categoryWiseView2) {
             ProductListViewModel productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
             productListViewModel.init();
             productListViewModel.getProductList(this, "main", getCategoryWiseView.getId(), "", "", "", "", "", true).observe(this, products -> {
+                dummyCardView.setVisibility(View.GONE);
 
                 recyclerViewCategoryWiseView.setAdapter(categoriesByViewAdapter2);
                 ArrayList<Products.Content> content = products.getContent();
@@ -253,7 +257,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("GETIDSALONGWITH", "setRecyclerViewProductCategories: title: " + title + " id: " + contents.getId());
                     }
                 }
-                setRecyclerViewCategoryWiseView2(categoryWiseViewModelArrayList);
+
+                List<CategoryWiseViewModel> categoryWiseViewModelFirstTwo = categoryWiseViewModelArrayList.subList(0, 2);
+                List<CategoryWiseViewModel> categoryWiseViewModelLastItems = categoryWiseViewModelArrayList.subList(2, categoryWiseViewModelArrayList.size());
+                setRecyclerViewCategoryWiseView2(categoryWiseViewModelFirstTwo, R.id.main_category_wise_recyclerview);
+                setRecyclerViewCategoryWiseView2(categoryWiseViewModelLastItems, R.id.main_category_wise_recyclerview_after_mid);
 
                 for (String items : productChecking) {
                     productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
@@ -271,12 +279,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getBannerSlider() {
+    private void getBannerSlider(SliderAdapterExample sliderAdapterExample, String bannerSliderPosition, SliderView sliderView, MaterialCardView materialCardView) {
         BannerSliderTopViewModel bannerSliderTopViewModel = new ViewModelProvider(this).get(BannerSliderTopViewModel.class);
         bannerSliderTopViewModel.init();
-        bannerSliderTopViewModel.getBannerSlider().observe(this, bannerSliderModel -> {
+        bannerSliderTopViewModel.getBannerSlider(bannerSliderPosition).observe(this, bannerSliderModel -> {
             if (bannerSliderModel == null) {
-                getBannerSlider();
+                getBannerSlider(sliderAdapterExample, bannerSliderPosition, sliderView, materialCardView);
             } else {
                 List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
                 for (BannerSliderModel.Content content : contents) {
@@ -287,17 +295,19 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
                 }
                 if (contents.isEmpty()) {
-                    cardViewBannerTop.setVisibility(View.GONE);
+                    materialCardView.setVisibility(View.GONE);
                 } else {
-                    cardViewBannerTop.setVisibility(View.VISIBLE);
+                    materialCardView.setVisibility(View.VISIBLE);
                     sliderView.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
-    private void setSliderView() {
-        sliderAdapterExample = new SliderAdapterExample(this);
+    private void setSliderView(String bannerSliderPosition, int sliderId, int cardId) {
+        SliderView sliderView = findViewById(sliderId);
+        MaterialCardView materialCardView = findViewById(cardId);
+        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(this);
         sliderView.setSliderAdapter(sliderAdapterExample);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -307,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
         sliderView.setScrollTimeInSec(3);
         sliderView.setAutoCycle(true);
         sliderView.startAutoCycle();
-        getBannerSlider();
+        getBannerSlider(sliderAdapterExample, bannerSliderPosition, sliderView, materialCardView);
     }
 
     private void setBottomNavigationView() {
@@ -349,8 +359,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.nav_drawer);
         navigationView = findViewById(R.id.navigation_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        sliderView = findViewById(R.id.imageSlider);
-        cardViewBannerTop = findViewById(R.id.banner_slider);
         signInButton = findViewById(R.id.sign_in_main);
 
         materialCardViewProductCategories = findViewById(R.id.product_categories_main);
@@ -360,7 +368,9 @@ public class MainActivity extends AppCompatActivity {
         switchCompatTheme = findViewById(R.id.nav_theme_switch);
         imageViewTheme = findViewById(R.id.imageView_theme);
         searchButton = findViewById(R.id.searchButton);
-        recyclerViewCategoryWiseView = findViewById(R.id.main_category_wise_recyclerview);
+        //recyclerViewCategoryWiseView = findViewById(R.id.main_category_wise_recyclerview);
+
+        dummyCardView = findViewById(R.id.dummy_card);
     }
 
     @Override

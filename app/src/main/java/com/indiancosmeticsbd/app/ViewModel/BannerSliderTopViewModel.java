@@ -11,19 +11,18 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BANNER_SLIDER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_TOP;
 
-public class BannerSliderTopViewModel extends ViewModel
-{
+public class BannerSliderTopViewModel extends ViewModel {
     private MutableLiveData<BannerSliderModel> mutableLiveData;
 
-    public void init(){
-        if(mutableLiveData != null){
+    public void init() {
+        if (mutableLiveData != null) {
             return;
         }
-
-        BannerSliderTopRepository bannerSliderTopRepository = BannerSliderTopRepository.getInstance();
-        mutableLiveData = bannerSliderTopRepository.getBannerSlider(API_TOKEN, BANNER_SLIDER, HOME_PAGE_TOP);
     }
-    public LiveData<BannerSliderModel> getBannerSlider(){
+
+    public LiveData<BannerSliderModel> getBannerSlider(String bannerSliderPosition) {
+        BannerSliderTopRepository bannerSliderTopRepository = BannerSliderTopRepository.getInstance();
+        mutableLiveData = bannerSliderTopRepository.getBannerSlider(API_TOKEN, BANNER_SLIDER, bannerSliderPosition);
         return mutableLiveData;
     }
 }

@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 
 import com.google.android.material.button.MaterialButton;
 import com.indiancosmeticsbd.app.R;
-import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 

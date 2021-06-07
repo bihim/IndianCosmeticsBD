@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.indiancosmeticsbd.app.R;
-import com.indiancosmeticsbd.app.Views.Activity.CartActivity;
-import com.indiancosmeticsbd.app.Views.Activity.MainActivity;
-import com.indiancosmeticsbd.app.Views.Activity.WishListActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.WishListActivity;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
@@ -75,8 +75,9 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.bottom_nav_home) {
-                    startActivity(new Intent(AccountActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    overridePendingTransition(0, 0);
+                    /*startActivity(new Intent(AccountActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    overridePendingTransition(0, 0);*/
+                    onBackPressed();
                 } else if (item.getItemId() == R.id.bottom_nav_wishlist) {
                     startActivity(new Intent(AccountActivity.this, WishListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
@@ -109,6 +110,7 @@ public class AccountActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(0, 0);
     }
 
     @Override

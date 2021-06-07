@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?layoutColor"
     android:orientation="vertical"
-    tools:context=".Views.Activity.WishListActivity">
+    tools:context=".Views.Activity.BottomNavActivities.WishListActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_top"

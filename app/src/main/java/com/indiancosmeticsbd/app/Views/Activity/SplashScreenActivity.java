@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.indiancosmeticsbd.app.Model.ContactInfo.ContactInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ContactInfoViewModel;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_ADDRESS;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_ADDRESS2;
@@ -28,7 +29,6 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_SKYPE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_TWITTER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_YAHOO;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_YOUTUBE;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CONTACT_INFO;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 
 
