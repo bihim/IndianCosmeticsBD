@@ -42,6 +42,7 @@
         <item name="editIcon">@color/editIconLight</item>
         <item name="collapsingToolColor">@color/collapsingColorLight</item>
         <item name="halka_color">@color/halkaColorLight</item>
+        <item name="category_color">@color/categoryColorLight</item>
     </style>
 
     <style name="Theme.IndianCosmeticsBD.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -63,6 +64,7 @@
         <item name="editIcon">@color/editIconDark</item>
         <item name="collapsingToolColor">@color/collapsingColorDark</item>
         <item name="halka_color">@color/halkaColorDark</item>
+        <item name="category_color">@color/categoryColorDark</item>
     </style>
 
     <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">

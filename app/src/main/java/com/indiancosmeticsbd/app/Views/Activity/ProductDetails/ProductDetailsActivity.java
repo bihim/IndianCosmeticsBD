@@ -189,7 +189,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         Intent i = new Intent(Intent.ACTION_SEND);
                         i.setType("text/plain");
                         i.putExtra(Intent.EXTRA_SUBJECT, toolbarName);
-                        i.putExtra(Intent.EXTRA_TEXT, WEBSITE_URL + content.getProductLink());
+                        i.putExtra(Intent.EXTRA_TEXT, WEBSITE_URL + content.getProductLink().replace("PROTOCOLHTTP_HOSTPROJECT_FOLDER/",""));
                         startActivity(Intent.createChooser(i, "Share URL"));
                     }
                 });

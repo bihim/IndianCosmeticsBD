@@ -29,6 +29,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
+import com.indiancosmeticsbd.app.GlobalValue.ExitDialog;
+import com.indiancosmeticsbd.app.GlobalValue.NumberDialog;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialButton signInButton;
     private SwitchCompat switchCompatTheme;
     private ImageView imageViewTheme;
+    private MaterialButton navHelpline;
 
     /*Product Categories*/
     private ArrayList<ProductCategoriesAdapterModel> productCategoriesModelAdapterArrayList;
@@ -352,6 +355,14 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        navHelpline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NumberDialog numberDialog = new NumberDialog(MainActivity.this);
+                numberDialog.showDialog();
+            }
+        });
     }
 
     private void findViewById() {
@@ -371,14 +382,19 @@ public class MainActivity extends AppCompatActivity {
         //recyclerViewCategoryWiseView = findViewById(R.id.main_category_wise_recyclerview);
 
         dummyCardView = findViewById(R.id.dummy_card);
+        navHelpline = findViewById(R.id.nav_order_helpline);
     }
 
     @Override
     public void onBackPressed() {
+        ExitDialog exitDialog = new ExitDialog(this);
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+            exitDialog.dismissDialog();
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            exitDialog.showDialog();
         }
 
     }

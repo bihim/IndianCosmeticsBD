@@ -15,5 +15,6 @@
     <attr name="editIcon" format="reference"/>
     <attr name="collapsingToolColor" format="reference"/>
     <attr name="halka_color" format="reference"/>
+    <attr name="category_color" format="reference"/>
 
 </resources>

@@ -115,4 +115,12 @@
 
     <!--Categories By View-->
     <string name="view_all">View All</string>
+
+    <!--Exit App-->
+    <string name="exit_dialog">Do you want to exit the app?</string>
+    <string name="yes_dialog">Yes</string>
+    <string name="no_dialog">No</string>
+
+    <!--Calling dialog-->
+    <string name="number_dialog">Tap one of the numbers to call</string>
 </resources>

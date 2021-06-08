@@ -22,10 +22,11 @@
     <color name="bottomNavUnselectedColorLight">#919191</color>
     <color name="buttonColorLight">#B48A56</color>
     <color name="forgotPassLight">#FF1A1A</color>
-    <color name="editTextBackLight">#C0C0C0</color>
+    <color name="editTextBackLight">#FFF</color>
     <color name="editIconLight">#4B4B4B</color>
     <color name="collapsingColorLight">#00FFFFFF</color>
     <color name="halkaColorLight">#F8F8F8</color>
+    <color name="categoryColorLight">#C0C0C0</color>
 
 
     <!--Dark Theme Color-->
@@ -44,6 +45,7 @@
     <color name="editIconDark">#FFF</color>
     <color name="collapsingColorDark">#6D1A1815</color>
     <color name="halkaColorDark">#191919</color>
+    <color name="categoryColorDark">#464646</color>
 
     <!--Some random colors-->
     <color name="color_1">#27ae60</color>
