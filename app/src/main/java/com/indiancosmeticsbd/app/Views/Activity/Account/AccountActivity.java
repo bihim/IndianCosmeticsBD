@@ -57,7 +57,7 @@ public class AccountActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         int previousNotificationSize = sharedPreferences.getInt(user_previous_notification_size, 0);
         int afterNotificationSize = sharedPreferences.getInt(user_after_notification_size, 0);
-        if (previousNotificationSize != afterNotificationSize) {
+        if (previousNotificationSize < afterNotificationSize) {
             imageButtonBadge.setVisibility(View.VISIBLE);
         } else {
             imageButtonBadge.setVisibility(View.GONE);

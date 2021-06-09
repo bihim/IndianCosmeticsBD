@@ -37,6 +37,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_id;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_mobile_number;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_notification;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_orders;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_password;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_postalcode;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_previous_notification_size;
@@ -60,15 +61,16 @@ public class SignInActivity extends AppCompatActivity {
         buttonClicks();
     }
 
-    private void setTheme(){
+    private void setTheme() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
 
-    private void setSignInButton(){
+    private void setSignInButton() {
         Gson gson = new Gson();
         List<UserInfo.Notification> notifications = new ArrayList<>();
+        List<UserInfo.CustomerOrder> customerOrders = new ArrayList<>();
 
         String emailAddress = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
@@ -77,6 +79,13 @@ public class SignInActivity extends AppCompatActivity {
         userInfoViewModel.getUserInfo(emailAddress, password, this, true).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
             notifications.addAll(value.getNotifications());
+            StringBuilder listCustomerOrders = new StringBuilder();
+            if (value.getCustomerOrders().size() != 0) {
+                for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
+                    listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
+                }
+            }
+
             int notificationSize = notifications.size();
             String notification_json = gson.toJson(notifications);
 
@@ -97,17 +106,18 @@ public class SignInActivity extends AppCompatActivity {
             editor.putString(user_mobile_number, value.getMobileNumber());
 
             /*Notification Part
-            * First time previous notification size will be 0 and new will assign to it.
-            * If it matches then no badge will show */
+             * First time previous notification size will be 0 and new will assign to it.
+             * If it matches then no badge will show */
 
             editor.putInt(user_previous_notification_size, 0);
             editor.putInt(user_after_notification_size, notificationSize);
             editor.putString(user_notification, notification_json);
+            editor.putString(user_orders, listCustomerOrders.toString());
             editor.apply();
         });
     }
 
-    private void buttonClicks(){
+    private void buttonClicks() {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +143,7 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    private void findViewById(){
+    private void findViewById() {
         closeButton = findViewById(R.id.sign_in_close);
         gotoRegisterButton = findViewById(R.id.gotoRegister);
         signInButton = findViewById(R.id.sign_in_button);

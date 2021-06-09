@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?layoutColor"
-    tools:context=".Views.Activity.NotificationActivity">
+    tools:context=".Views.Activity.Orders.OrderListActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_top"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_24sdp"
-                android:text="@string/notification_toolbar"
+                android:text="@string/order_toolbar"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -71,10 +71,10 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notification_recyclerview"
+            android:id="@+id/order_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/recyclerview_notification">
+            tools:listitem="@layout/recyclerview_order_list">
 
         </androidx.recyclerview.widget.RecyclerView>
 

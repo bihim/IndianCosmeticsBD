@@ -123,4 +123,14 @@
 
     <!--Calling dialog-->
     <string name="number_dialog">Tap and hold one of the numbers to call</string>
+
+    <!--Notification-->
+    <string name="notification_toolbar">Notification</string>
+    <string name="no_notification">No notification available</string>
+    <string name="notificationType">Order</string>
+    <string name="notifications">Your order #56768 is now in processing.</string>
+
+    <!--Orders-->
+    <string name="order_toolbar">Orders</string>
+    <string name="order_no">Order no: 56768</string>
 </resources>

@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 editor.apply();
-                Intent intent = new Intent(getIntent());
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 intent.putExtra("drawer_open", true);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

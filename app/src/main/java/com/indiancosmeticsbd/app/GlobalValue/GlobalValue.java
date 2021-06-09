@@ -55,6 +55,7 @@ public class GlobalValue {
     public static final String user_previous_notification_size = "user_previous_notification_size";
     public static final String user_after_notification_size = "user_after_notification_size";
     public static final String user_notification = "user_notification";
+    public static final String user_orders = "user_orders";
 
     /*Company*/
     public static final String COMPANY_ADDRESS = "company_address";
@@ -119,6 +120,6 @@ public class GlobalValue {
         int previousNotificationSize = sharedPreferences.getInt(user_previous_notification_size, 0);
         int afterNotificationSize = sharedPreferences.getInt(user_after_notification_size, 0);
         BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_account);
-        badgeDrawable.setVisible(previousNotificationSize!=afterNotificationSize);
+        badgeDrawable.setVisible(previousNotificationSize<afterNotificationSize);
     }
 }
