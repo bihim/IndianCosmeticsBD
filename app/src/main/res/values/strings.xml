@@ -122,5 +122,5 @@
     <string name="no_dialog">No</string>
 
     <!--Calling dialog-->
-    <string name="number_dialog">Tap one of the numbers to call</string>
+    <string name="number_dialog">Tap and hold one of the numbers to call</string>
 </resources>

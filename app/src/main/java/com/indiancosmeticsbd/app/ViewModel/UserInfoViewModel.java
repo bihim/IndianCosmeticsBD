@@ -28,9 +28,9 @@ public class UserInfoViewModel extends ViewModel {
         mutableLiveData = userValidateInfoRepository.getUserInfo(emailAddress.getValue(), password.getValue());
     }*/
 
-    public LiveData<UserInfo> getUserInfo(String emailAddress, String password, Activity activity){
+    public LiveData<UserInfo> getUserInfo(String emailAddress, String password, Activity activity, boolean isComingFromSignIn){
         UserValidateInfoRepository userValidateInfoRepository = UserValidateInfoRepository.getInstance();
-        mutableLiveData = userValidateInfoRepository.getUserInfo(activity, emailAddress, password);
+        mutableLiveData = userValidateInfoRepository.getUserInfo(activity, emailAddress, password, isComingFromSignIn);
         return mutableLiveData;
     }
 }

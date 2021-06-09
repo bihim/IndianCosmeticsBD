@@ -12,13 +12,22 @@ import android.widget.ImageButton;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.UserInfoViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_country;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_district;
@@ -27,7 +36,10 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_id;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_mobile_number;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_notification;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_password;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_postalcode;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_previous_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_token;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
@@ -55,16 +67,24 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void setSignInButton(){
+        Gson gson = new Gson();
+        List<UserInfo.Notification> notifications = new ArrayList<>();
+
         String emailAddress = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
-        userInfoViewModel.getUserInfo(emailAddress, password, this).observe(this, userInfo -> {
+        userInfoViewModel.getUserInfo(emailAddress, password, this, true).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
+            notifications.addAll(value.getNotifications());
+            int notificationSize = notifications.size();
+            String notification_json = gson.toJson(notifications);
+
             SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(user_id, value.getId());
             editor.putString(user_username, value.getUsername());
+            editor.putString(user_password, password);
             editor.putString(user_token, value.getToken());
             editor.putString(user_first_name, value.getFirstName());
             editor.putString(user_last_name, value.getLastName());
@@ -75,6 +95,14 @@ public class SignInActivity extends AppCompatActivity {
             editor.putString(user_country, value.getCountry());
             editor.putString(user_postalcode, value.getPostalcode());
             editor.putString(user_mobile_number, value.getMobileNumber());
+
+            /*Notification Part
+            * First time previous notification size will be 0 and new will assign to it.
+            * If it matches then no badge will show */
+
+            editor.putInt(user_previous_notification_size, 0);
+            editor.putInt(user_after_notification_size, notificationSize);
+            editor.putString(user_notification, notification_json);
             editor.apply();
         });
     }

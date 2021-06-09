@@ -38,10 +38,13 @@ public class UserValidateInfoRepository {
         userValidateInfoApi = RetrofitService.createService(UserValidateInfoApi.class);
     }
 
-    public MutableLiveData<UserInfo> getUserInfo(Activity activity, String username, String password) {
+    public MutableLiveData<UserInfo> getUserInfo(Activity activity, String username, String password, boolean isComingFromSignIn) {
         MutableLiveData<UserInfo> userInfoLiveData = new MutableLiveData<>();
         LoadingDialog loadingDialog = new LoadingDialog(activity);
-        loadingDialog.showDialog();
+        if (isComingFromSignIn){
+            loadingDialog.showDialog();
+        }
+
         userValidateInfoApi.getUserValidate(API_TOKEN, USER_VALIDATE, username, password).enqueue(new Callback<UserValidate>() {
             @Override
             public void onResponse(Call<UserValidate> call, Response<UserValidate> response) {
@@ -55,16 +58,21 @@ public class UserValidateInfoRepository {
                                 @Override
                                 public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                                     if (response.isSuccessful()) {
-                                        loadingDialog.dismissDialog();
+                                        if (isComingFromSignIn){
+                                            loadingDialog.dismissDialog();
+                                        }
                                         if (response.body()!=null){
                                             UserInfo userInfo = response.body();
                                             String status = userInfo.getStatus();
                                             if (status.equals("SUCCESS")){
                                                 userInfoLiveData.setValue(response.body());
                                                 Log.d("LOGININFO", "onResponse: I am here success");
-                                                Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
-                                                activity.startActivity(new Intent(activity, AccountActivity.class));
-                                                activity.finish();
+                                                if (isComingFromSignIn){
+                                                    Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
+                                                    activity.startActivity(new Intent(activity, AccountActivity.class));
+                                                    activity.finish();
+                                                }
+
                                             }
                                             else{
                                                 userInfoLiveData.setValue(null);
@@ -89,7 +97,10 @@ public class UserValidateInfoRepository {
                 } else {
                     userInfoLiveData.setValue(null);
                 }
-                loadingDialog.dismissDialog();
+                if (isComingFromSignIn){
+                    loadingDialog.dismissDialog();
+                }
+
             }
             @Override
             public void onFailure(Call<UserValidate> call, Throwable t) {

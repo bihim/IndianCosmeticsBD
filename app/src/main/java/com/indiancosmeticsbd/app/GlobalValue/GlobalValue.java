@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
+import com.indiancosmeticsbd.app.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class GlobalValue {
     /*User Info*/
     public static final String user_id = "user_id";
     public static final String user_username = "user_username";
+    public static final String user_password = "user_password";
     public static final String user_token = "user_token";
     public static final String user_first_name = "user_first_name";
     public static final String user_last_name = "user_last_name";
@@ -50,6 +52,9 @@ public class GlobalValue {
     public static final String user_country = "user_country";
     public static final String user_postalcode = "user_postalcode";
     public static final String user_mobile_number = "user_mobile_number";
+    public static final String user_previous_notification_size = "user_previous_notification_size";
+    public static final String user_after_notification_size = "user_after_notification_size";
+    public static final String user_notification = "user_notification";
 
     /*Company*/
     public static final String COMPANY_ADDRESS = "company_address";
@@ -107,5 +112,13 @@ public class GlobalValue {
                 //return carts.size();
             }
         }
+    }
+
+    public static void NOTIFICATION_SHOW(Activity activity, BottomNavigationView bottomNavigationView){
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        int previousNotificationSize = sharedPreferences.getInt(user_previous_notification_size, 0);
+        int afterNotificationSize = sharedPreferences.getInt(user_after_notification_size, 0);
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_account);
+        badgeDrawable.setVisible(previousNotificationSize!=afterNotificationSize);
     }
 }

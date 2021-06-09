@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -61,6 +62,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_MIDDLE
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_TOP;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         themeSwitch();
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        NOTIFICATION_SHOW(this, bottomNavigationView);
     }
 
     private void setRecyclerViewCategoryWiseView2(List<CategoryWiseViewModel> categoryWiseView2, int recyclerviewID) {
@@ -330,16 +333,16 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.bottom_nav_home) {
                     //
                 } else if (item.getItemId() == R.id.bottom_nav_wishlist) {
-                    startActivity(new Intent(MainActivity.this, WishListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(MainActivity.this, WishListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 } else if (item.getItemId() == R.id.bottom_nav_cart) {
-                    startActivity(new Intent(MainActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    startActivity(new Intent(MainActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     overridePendingTransition(0, 0);
                 } else if (item.getItemId() == R.id.bottom_nav_account) {
 
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                     if (sharedPreferences.contains(user_username)) {
-                        startActivity(new Intent(MainActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        startActivity(new Intent(MainActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     } else {
                         startActivity(new Intent(MainActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                     }
@@ -405,5 +408,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        NOTIFICATION_SHOW(this, bottomNavigationView);
     }
 }

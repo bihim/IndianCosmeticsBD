@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -14,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark"
         android:windowSoftInputMode="stateVisible|adjustPan">
-        <activity android:name=".Views.Activity.SearchActivity"></activity>
+        <activity android:name=".Views.Activity.NotificationActivity"></activity>
+        <activity android:name=".Views.Activity.SearchActivity" />
         <activity android:name=".Views.Activity.SpeechTestActivity" />
         <activity android:name=".Views.Activity.ProductDetails.PhotoViewActivity" />
         <activity android:name=".Views.Activity.ProductDetails.ProductDetailsActivity" />
@@ -25,7 +25,8 @@
         <activity android:name=".Views.Activity.Account.AccountActivity" />
         <activity android:name=".Views.Activity.BottomNavActivities.CartActivity" />
         <activity android:name=".Views.Activity.BottomNavActivities.WishListActivity" />
-        <activity android:name=".Views.Activity.BottomNavActivities.MainActivity" />
+        <activity android:name=".Views.Activity.BottomNavActivities.MainActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".Views.Activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

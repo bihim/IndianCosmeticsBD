@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Adapter.CartAdapter;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
@@ -30,9 +31,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -224,12 +227,13 @@ public class CartActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(bottomNavigationId);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.bottom_nav_home){
-               /* startActivity(new Intent(CartActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                overridePendingTransition(0, 0);*/
-                onBackPressed();
+                startActivity(new Intent(CartActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                overridePendingTransition(0, 0);
+                //onBackPressed();
             }
             else if(item.getItemId() == R.id.bottom_nav_wishlist){
                 startActivity(new Intent(CartActivity.this, WishListActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
                 overridePendingTransition(0, 0);
             }
             else if(item.getItemId() == R.id.bottom_nav_cart){
@@ -237,7 +241,13 @@ public class CartActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);*/
             }
             else if(item.getItemId() == R.id.bottom_nav_account){
-                startActivity(new Intent(CartActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                if (sharedPreferences.contains(user_username)) {
+                    startActivity(new Intent(CartActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+                } else {
+                    startActivity(new Intent(CartActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                }
                 overridePendingTransition(0, 0);
             }
             return true;
@@ -277,6 +287,7 @@ public class CartActivity extends AppCompatActivity {
         }
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        NOTIFICATION_SHOW(this, bottomNavigationView);
     }
 
     @Override

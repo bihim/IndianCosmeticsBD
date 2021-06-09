@@ -108,6 +108,17 @@ public class UserInfo {
         @SerializedName("customer_orders")
         @Expose
         private List<CustomerOrder> customerOrders = null;
+        @SerializedName("notifications")
+        @Expose
+        private List<Notification> notifications = null;
+
+        public List<Notification> getNotifications() {
+            return notifications;
+        }
+
+        public void setNotifications(List<Notification> notifications) {
+            this.notifications = notifications;
+        }
 
         public String getId() {
             return id;

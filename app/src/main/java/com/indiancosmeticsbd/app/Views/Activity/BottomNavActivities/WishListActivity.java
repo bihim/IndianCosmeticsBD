@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Adapter.WishListAdapter;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
@@ -28,9 +29,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class WishListActivity extends AppCompatActivity {
 
@@ -56,6 +59,7 @@ public class WishListActivity extends AppCompatActivity {
         wishListArrayList = viewWishList();
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        NOTIFICATION_SHOW(this, bottomNavigationView);
         if (!wishListArrayList.isEmpty())
         {
             setRecyclerview();
@@ -142,19 +146,27 @@ public class WishListActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.bottom_nav_home){
-                    /*startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    overridePendingTransition(0, 0);*/
-                    onBackPressed();
+                    startActivity(new Intent(WishListActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
+                    overridePendingTransition(0, 0);
+                    //onBackPressed();
                 }
                 else if(item.getItemId() == R.id.bottom_nav_wishlist){
                     //startActivity(new Intent(WishListActivity.this, WishListActivity.class));
                 }
                 else if(item.getItemId() == R.id.bottom_nav_cart){
                     startActivity(new Intent(WishListActivity.this, CartActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
                     overridePendingTransition(0, 0);
                 }
                 else if(item.getItemId() == R.id.bottom_nav_account){
-                    startActivity(new Intent(WishListActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                    if (sharedPreferences.contains(user_username)) {
+                        startActivity(new Intent(WishListActivity.this, AccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        finish();
+                    } else {
+                        startActivity(new Intent(WishListActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    }
                     overridePendingTransition(0, 0);
                 }
                 return true;
@@ -193,5 +205,6 @@ public class WishListActivity extends AppCompatActivity {
         isCartEmpty(wishListArrayList.isEmpty());
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
+        NOTIFICATION_SHOW(this, bottomNavigationView);
     }
 }
