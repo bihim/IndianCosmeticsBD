@@ -141,4 +141,7 @@
     <string name="confirmation_message">A recovery mail has been sent to your email address. Please check in your inbox/spam folder.</string>
     <string name="submit">Submit</string>
     <string name="error_forgot">Error Occurred</string>
+
+    <!--View Orders-->
+    <string name="view_orders">Orders</string>
 </resources>

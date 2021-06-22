@@ -56,6 +56,7 @@ public class GlobalValue {
     public static final String user_after_notification_size = "user_after_notification_size";
     public static final String user_notification = "user_notification";
     public static final String user_orders = "user_orders";
+    public static final String user_date = "user_date";
 
     /*Company*/
     public static final String COMPANY_ADDRESS = "company_address";

@@ -49,6 +49,7 @@ import com.indiancosmeticsbd.app.ViewModel.ProductCategoriesViewModel;
 import com.indiancosmeticsbd.app.ViewModel.ProductListViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.Orders.ViewOrdersActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductListActivity;
 import com.indiancosmeticsbd.app.Views.Activity.SearchActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -68,6 +69,8 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_date;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_orders;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private SwitchCompat switchCompatTheme;
     private ImageView imageViewTheme;
     private MaterialButton navHelpline;
+    private MaterialButton navOrders;
 
     /*Product Categories*/
     private ArrayList<ProductCategoriesAdapterModel> productCategoriesModelAdapterArrayList;
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
         NOTIFICATION_SHOW(this, bottomNavigationView);
+        testUserOrder();
     }
 
     private void setRecyclerViewCategoryWiseView2(List<CategoryWiseViewModel> categoryWiseView2, int recyclerviewID) {
@@ -370,6 +375,25 @@ public class MainActivity extends AppCompatActivity {
                 numberDialog.showDialog();
             }
         });
+
+        navOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ViewOrdersActivity.class));
+            }
+        });
+    }
+
+    private void testUserOrder(){
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                String getOrders = sharedPreferences.getString(user_orders, "");
+                String getDate = sharedPreferences.getString(user_date, "");
+                Log.d("USERORDERS", "onClick: order: "+getOrders+" date: "+getDate);
+            }
+        });
     }
 
     private void findViewById() {
@@ -390,6 +414,7 @@ public class MainActivity extends AppCompatActivity {
 
         dummyCardView = findViewById(R.id.dummy_card);
         navHelpline = findViewById(R.id.nav_order_helpline);
+        navOrders = findViewById(R.id.nav_orders);
     }
 
     @Override

@@ -31,6 +31,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_country;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_date;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_district;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_email;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
@@ -82,9 +83,11 @@ public class SignInActivity extends AppCompatActivity {
             UserInfo.Content value = userInfo.getContent();
             notifications.addAll(value.getNotifications());
             StringBuilder listCustomerOrders = new StringBuilder();
+            StringBuilder listCustomerDate = new StringBuilder();
             if (value.getCustomerOrders().size() != 0) {
                 for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
                     listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
+                    listCustomerDate.append(customerOrder.getDate()).append(",");
                 }
             }
 
@@ -115,6 +118,7 @@ public class SignInActivity extends AppCompatActivity {
             editor.putInt(user_after_notification_size, notificationSize);
             editor.putString(user_notification, notification_json);
             editor.putString(user_orders, listCustomerOrders.toString());
+            editor.putString(user_date, listCustomerDate.toString());
             editor.apply();
         });
     }

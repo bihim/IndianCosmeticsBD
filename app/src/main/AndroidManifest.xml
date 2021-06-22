@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark"
         android:windowSoftInputMode="stateVisible|adjustPan">
-        <activity android:name=".Views.Activity.Orders.ViewOrdersActivity"></activity>
+        <activity android:name=".Views.Activity.Orders.OrderStatusActivity"></activity>
+        <activity android:name=".Views.Activity.Orders.ViewOrdersActivity" />
         <activity android:name=".Views.Activity.Orders.OrderListActivity" />
         <activity android:name=".Views.Activity.NotificationActivity" />
         <activity android:name=".Views.Activity.SearchActivity" />

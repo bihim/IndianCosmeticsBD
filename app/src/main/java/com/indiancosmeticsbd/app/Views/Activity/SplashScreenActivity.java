@@ -40,6 +40,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_country;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_date;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_district;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_email;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
@@ -47,6 +48,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_id;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_mobile_number;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_notification;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_orders;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_password;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_postalcode;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_previous_notification_size;
@@ -64,18 +66,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         getContactInfoMVVM();
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        if (sharedPreferences.contains(user_previous_notification_size)){
+        if (sharedPreferences.contains(user_previous_notification_size)) {
             String emailAddress = sharedPreferences.getString(user_email, "test@mail.com");
             String password = sharedPreferences.getString(user_password, "test1234");
             setSignInButton(emailAddress, password);
         }
     }
 
-    private void getContactInfoMVVM(){
+    private void getContactInfoMVVM() {
         ContactInfoViewModel contactInfoViewModel = new ViewModelProvider(this).get(ContactInfoViewModel.class);
         contactInfoViewModel.init();
         contactInfoViewModel.getContactInfo().observe(this, contactInfo -> {
-            if(contactInfo!=null){
+            if (contactInfo != null) {
                 ContactInfo.Content content = contactInfo.getContent();
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -101,7 +103,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
-    private void setSignInButton(String emailAddress, String password){
+    private void setSignInButton(String emailAddress, String password) {
         Gson gson = new Gson();
         List<UserInfo.Notification> notifications = new ArrayList<>();
 
@@ -109,7 +111,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this, false).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
-            if (value.getCustomerOrders().size() != 0){
+            if (value.getCustomerOrders().size() != 0) {
+                StringBuilder listCustomerOrders = new StringBuilder();
+                StringBuilder listCustomerDate = new StringBuilder();
+                for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
+                    listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
+                    listCustomerDate.append(customerOrder.getDate()).append(",");
+                }
                 notifications.addAll(value.getNotifications());
                 int notificationSize = notifications.size();
                 String notification_json = gson.toJson(notifications);
@@ -134,6 +142,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                 //editor.putInt(user_previous_notification_size, 0);
                 editor.putInt(user_after_notification_size, notificationSize);
                 editor.putString(user_notification, notification_json);
+                editor.putString(user_orders, listCustomerOrders.toString());
+                editor.putString(user_date, listCustomerDate.toString());
 
                 editor.apply();
             }
