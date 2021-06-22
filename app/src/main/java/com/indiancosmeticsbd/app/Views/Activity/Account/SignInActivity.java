@@ -14,6 +14,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.GlobalValue.ForgotPasswordDialog;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.R;
@@ -50,6 +51,7 @@ public class SignInActivity extends AppCompatActivity {
     private ImageButton closeButton;
     private MaterialButton gotoRegisterButton;
     private MaterialButton signInButton;
+    private MaterialButton forgotButton;
     private TextInputEditText emailEditText, passwordEditText;
 
     @Override
@@ -141,6 +143,14 @@ public class SignInActivity extends AppCompatActivity {
                 Log.d("LOGININFO", "onClick: Clicked Hereee");
             }
         });
+
+        forgotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForgotPasswordDialog forgotPasswordDialog = new ForgotPasswordDialog(SignInActivity.this);
+                forgotPasswordDialog.showDialog();
+            }
+        });
     }
 
     private void findViewById() {
@@ -149,5 +159,6 @@ public class SignInActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.sign_in_button);
         emailEditText = findViewById(R.id.sign_in_email);
         passwordEditText = findViewById(R.id.sign_in_password);
+        forgotButton = findViewById(R.id.sign_in_forgot_pass);
     }
 }

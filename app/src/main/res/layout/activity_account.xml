@@ -235,6 +235,16 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="?forgot_password_color"
+                    android:text="@string/logout"
+                    app:elevation="0dp"
+                    app:cornerRadius="@dimen/_10sdp"
+                    android:textSize="@dimen/_10ssp"/>
+
             </LinearLayout>
         </ScrollView>
 

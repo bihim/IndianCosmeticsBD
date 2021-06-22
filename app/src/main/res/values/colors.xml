@@ -22,7 +22,7 @@
     <color name="bottomNavUnselectedColorLight">#919191</color>
     <color name="buttonColorLight">#B48A56</color>
     <color name="forgotPassLight">#FF1A1A</color>
-    <color name="editTextBackLight">#FFF</color>
+    <color name="editTextBackLight">#EDEDED</color>
     <color name="editIconLight">#4B4B4B</color>
     <color name="collapsingColorLight">#00FFFFFF</color>
     <color name="halkaColorLight">#F8F8F8</color>

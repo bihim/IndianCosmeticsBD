@@ -14,14 +14,17 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.WishListActivity;
 import com.indiancosmeticsbd.app.Views.Activity.NotificationActivity;
 
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
@@ -39,6 +42,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView textViewName, textViewEmail, textViewMobileNumber, textViewAddress;
     private ImageButton imageButtonNotification;
     private LinearLayout imageButtonBadge;
+    private MaterialButton buttonLogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,29 @@ public class AccountActivity extends AppCompatActivity {
         setBottomNavigation(R.id.bottom_navigation);
         findViewById();
         settingAccountInfo();
+        setLogOut();
         NOTIFICATION_SHOW(this, bottomNavigationView);
         showNotification();
+    }
+
+    private void setLogOut(){
+        buttonLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearSharedPref(SHARED_PREF_NAME);
+                clearSharedPref(CART);
+                clearSharedPref(WISHLIST);
+                startActivity(new Intent(AccountActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void clearSharedPref(String name){
+        SharedPreferences sharedPreferences = getSharedPreferences(name, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
     private void showNotification() {
@@ -95,6 +120,7 @@ public class AccountActivity extends AppCompatActivity {
         textViewMobileNumber = findViewById(R.id.account_mobile);
         imageButtonNotification = findViewById(R.id.notification_notification);
         imageButtonBadge = findViewById(R.id.notification_badge);
+        buttonLogOut = findViewById(R.id.logout);
     }
 
     private void setBottomNavigation(int bottomNavigationId) {

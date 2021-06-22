@@ -11,8 +11,8 @@ import com.indiancosmeticsbd.app.R;
 
 public class ExitDialog {
 
-    private Activity activity;
-    private Dialog dialog;
+    final private Activity activity;
+    final private Dialog dialog;
 
     public ExitDialog(Activity activity) {
         this.activity = activity;

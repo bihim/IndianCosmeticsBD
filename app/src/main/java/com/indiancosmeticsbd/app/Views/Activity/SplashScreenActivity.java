@@ -109,33 +109,35 @@ public class SplashScreenActivity extends AppCompatActivity {
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this, false).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
-            notifications.addAll(value.getNotifications());
-            int notificationSize = notifications.size();
-            String notification_json = gson.toJson(notifications);
+            if (value.getCustomerOrders().size() != 0){
+                notifications.addAll(value.getNotifications());
+                int notificationSize = notifications.size();
+                String notification_json = gson.toJson(notifications);
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(user_id, value.getId());
+                editor.putString(user_username, value.getUsername());
+                editor.putString(user_token, value.getToken());
+                editor.putString(user_first_name, value.getFirstName());
+                editor.putString(user_last_name, value.getLastName());
+                editor.putString(user_email, value.getEmail());
+                editor.putString(user_address, value.getAddress());
+                editor.putString(user_city, value.getCity());
+                editor.putString(user_district, value.getDistrict());
+                editor.putString(user_country, value.getCountry());
+                editor.putString(user_postalcode, value.getPostalcode());
+                editor.putString(user_mobile_number, value.getMobileNumber());
+                /*Notification Part
+                 * First time previous notification size will be 0 and new will assign to it.
+                 * If it matches then no badge will show */
 
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(user_id, value.getId());
-            editor.putString(user_username, value.getUsername());
-            editor.putString(user_token, value.getToken());
-            editor.putString(user_first_name, value.getFirstName());
-            editor.putString(user_last_name, value.getLastName());
-            editor.putString(user_email, value.getEmail());
-            editor.putString(user_address, value.getAddress());
-            editor.putString(user_city, value.getCity());
-            editor.putString(user_district, value.getDistrict());
-            editor.putString(user_country, value.getCountry());
-            editor.putString(user_postalcode, value.getPostalcode());
-            editor.putString(user_mobile_number, value.getMobileNumber());
-            /*Notification Part
-             * First time previous notification size will be 0 and new will assign to it.
-             * If it matches then no badge will show */
+                //editor.putInt(user_previous_notification_size, 0);
+                editor.putInt(user_after_notification_size, notificationSize);
+                editor.putString(user_notification, notification_json);
 
-            //editor.putInt(user_previous_notification_size, 0);
-            editor.putInt(user_after_notification_size, notificationSize);
-            editor.putString(user_notification, notification_json);
+                editor.apply();
+            }
 
-            editor.apply();
         });
     }
 }
