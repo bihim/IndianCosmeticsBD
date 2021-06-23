@@ -1,0 +1,125 @@
+package com.indiancosmeticsbd.app.Views.Activity.Orders;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.indiancosmeticsbd.app.Adapter.CartAdapter;
+import com.indiancosmeticsbd.app.Adapter.OrderSubmitProductAdapter;
+import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
+import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
+import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_mobile_number;
+
+public class OrderSubmitActivity extends AppCompatActivity {
+
+    private TextView textViewName;
+    private TextView textViewPhoneNumber;
+    private TextView textViewAddress;
+    private TextView textViewTotal;
+    private RecyclerView recyclerView;
+    private MaterialButton buttonSubmit;
+    private OrderSubmitProductAdapter orderSubmitProductAdapter;
+    private ArrayList<Cart> cartArrayList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setTheme();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order_submit);
+        setToolbar(R.id.toolbar_top, R.id.back_button);
+        findViewById();
+        setDeliveredAddress();
+        setRecyclerview();
+    }
+
+    private void setRecyclerview(){
+        cartArrayList = viewCart();
+        orderSubmitProductAdapter = new OrderSubmitProductAdapter(cartArrayList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(orderSubmitProductAdapter);
+        totalPrice();
+    }
+    private void totalPrice(){
+        int totalCount = 0;
+        for (Cart cart: cartArrayList){
+            int price = Integer.parseInt(cart.getPrice());
+            int quantity = Integer.parseInt(cart.getQuantity());
+            totalCount = totalCount+(price*quantity);
+        }
+        textViewTotal.setText("৳"+totalCount);
+    }
+
+    private ArrayList<Cart> viewCart() {
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
+        String json = sharedPreferences.getString(CART, "");
+        Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+        ArrayList<Cart> carts = gson.fromJson(json, type);
+        if (json.equals(""))
+        {
+            return new ArrayList<>();
+        }
+        else{
+            return carts;
+        }
+    }
+
+    private void setDeliveredAddress(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        textViewName.setText(sharedPreferences.getString(user_first_name,"No name")+" "+sharedPreferences.getString(user_last_name, ""));
+        textViewPhoneNumber.setText(sharedPreferences.getString(user_mobile_number, "No Number"));
+        textViewAddress.setText(sharedPreferences.getString(user_address, "No Address"));
+    }
+
+    private void setTheme() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "light");
+        setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
+    }
+    private void setToolbar(int toolbarId, int backButtonId) {
+        MaterialToolbar toolbar = findViewById(toolbarId);
+        setSupportActionBar(toolbar);
+        ImageButton backButton = findViewById(backButtonId);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+    private void findViewById() {
+        textViewName = findViewById(R.id.order_submit_name);
+        textViewPhoneNumber = findViewById(R.id.order_submit_phone_number);
+        textViewAddress = findViewById(R.id.order_submit_address);
+        recyclerView = findViewById(R.id.order_submit_list_product_recyclerview);
+        buttonSubmit = findViewById(R.id.submit_order);
+        textViewTotal = findViewById(R.id.order_submit_total_amount);
+    }
+}

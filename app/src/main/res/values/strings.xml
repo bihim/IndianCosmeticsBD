@@ -144,4 +144,19 @@
 
     <!--View Orders-->
     <string name="view_orders">Orders</string>
+
+    <!--Order Submit-->
+    <string name="order_submit">Order Details</string>
+    <string name="product_list">List of products</string>
+    <string name="user_name">Muhammad Zubaer Bin Ibne Alam Bihim</string>
+    <string name="user_phone">01911000000</string>
+    <string name="user_phone_text">Phone</string>
+    <string name="user_address_text">Delivery Address</string>
+    <string name="user_address">Secor 9, Uttara, Dhaka, Bangladesh, Noakhali, Chittagong</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="delivery_amount">Delivery Cost</string>
+    <string name="total_tk">1200tk</string>
+
+    <!--Order Status-->
+    <string name="order_status_name">Order Status</string>
 </resources>

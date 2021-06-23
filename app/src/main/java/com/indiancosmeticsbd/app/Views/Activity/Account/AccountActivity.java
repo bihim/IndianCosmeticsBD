@@ -24,6 +24,7 @@ import com.indiancosmeticsbd.app.Views.Activity.NotificationActivity;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
@@ -55,6 +56,8 @@ public class AccountActivity extends AppCompatActivity {
         settingAccountInfo();
         setLogOut();
         NOTIFICATION_SHOW(this, bottomNavigationView);
+        SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
+        SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
         showNotification();
     }
 

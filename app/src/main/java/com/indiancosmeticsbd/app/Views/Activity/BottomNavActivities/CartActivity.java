@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.indiancosmeticsbd.app.Adapter.CartAdapter;
@@ -25,6 +26,7 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.Orders.OrderSubmitActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
 import java.lang.reflect.Type;
@@ -48,6 +50,7 @@ public class CartActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayoutCheckout;
     private TextView textViewTotal;
     private LinearLayout empty;
+    private MaterialButton buttonCheckout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +61,21 @@ public class CartActivity extends AppCompatActivity {
         setBottomNavigation(R.id.bottom_navigation);
         recyclerView = findViewById(R.id.cart_recyclerview);
         textViewTotal = findViewById(R.id.cart_total);
+        buttonCheckout = findViewById(R.id.checkout);
         empty = findViewById(R.id.empty_image);
         constraintLayoutCheckout = findViewById(R.id.checkout_card);
         sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
+        setButtonCheckout();
         setCommonThings();
+    }
+
+    private void setButtonCheckout(){
+        buttonCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this, OrderSubmitActivity.class));
+            }
+        });
     }
 
     private void setRecyclerview(){

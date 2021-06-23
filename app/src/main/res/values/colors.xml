@@ -27,6 +27,7 @@
     <color name="collapsingColorLight">#00FFFFFF</color>
     <color name="halkaColorLight">#F8F8F8</color>
     <color name="categoryColorLight">#C0C0C0</color>
+    <color name="editTextBackLight2">#FFFFFF</color>
 
 
     <!--Dark Theme Color-->

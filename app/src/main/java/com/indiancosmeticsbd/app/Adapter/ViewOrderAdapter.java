@@ -1,6 +1,7 @@
 package com.indiancosmeticsbd.app.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.indiancosmeticsbd.app.Model.Orders.ViewOrdersModel;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.Orders.OrderStatusActivity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,7 +40,7 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewOrderViewHolder holder, int position) {
         ViewOrdersModel selectedItem = viewOrdersModels.get(position);
-        holder.textView.setText("Order No: "+selectedItem.getOrderNumber());
+        holder.textView.setText("Order No: " + selectedItem.getOrderNumber());
         try {
             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
@@ -49,6 +51,15 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.View
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrderStatusActivity.class);
+                intent.putExtra("id", selectedItem.getOrderNumber());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
