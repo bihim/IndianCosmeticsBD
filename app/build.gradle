@@ -61,4 +61,6 @@ dependencies {
     implementation 'com.github.giswangsj:AndRatingBar:1.0.5'
     //PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    //pretty logger
+    implementation 'com.orhanobut:logger:2.2.0'
 }

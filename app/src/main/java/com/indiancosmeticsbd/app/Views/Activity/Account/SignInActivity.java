@@ -13,19 +13,15 @@ import android.widget.ImageButton;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.indiancosmeticsbd.app.GlobalValue.ForgotPasswordDialog;
-import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
+import com.indiancosmeticsbd.app.Views.Dialogs.ForgotPasswordDialog;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.UserInfoViewModel;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;

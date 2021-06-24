@@ -5,7 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.indiancosmeticsbd.app.GlobalValue.LoadingDialog;
+import com.indiancosmeticsbd.app.Views.Dialogs.LoadingDialog;
 import com.indiancosmeticsbd.app.Model.ProductDetails.ProductInfo;
 import com.indiancosmeticsbd.app.Network.RetrofitService;
 

@@ -156,6 +156,11 @@
     <string name="total_amount">Total Amount</string>
     <string name="delivery_amount">Delivery Cost</string>
     <string name="total_tk">1200tk</string>
+    <string name="bkash">Bkash Payment</string>
+    <string name="cod">Cash On Delivery</string>
+
+    <string name="delivery_text">Dhaka City- 6 to 48 hours. Outside Dhaka- 24 to 96 hours.</string>
+    <string name="order_confirmation">Order has taken successfully</string>
 
     <!--Order Status-->
     <string name="order_status_name">Order Status</string>

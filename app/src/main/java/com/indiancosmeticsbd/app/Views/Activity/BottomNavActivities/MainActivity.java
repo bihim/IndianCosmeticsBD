@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -32,8 +29,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
-import com.indiancosmeticsbd.app.GlobalValue.ExitDialog;
-import com.indiancosmeticsbd.app.GlobalValue.NumberDialog;
+import com.indiancosmeticsbd.app.Views.Dialogs.ExitDialog;
+import com.indiancosmeticsbd.app.Views.Dialogs.NumberDialog;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
 import com.indiancosmeticsbd.app.Model.BannerSlider.SliderItem;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
@@ -58,8 +55,6 @@ import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.HOME_PAGE_BOTTOM;

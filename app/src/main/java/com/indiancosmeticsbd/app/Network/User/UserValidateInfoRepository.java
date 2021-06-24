@@ -3,11 +3,10 @@ package com.indiancosmeticsbd.app.Network.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.indiancosmeticsbd.app.GlobalValue.LoadingDialog;
+import com.indiancosmeticsbd.app.Views.Dialogs.LoadingDialog;
 import com.indiancosmeticsbd.app.Model.SignIn.UserInfo;
 import com.indiancosmeticsbd.app.Model.SignIn.UserValidate;
 import com.indiancosmeticsbd.app.Network.RetrofitService;

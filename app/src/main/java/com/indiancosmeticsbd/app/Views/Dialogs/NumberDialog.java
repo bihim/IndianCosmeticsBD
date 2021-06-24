@@ -1,4 +1,4 @@
-package com.indiancosmeticsbd.app.GlobalValue;
+package com.indiancosmeticsbd.app.Views.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;

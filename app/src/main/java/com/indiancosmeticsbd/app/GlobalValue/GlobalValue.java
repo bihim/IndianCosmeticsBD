@@ -92,6 +92,10 @@ public class GlobalValue {
     /*Forgot Password*/
     public static final String FORGOT_PASSWORD = "forgotPassword";
 
+    /*COD Order*/
+    public static final String ORDER_SUBMIT = "orderSubmit";
+    public static final String COD = "cod";
+
     public static void SHOWBADGE(Activity activity, String sharedPrefName, int menuId, BottomNavigationView bottomNavigationView){
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(sharedPrefName, MODE_PRIVATE);

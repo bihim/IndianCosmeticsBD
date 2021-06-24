@@ -1,9 +1,8 @@
-package com.indiancosmeticsbd.app.GlobalValue;
+package com.indiancosmeticsbd.app.Views.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -28,11 +27,11 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.FORGOT_PASSWORD;
 
-public class ForgotPasswordDialog {
+public class BkashOrderSubmitDialog {
     final private Activity activity;
     final private Dialog dialog;
 
-    public ForgotPasswordDialog(Activity activity) {
+    public BkashOrderSubmitDialog(Activity activity) {
         this.activity = activity;
         dialog = new Dialog(activity);
     }

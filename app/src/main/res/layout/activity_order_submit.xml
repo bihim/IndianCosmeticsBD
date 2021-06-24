@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?layoutColor"
     android:orientation="vertical"
-    tools:context=".Views.Activity.Orders.OrderStatusActivity">
+    tools:context=".Views.Activity.Orders.OrderSubmitActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_top"
@@ -59,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="@dimen/_12sdp">
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -82,46 +84,47 @@
                                 android:id="@+id/order_submit_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_5sdp"
                                 android:text="@string/user_name"
-                                android:textSize="@dimen/_14ssp"
-                                android:textStyle="bold"
                                 android:textColor="?textViewMainColor"
-                                android:layout_marginBottom="@dimen/_5sdp"/>
+                                android:textSize="@dimen/_14ssp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/user_phone_text"
                                 android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp"/>
+                                android:textSize="@dimen/_11ssp" />
 
                             <TextView
                                 android:id="@+id/order_submit_phone_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_5sdp"
                                 android:text="@string/user_phone"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold"
                                 android:textColor="?textViewMainColor"
-                                android:layout_marginBottom="@dimen/_5sdp"/>
+                                android:textSize="@dimen/_11ssp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/user_address_text"
                                 android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp"/>
+                                android:textSize="@dimen/_11ssp" />
 
                             <TextView
                                 android:id="@+id/order_submit_address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/user_address"
+                                android:textColor="?textViewMainColor"
                                 android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold"
-                                android:textColor="?textViewMainColor" />
+                                android:textStyle="bold" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -134,33 +137,33 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/total_amount"
                                 android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp"/>
+                                android:textSize="@dimen/_11ssp" />
 
                             <TextView
                                 android:id="@+id/order_submit_total_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_5sdp"
                                 android:text="@string/total_tk"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold"
                                 android:textColor="?textViewMainColor"
-                                android:layout_marginBottom="@dimen/_5sdp"/>
+                                android:textSize="@dimen/_11ssp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/delivery_amount"
                                 android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp"/>
+                                android:textSize="@dimen/_11ssp" />
 
                             <TextView
                                 android:id="@+id/order_submit_delivery_cost"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/total_tk"
+                                android:textColor="?textViewMainColor"
                                 android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold"
-                                android:textColor="?textViewMainColor" />
+                                android:textStyle="bold" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -170,35 +173,54 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
                     android:text="@string/product_list"
                     android:textColor="?textViewMainColor"
-                    android:textStyle="bold"
                     android:textSize="@dimen/_14ssp"
-                    android:layout_margin="@dimen/_10sdp"/>
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/order_submit_list_product_recyclerview"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/recyclerview_order_submit_products"/>
-
-
-
+                    android:visibility="gone"
+                    tools:listitem="@layout/recyclerview_order_submit_products" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-        <com.google.android.material.button.MaterialButton
+
+
+        <LinearLayout
             android:id="@+id/submit_order"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/submit"
-            app:backgroundTint="?buttonColor"
-            android:layout_marginHorizontal="@dimen/_5sdp"
-            app:elevation="0dp"
-            app:cornerRadius="@dimen/_7sdp"/>
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_order_cod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:text="@string/cod"
+                app:backgroundTint="?buttonColor"
+                app:cornerRadius="@dimen/_7sdp"
+                app:elevation="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_order_bkash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/bkash"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                app:backgroundTint="#DF146E"
+                app:cornerRadius="@dimen/_7sdp"
+                app:elevation="0dp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -24,6 +24,9 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
+import com.indiancosmeticsbd.app.Views.Dialogs.CODOrderSubmitDialog;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -42,8 +45,10 @@ public class OrderSubmitActivity extends AppCompatActivity {
     private TextView textViewPhoneNumber;
     private TextView textViewAddress;
     private TextView textViewTotal;
+    private TextView textViewDelivery;
     private RecyclerView recyclerView;
-    private MaterialButton buttonSubmit;
+    private MaterialButton buttonSubmitCOD;
+    private MaterialButton buttonSubmitBkash;
     private OrderSubmitProductAdapter orderSubmitProductAdapter;
     private ArrayList<Cart> cartArrayList;
 
@@ -56,6 +61,14 @@ public class OrderSubmitActivity extends AppCompatActivity {
         findViewById();
         setDeliveredAddress();
         setRecyclerview();
+
+        buttonSubmitCOD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
+                codOrderSubmitDialog.showDialog();
+            }
+        });
     }
 
     private void setRecyclerview(){
@@ -74,14 +87,19 @@ public class OrderSubmitActivity extends AppCompatActivity {
             totalCount = totalCount+(price*quantity);
         }
         textViewTotal.setText("৳"+totalCount);
+        textViewDelivery.setText("৳100");
     }
 
     private ArrayList<Cart> viewCart() {
+
+        Logger.addLogAdapter(new AndroidLogAdapter());
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         String json = sharedPreferences.getString(CART, "");
+        Logger.d("String: "+json);
         Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
         ArrayList<Cart> carts = gson.fromJson(json, type);
+        Logger.d("ArrayList: "+carts);
         if (json.equals(""))
         {
             return new ArrayList<>();
@@ -119,7 +137,9 @@ public class OrderSubmitActivity extends AppCompatActivity {
         textViewPhoneNumber = findViewById(R.id.order_submit_phone_number);
         textViewAddress = findViewById(R.id.order_submit_address);
         recyclerView = findViewById(R.id.order_submit_list_product_recyclerview);
-        buttonSubmit = findViewById(R.id.submit_order);
+        textViewDelivery = findViewById(R.id.order_submit_delivery_cost);
         textViewTotal = findViewById(R.id.order_submit_total_amount);
+        buttonSubmitCOD = findViewById(R.id.submit_order_cod);
+        buttonSubmitBkash = findViewById(R.id.submit_order_bkash);
     }
 }
