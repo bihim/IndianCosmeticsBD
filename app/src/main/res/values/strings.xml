@@ -2,6 +2,9 @@
     <string name="app_name">IndianCosmeticsBD</string>
 
 
+    <string name="retry">Retry</string>
+    <string name="retry_text">Oops! Retry to load</string>
+
     <!--Main Activity-->
     <string name="toolbar_main">IndianCosmeticsBD</string>
     <string name="Open">Open</string>
@@ -161,7 +164,13 @@
 
     <string name="delivery_text">Dhaka City- 6 to 48 hours. Outside Dhaka- 24 to 96 hours.</string>
     <string name="order_confirmation">Order has taken successfully</string>
+    <string name="bkash_phone">Enter Bkash Wallet Number</string>
+    <string name="trnx_id">Enter Payment Transaction ID</string>
+    <string name="bkash_instruction">Step 1: Go to bKash account menu by dialing *247#\nStep 2: Choose option 1 (Send Money)\nStep 3: Enter bkash account number %1$s\nStep 4: Enter amount %2$s\nStep 5: Enter reference (Eg: your name)\nStep 5: Enter pin to confirm your payment</string>
 
     <!--Order Status-->
     <string name="order_status_name">Order Status</string>
+    <string name="delivery_date_text">1st May, 2021 (12:45PM)</string>
+    <string name="delivery_date">Delivery Date</string>
+    <string name="content_description">This is content description</string>
 </resources>

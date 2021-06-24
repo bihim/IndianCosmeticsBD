@@ -3,6 +3,8 @@ package com.indiancosmeticsbd.app.Views.Dialogs;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
@@ -12,22 +14,21 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.indiancosmeticsbd.app.Model.ForgotPassword.ForgotPasswordModel;
-import com.indiancosmeticsbd.app.Model.Orders.CODModel;
+import com.indiancosmeticsbd.app.Model.Orders.TransactionModel;
 import com.indiancosmeticsbd.app.Model.Orders.ProductOrderModels;
 import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
-import com.indiancosmeticsbd.app.Network.ForgotPassword.ForgotPasswordApi;
-import com.indiancosmeticsbd.app.Network.Order.CODApi;
+import com.indiancosmeticsbd.app.Network.Order.TransactionApi;
 import com.indiancosmeticsbd.app.R;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,9 +40,9 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COD;
-import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.FORGOT_PASSWORD;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.ORDER_SUBMIT;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_date;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_orders;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_token;
 
@@ -68,53 +69,57 @@ public class CODOrderSubmitDialog {
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
 
-        CODApi codApi = retrofit.create(CODApi.class);
+        TransactionApi transactionApi = retrofit.create(TransactionApi.class);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.setCancelable(false);
-                linearLayout.setVisibility(View.GONE);
-                lottieAnimationView.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.GONE);
-                SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                String userToken = sharedPreferences.getString(user_token, "Null");
+        button.setOnClickListener(v -> {
+            dialog.setCancelable(false);
+            linearLayout.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+            SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            String userToken = sharedPreferences.getString(user_token, "Null");
 
-                Call<CODModel> call = codApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(), COD, "Null", "");
-                call.enqueue(new Callback<CODModel>() {
-                    @Override
-                    public void onResponse(Call<CODModel> call, Response<CODModel> response) {
-                        dialog.setCancelable(true);
-                        if (response.isSuccessful()) {
-                            CODModel codModel = response.body();
-                            if (codModel != null) {
-                                if (codModel.getStatus().equals("SUCCESS")) {
-                                    if (codModel.getContent().getSuccess()) {
-                                        linearLayout.setVisibility(View.GONE);
-                                        lottieAnimationView.setVisibility(View.GONE);
-                                        textView.setVisibility(View.VISIBLE);
-                                        textView.setText(activity.getResources().getString(R.string.order_confirmation));
+            Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(), COD, "Null", "");
+            call.enqueue(new Callback<TransactionModel>() {
+                @Override
+                public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
+                    dialog.setCancelable(true);
+                    if (response.isSuccessful()) {
+                        TransactionModel transactionModel = response.body();
+                        if (transactionModel != null) {
+                            if (transactionModel.getStatus().equals("SUCCESS")) {
+                                if (transactionModel.getContent().getSuccess()) {
+                                    linearLayout.setVisibility(View.GONE);
+                                    lottieAnimationView.setVisibility(View.GONE);
+                                    textView.setVisibility(View.VISIBLE);
+                                    textView.setText(activity.getResources().getString(R.string.order_confirmation));
 
-                                        String orderNo = String.valueOf(codModel.getContent().getOrderno());
-                                        String userOrders = sharedPreferences.getString(user_orders, "");
-
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        userOrders = userOrders+","+orderNo;
-                                        editor.putString(user_orders, userOrders);
-                                        editor.apply();
+                                    String orderNo = String.valueOf(transactionModel.getContent().getOrderno());
+                                    String userOrders = sharedPreferences.getString(user_orders, "");
+                                    String userDates = sharedPreferences.getString(user_date, "");
 
 
-                                        SharedPreferences sharedPreferencesCart = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
-                                        editorCart.clear();
-                                        editorCart.apply();
+                                    Date cDate = new Date();
+                                    String fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(cDate);
+                                    userDates = userDates+","+fDate;
 
-                                    } else {
-                                        linearLayout.setVisibility(View.GONE);
-                                        lottieAnimationView.setVisibility(View.GONE);
-                                        textView.setVisibility(View.VISIBLE);
-                                        textView.setText(activity.getResources().getString(R.string.error_forgot));
-                                    }
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    userOrders = userOrders+","+orderNo;
+                                    editor.putString(user_orders, userOrders);
+                                    editor.putString(user_date, userDates);
+                                    editor.apply();
+
+
+                                    SharedPreferences sharedPreferencesCart = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
+                                    editorCart.clear();
+                                    editorCart.apply();
+
+                                    dialog.setOnCancelListener(dialog -> {
+                                        activity.startActivity(new Intent(activity, MainActivity.class));
+                                        activity.finish();
+                                    });
+
                                 } else {
                                     linearLayout.setVisibility(View.GONE);
                                     lottieAnimationView.setVisibility(View.GONE);
@@ -127,7 +132,6 @@ public class CODOrderSubmitDialog {
                                 textView.setVisibility(View.VISIBLE);
                                 textView.setText(activity.getResources().getString(R.string.error_forgot));
                             }
-
                         } else {
                             linearLayout.setVisibility(View.GONE);
                             lottieAnimationView.setVisibility(View.GONE);
@@ -135,19 +139,25 @@ public class CODOrderSubmitDialog {
                             textView.setText(activity.getResources().getString(R.string.error_forgot));
                         }
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<CODModel> call, Throwable t) {
+                    } else {
                         linearLayout.setVisibility(View.GONE);
                         lottieAnimationView.setVisibility(View.GONE);
                         textView.setVisibility(View.VISIBLE);
                         textView.setText(activity.getResources().getString(R.string.error_forgot));
                     }
-                });
-                Logger.addLogAdapter(new AndroidLogAdapter());
-                Logger.d("In Dialog"+getProducts());
-            }
+
+                }
+
+                @Override
+                public void onFailure(Call<TransactionModel> call, Throwable t) {
+                    linearLayout.setVisibility(View.GONE);
+                    lottieAnimationView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setText(activity.getResources().getString(R.string.error_forgot));
+                }
+            });
+            Logger.addLogAdapter(new AndroidLogAdapter());
+            Logger.d("In Dialog"+getProducts());
         });
         dialog.show();
     }

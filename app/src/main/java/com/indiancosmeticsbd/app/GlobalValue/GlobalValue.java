@@ -95,6 +95,7 @@ public class GlobalValue {
     /*COD Order*/
     public static final String ORDER_SUBMIT = "orderSubmit";
     public static final String COD = "cod";
+    public static final String BKASH = "bkash";
 
     public static void SHOWBADGE(Activity activity, String sharedPrefName, int menuId, BottomNavigationView bottomNavigationView){
         Gson gson = new Gson();

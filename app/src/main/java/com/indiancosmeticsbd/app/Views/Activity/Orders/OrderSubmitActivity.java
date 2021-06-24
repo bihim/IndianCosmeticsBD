@@ -24,6 +24,7 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
+import com.indiancosmeticsbd.app.Views.Dialogs.BkashOrderSubmitDialog;
 import com.indiancosmeticsbd.app.Views.Dialogs.CODOrderSubmitDialog;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -62,12 +63,14 @@ public class OrderSubmitActivity extends AppCompatActivity {
         setDeliveredAddress();
         setRecyclerview();
 
-        buttonSubmitCOD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
-                codOrderSubmitDialog.showDialog();
-            }
+        buttonSubmitCOD.setOnClickListener(v -> {
+            CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
+            codOrderSubmitDialog.showDialog();
+        });
+
+        buttonSubmitBkash.setOnClickListener(v -> {
+            BkashOrderSubmitDialog bkashOrderSubmitDialog = new BkashOrderSubmitDialog(OrderSubmitActivity.this);
+            bkashOrderSubmitDialog.showDialog(totalPrice());
         });
     }
 
@@ -77,17 +80,17 @@ public class OrderSubmitActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(orderSubmitProductAdapter);
-        totalPrice();
+        textViewTotal.setText("৳"+totalPrice());
+        textViewDelivery.setText("৳100");
     }
-    private void totalPrice(){
+    private int totalPrice(){
         int totalCount = 0;
         for (Cart cart: cartArrayList){
             int price = Integer.parseInt(cart.getPrice());
             int quantity = Integer.parseInt(cart.getQuantity());
             totalCount = totalCount+(price*quantity);
         }
-        textViewTotal.setText("৳"+totalCount);
-        textViewDelivery.setText("৳100");
+        return totalCount;
     }
 
     private ArrayList<Cart> viewCart() {
@@ -125,12 +128,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(toolbarId);
         setSupportActionBar(toolbar);
         ImageButton backButton = findViewById(backButtonId);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
     }
     private void findViewById() {
         textViewName = findViewById(R.id.order_submit_name);

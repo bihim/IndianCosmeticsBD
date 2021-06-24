@@ -1,7 +1,7 @@
 package com.indiancosmeticsbd.app.Model.Orders;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class CODModel {
+public class TransactionModel {
 
     @SerializedName("status")
     @Expose

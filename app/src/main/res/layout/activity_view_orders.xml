@@ -26,7 +26,8 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/content_description" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +59,8 @@
             <ImageView
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="@dimen/_300sdp"
-                android:src="@drawable/ic_no_notification" />
+                android:src="@drawable/ic_no_notification"
+                android:contentDescription="@string/content_description" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,13 +72,47 @@
 
         </LinearLayout>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_100sdp"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_fileName="circle_loading.json"
+            app:lottie_loop="true" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/view_order_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/recyclerview_notification">
+            android:visibility="gone"
+            tools:listitem="@layout/recyclerview_notification"/>
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/splash_retry_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry_text"
+                android:textColor="?forgot_password_color"
+                android:textStyle="bold"
+                android:textSize="@dimen/_14ssp"
+                android:layout_marginBottom="@dimen/_10sdp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/splash_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:backgroundTint="?buttonColor"
+                android:layout_gravity="center"
+                android:text="@string/retry"/>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
