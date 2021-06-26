@@ -154,6 +154,15 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     editor.apply();
                 }
+                else{
+                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(user_orders, "null");
+                    editor.putString(user_date, "null");
+                    editor.putInt(user_after_notification_size, 0);
+                    editor.putString(user_notification, "null");
+                    editor.apply();
+                }
             }
             else{
                 buttonRetry.setVisibility(View.VISIBLE);

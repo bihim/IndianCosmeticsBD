@@ -97,6 +97,9 @@ public class GlobalValue {
     public static final String COD = "cod";
     public static final String BKASH = "bkash";
 
+    /*OrderInfo*/
+    public static final String ORDER_INFO = "orderInfo";
+
     public static void SHOWBADGE(Activity activity, String sharedPrefName, int menuId, BottomNavigationView bottomNavigationView){
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(sharedPrefName, MODE_PRIVATE);

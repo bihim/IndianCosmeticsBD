@@ -82,13 +82,15 @@ public class ViewOrdersActivity extends AppCompatActivity {
         Logger.addLogAdapter(new AndroidLogAdapter());
         String getOrders = sharedPreferences.getString(user_orders, "null");
         String getDate = sharedPreferences.getString(user_date, "null");
-        Logger.d("Orders: "+getOrders+"\nDate: "+getDate);
+        //Logger.d("Orders: "+getOrders+"\nDate: "+getDate);
         viewOrdersModelArrayList = new ArrayList<>();
         if (!getOrders.equals("null")){
             String[] orders = getOrders.split(",");
             String[] dates = getDate.split(",");
             for (int i = 0; i < orders.length; i++){
-                viewOrdersModelArrayList.add(new ViewOrdersModel(orders[i], dates[i]));
+                if (!orders[i].equals("null")){
+                    viewOrdersModelArrayList.add(new ViewOrdersModel(orders[i], dates[i]));
+                }
             }
         }
 
@@ -109,7 +111,6 @@ public class ViewOrdersActivity extends AppCompatActivity {
     private void setSignInButton(String emailAddress, String password) {
         retry.setVisibility(View.GONE);
         lottieAnimationView.setVisibility(View.VISIBLE);
-
         Gson gson = new Gson();
         List<UserInfo.Notification> notifications = new ArrayList<>();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
@@ -153,6 +154,13 @@ public class ViewOrdersActivity extends AppCompatActivity {
                     editor.putString(user_orders, listCustomerOrders.toString());
                     editor.putString(user_date, listCustomerDate.toString());
 
+                    editor.apply();
+                }
+                else{
+                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(user_orders, "null");
+                    editor.putString(user_date, "null");
                     editor.apply();
                 }
             }

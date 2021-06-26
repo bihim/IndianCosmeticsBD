@@ -131,6 +131,7 @@
     <!--Notification-->
     <string name="notification_toolbar">Notification</string>
     <string name="no_notification">No notification available</string>
+    <string name="no_order">No order available</string>
     <string name="notificationType">Order</string>
     <string name="notifications">Your order #56768 is now in processing.</string>
 
@@ -173,4 +174,8 @@
     <string name="delivery_date_text">1st May, 2021 (12:45PM)</string>
     <string name="delivery_date">Delivery Date</string>
     <string name="content_description">This is content description</string>
+    <string name="payment_type_text">Payment Type</string>
+    <string name="payment_type">Cash on delivery</string>
+    <string name="payment_status">Unverified</string>
+    <string name="payment_status_text">Payment Status</string>
 </resources>

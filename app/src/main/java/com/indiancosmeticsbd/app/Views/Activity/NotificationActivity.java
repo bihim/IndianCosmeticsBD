@@ -45,35 +45,50 @@ public class NotificationActivity extends AppCompatActivity {
         setNotification();
         setRecyclerView();
     }
+
     private void setTheme() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String theme = sharedPreferences.getString("theme", "light");
         setTheme(theme.equals("light") ? R.style.Theme_IndianCosmeticsBD_Light : R.style.Theme_IndianCosmeticsBD_Dark);
     }
+
     private void setRecyclerView() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString(user_notification, "");
-        Type type = new TypeToken<ArrayList<UserInfo.Notification>>() {
-        }.getType();
-        ArrayList<UserInfo.Notification> notifications = gson.fromJson(json, type);
-        notificationModelArrayList = new ArrayList<>();
-        for (UserInfo.Notification notification : notifications) {
-            notificationModelArrayList.add(new NotificationModel(notification.getNotificationType(), notification.getNotificationText(), notification.getLink(), notification.getStatus()));
-        }
+        String json = sharedPreferences.getString(user_notification, "null");
+        if (!json.equals("null")){
+            Type type = new TypeToken<ArrayList<UserInfo.Notification>>() {}.getType();
+            ArrayList<UserInfo.Notification> notifications = gson.fromJson(json, type);
+            notificationModelArrayList = new ArrayList<>();
+            for (UserInfo.Notification notification : notifications) {
+                notificationModelArrayList.add(new NotificationModel(notification.getNotificationType(), notification.getNotificationText(), notification.getLink(), notification.getStatus()));
+            }
 
-        if (notifications.size() == 0) {
-            recyclerView.setVisibility(View.GONE);
+            if (notifications.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                empty.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.GONE);
+            }
+
+            if (json.equals("null")){
+                recyclerView.setVisibility(View.GONE);
+                empty.setVisibility(View.VISIBLE);
+            }
+            else{
+                recyclerView.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.GONE);
+            }
+
+            notificationAdapter = new NotificationAdapter(notificationModelArrayList, this);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setAdapter(notificationAdapter);
+        }
+        else{
             empty.setVisibility(View.VISIBLE);
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            empty.setVisibility(View.GONE);
         }
-
-        notificationAdapter = new NotificationAdapter(notificationModelArrayList, this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(notificationAdapter);
     }
 
     private void setNotification() {

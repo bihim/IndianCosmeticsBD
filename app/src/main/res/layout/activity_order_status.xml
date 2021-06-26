@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="?layoutColor"
+    android:orientation="vertical"
     tools:context=".Views.Activity.Orders.OrderStatusActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -23,11 +23,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/content_description"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/content_description" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,8 +59,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:baselineAligned="false"
+                android:orientation="horizontal"
                 android:padding="@dimen/_12sdp">
 
                 <LinearLayout
@@ -71,7 +71,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/order_submit_name"
+                        android:id="@+id/order_status_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -88,7 +88,7 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
-                        android:id="@+id/order_submit_phone_number"
+                        android:id="@+id/order_status_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -105,7 +105,7 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
-                        android:id="@+id/order_submit_address"
+                        android:id="@+id/order_status_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_address"
@@ -130,7 +130,7 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
-                        android:id="@+id/order_submit_delivery_date"
+                        android:id="@+id/order_status_delivery_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -147,7 +147,7 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
-                        android:id="@+id/order_submit_total_amount"
+                        android:id="@+id/order_status_total_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -164,10 +164,121 @@
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
-                        android:id="@+id/order_submit_delivery_cost"
+                        android:id="@+id/order_status_delivery_cost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/total_tk"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_11ssp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:padding="@dimen/_12sdp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/order_status_payment_logo"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:contentDescription="@string/content_description"
+                        android:src="@drawable/ic_bkash" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/greyLight"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_type_text"
+                        android:textColor="?textViewSecondaryColor"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        android:id="@+id/order_status_payment_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:text="@string/payment_type"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_11ssp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginBottom="@dimen/_5sdp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="@dimen/_15sdp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/forgotPassDark"
+                                android:padding="@dimen/_4sdp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/payment_status"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_14ssp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5"
+                        android:background="@color/greyLight"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_address_text"
+                        android:textColor="?textViewSecondaryColor"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textAlignment="textEnd"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_address"
                         android:textColor="?textViewMainColor"
                         android:textSize="@dimen/_11ssp"
                         android:textStyle="bold" />
