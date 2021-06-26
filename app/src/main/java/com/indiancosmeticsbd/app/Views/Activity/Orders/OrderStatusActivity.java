@@ -1,12 +1,15 @@
 package com.indiancosmeticsbd.app.Views.Activity.Orders;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -23,11 +26,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 
 public class OrderStatusActivity extends AppCompatActivity {
 
     private TextView textViewName, textViewPhone, textViewDeliveryAddress, textViewDeliveryDate, textViewTotalAmount, textViewDeliveryCost;
+    private NestedScrollView nestedScrollView;
+    private LinearLayout linearLayoutLoading;
+
+    private ImageView imageViewPaymentInfo;
+    private TextView textViewPaymentType;
+    private TextView textViewTrnxId;
+    private TextView textViewTrnxIdText;
+    private LinearLayout linearLayoutVerification;
+    private TextView textViewVerification;
 
 
     @Override
@@ -43,11 +57,15 @@ public class OrderStatusActivity extends AppCompatActivity {
     }
 
     private void setOrderStatus(String orderId){
+        nestedScrollView.setVisibility(View.GONE);
+        linearLayoutLoading.setVisibility(View.VISIBLE);
         OrderStatusViewModel orderStatusViewModel = new ViewModelProvider(this).get(OrderStatusViewModel.class);
         orderStatusViewModel.init(orderId);
         orderStatusViewModel.getOrderStatus().observe(this, orderStatusModel -> {
             OrderStatusModel.Content content = orderStatusModel.getContent();
             if (content!=null){
+                nestedScrollView.setVisibility(View.VISIBLE);
+                linearLayoutLoading.setVisibility(View.GONE);
                 textViewName.setText(content.getShippingInfo().getShippingName());
                 textViewDeliveryAddress.setText(content.getShippingInfo().getShippingAddress());
                 textViewPhone.setText(content.getShippingInfo().getShippingPhone());
@@ -74,6 +92,7 @@ public class OrderStatusActivity extends AppCompatActivity {
             else{
                 String id = getIntent().getStringExtra("id");
                 setOrderStatus(id);
+                Toasty.error(this, "Something is wrong, retrying...", Toasty.LENGTH_SHORT, true).show();
             }
         });
     }
@@ -102,5 +121,15 @@ public class OrderStatusActivity extends AppCompatActivity {
         textViewDeliveryDate = findViewById(R.id.order_status_delivery_date);
         textViewTotalAmount = findViewById(R.id.order_status_total_amount);
         textViewDeliveryCost = findViewById(R.id.order_status_delivery_cost);
+
+        nestedScrollView = findViewById(R.id.order_status_scrollview);
+        linearLayoutLoading = findViewById(R.id.order_status_loading);
+
+        imageViewPaymentInfo = findViewById(R.id.order_status_payment_logo);
+        textViewPaymentType = findViewById(R.id.order_status_payment_type);
+        textViewTrnxId = findViewById(R.id.order_status_trnx_id);
+        textViewTrnxIdText = findViewById(R.id.order_status_trnx_id_text);
+        linearLayoutVerification = findViewById(R.id.verification_background);
+        textViewVerification = findViewById(R.id.verification_text);
     }
 }

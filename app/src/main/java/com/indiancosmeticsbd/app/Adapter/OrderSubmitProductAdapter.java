@@ -44,7 +44,6 @@ public class OrderSubmitProductAdapter extends RecyclerView.Adapter<OrderSubmitP
         Glide.with(context.getApplicationContext()).load(cart.getImageUrl()).into(holder.imageView);
         int price = Integer.parseInt(cart.getPrice());
         int quantity = Integer.parseInt(cart.getQuantity());
-        int stock = Integer.parseInt(cart.getStock());
         if (cart.getDiscount().equals("0")){
             holder.discount.setVisibility(View.GONE);
             holder.priceXquantity.setText("৳"+price+" x "+quantity);
@@ -59,7 +58,6 @@ public class OrderSubmitProductAdapter extends RecyclerView.Adapter<OrderSubmitP
             holder.discount.setText(price);
         }
         holder.size.setText(cart.getSize());
-
     }
 
     @Override
