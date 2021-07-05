@@ -59,7 +59,7 @@
                         android:drawableTint="?editIcon"
                         android:gravity="start"
                         android:hint="@string/bkash_phone"
-                        android:inputType="textEmailAddress"
+                        android:inputType="phone"
                         android:textColorHint="?editIcon"
                         android:textCursorDrawable="@null" />
 
@@ -92,7 +92,7 @@
                         android:drawableTint="?editIcon"
                         android:gravity="start"
                         android:hint="@string/trnx_id"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:textColorHint="?editIcon"
                         android:textCursorDrawable="@null" />
 

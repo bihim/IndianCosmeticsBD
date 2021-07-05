@@ -3,12 +3,15 @@ package com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -65,6 +68,9 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.NOTIFICATION_SHOW;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_date;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_email;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_first_name;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_last_name;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_orders;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
@@ -81,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageViewTheme;
     private MaterialButton navHelpline;
     private MaterialButton navOrders;
+    private MaterialButton navRateUs;
+
+    private LinearLayout navNoUser, navUserInfo;
+    private TextView navUserName, navUserEmail;
 
     /*Product Categories*/
     private ArrayList<ProductCategoriesAdapterModel> productCategoriesModelAdapterArrayList;
@@ -260,9 +270,13 @@ public class MainActivity extends AppCompatActivity {
                 for (ProductCategoriesModel.Content contents : content) {
                     String title = contents.getMain();
                     String header = contents.getHeader();
+                    String getImageLink = contents.getCatimg();
+                    String imageLink = getImageLink.substring(0, getImageLink.length()-5)+"2.jpg";
+                    Log.d("IMAGELINKS", "setRecyclerViewProductCategories: "+imageLink);
                     categories.add(new CategorySelectedModel(title, header, contents.getId()));
                     if (!productChecking.contains(title)) {
                         productChecking.add(title);
+                        productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(title, imageLink));
                         categoryWiseViewModelArrayList.add(new CategoryWiseViewModel(contents.getId(), title));
                         Log.d("GETIDSALONGWITH", "setRecyclerViewProductCategories: title: " + title + " id: " + contents.getId());
                     }
@@ -273,9 +287,9 @@ public class MainActivity extends AppCompatActivity {
                 setRecyclerViewCategoryWiseView2(categoryWiseViewModelFirstTwo, R.id.main_category_wise_recyclerview);
                 setRecyclerViewCategoryWiseView2(categoryWiseViewModelLastItems, R.id.main_category_wise_recyclerview_after_mid);
 
-                for (String items : productChecking) {
+                /*for (String items : productChecking) {
                     productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
-                }
+                }*/
 
                 if (productCategoriesModelAdapterArrayList.isEmpty()) {
                     materialCardViewProductCategories.setVisibility(View.GONE);
@@ -372,22 +386,53 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         navOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ViewOrdersActivity.class));
+                if (sharedPreferences.contains(user_username)) {
+                    startActivity(new Intent(MainActivity.this, ViewOrdersActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                }
             }
         });
+
+        navRateUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String appPackageName = getPackageName(); // package name of the app
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+
+        if (sharedPreferences.contains(user_username)){
+            navNoUser.setVisibility(View.GONE);
+            navUserInfo.setVisibility(View.VISIBLE);
+            navUserName.setText(sharedPreferences.getString(user_first_name,"")+" "+sharedPreferences.getString(user_last_name, " "));
+            navUserEmail.setText(sharedPreferences.getString(user_email, ""));
+        }
+        else{
+            navNoUser.setVisibility(View.VISIBLE);
+            navUserInfo.setVisibility(View.GONE);
+        }
+
     }
 
-    private void testUserOrder(){
+    private void testUserOrder() {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+               /* SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                 String getOrders = sharedPreferences.getString(user_orders, "");
                 String getDate = sharedPreferences.getString(user_date, "");
-                Log.d("USERORDERS", "onClick: order: "+getOrders+" date: "+getDate);
+                Log.d("USERORDERS", "onClick: order: " + getOrders + " date: " + getDate);*/
+                startActivity(new Intent(MainActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                overridePendingTransition(0, 0);
             }
         });
     }
@@ -411,6 +456,12 @@ public class MainActivity extends AppCompatActivity {
         dummyCardView = findViewById(R.id.dummy_card);
         navHelpline = findViewById(R.id.nav_order_helpline);
         navOrders = findViewById(R.id.nav_orders);
+
+        navNoUser = findViewById(R.id.nav_no_user);
+        navUserInfo = findViewById(R.id.nav_user_info);
+        navUserName = findViewById(R.id.nav_drawer_profile_text);
+        navUserEmail = findViewById(R.id.nav_drawer_profile_email);
+        navRateUs = findViewById(R.id.nav_rate_us);
     }
 
     @Override

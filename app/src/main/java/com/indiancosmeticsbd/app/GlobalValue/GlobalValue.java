@@ -1,7 +1,11 @@
 package com.indiancosmeticsbd.app.GlobalValue;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,6 +41,9 @@ public class GlobalValue {
 
     /*Contact Info*/
     public static final String CONTACT_INFO = "contactInfo";
+
+    /*Register User*/
+    public static final String REGISTER_USER = "registerUser";
 
     /*User Info*/
     public static final String user_id = "user_id";
@@ -133,5 +140,20 @@ public class GlobalValue {
         int afterNotificationSize = sharedPreferences.getInt(user_after_notification_size, 0);
         BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_account);
         badgeDrawable.setVisible(previousNotificationSize<afterNotificationSize);
+    }
+
+    public static boolean hasInternetConnection(final Context context) {
+        final ConnectivityManager connectivityManager = (ConnectivityManager)context.
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        final Network network;
+        NetworkCapabilities capabilities = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            network = connectivityManager.getActiveNetwork();
+            capabilities = connectivityManager
+                    .getNetworkCapabilities(network);
+        }
+        return capabilities != null
+                && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
 }

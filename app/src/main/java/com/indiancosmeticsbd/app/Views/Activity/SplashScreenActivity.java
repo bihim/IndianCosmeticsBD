@@ -38,6 +38,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_TWITTER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_YAHOO;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_YOUTUBE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.hasInternetConnection;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_city;
@@ -70,13 +71,19 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         buttonRetry = findViewById(R.id.splash_retry);
         buttonRetry.setVisibility(View.GONE);
-        getContactInfoMVVM();
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        if (sharedPreferences.contains(user_previous_notification_size)) {
-            String emailAddress = sharedPreferences.getString(user_email, "test@mail.com");
-            String password = sharedPreferences.getString(user_password, "test1234");
-            setSignInButton(emailAddress, password);
+        if (hasInternetConnection(this)){
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+            if (sharedPreferences.contains(user_previous_notification_size)) {
+                String emailAddress = sharedPreferences.getString(user_email, "test@mail.com");
+                String password = sharedPreferences.getString(user_password, "test1234");
+                setSignInButton(emailAddress, password);
+            }
+            getContactInfoMVVM();
         }
+        else{
+            startActivity(new Intent(this, NoInternetActivity.class));
+        }
+
     }
 
     private void getContactInfoMVVM() {
@@ -180,5 +187,22 @@ public class SplashScreenActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (hasInternetConnection(this)){
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+            if (sharedPreferences.contains(user_previous_notification_size)) {
+                String emailAddress = sharedPreferences.getString(user_email, "test@mail.com");
+                String password = sharedPreferences.getString(user_password, "test1234");
+                setSignInButton(emailAddress, password);
+            }
+            getContactInfoMVVM();
+        }
+        else{
+            startActivity(new Intent(this, NoInternetActivity.class));
+        }
     }
 }

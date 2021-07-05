@@ -62,7 +62,7 @@ public class ProductCategoriesModel {
     public void setContent(ArrayList<Content> content) {
         this.content = content;
     }
-    public class Content {
+    public static class Content {
 
         @SerializedName("id")
         @Expose
@@ -79,6 +79,9 @@ public class ProductCategoriesModel {
         @SerializedName("position")
         @Expose
         private String position;
+        @SerializedName("catimg")
+        @Expose
+        private String catimg;
 
         public String getId() {
             return id;
@@ -120,5 +123,12 @@ public class ProductCategoriesModel {
             this.position = position;
         }
 
+        public String getCatimg() {
+            return catimg;
+        }
+
+        public void setCatimg(String catimg) {
+            this.catimg = catimg;
+        }
     }
 }

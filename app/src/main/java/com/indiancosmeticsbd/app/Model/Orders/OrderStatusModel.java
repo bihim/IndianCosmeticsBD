@@ -338,7 +338,7 @@ public class OrderStatusModel {
         private String paymentType;
         @SerializedName("payment_trxn_id")
         @Expose
-        private Object paymentTrxnId;
+        private String paymentTrxnId;
         @SerializedName("payment_status")
         @Expose
         private String paymentStatus;
@@ -351,11 +351,11 @@ public class OrderStatusModel {
             this.paymentType = paymentType;
         }
 
-        public Object getPaymentTrxnId() {
+        public String getPaymentTrxnId() {
             return paymentTrxnId;
         }
 
-        public void setPaymentTrxnId(Object paymentTrxnId) {
+        public void setPaymentTrxnId(String paymentTrxnId) {
             this.paymentTrxnId = paymentTrxnId;
         }
 
@@ -368,7 +368,7 @@ public class OrderStatusModel {
         }
     }
 
-    public class Product {
+    public static class Product {
 
         @SerializedName("productId")
         @Expose
@@ -382,6 +382,39 @@ public class OrderStatusModel {
         @SerializedName("productQuantity")
         @Expose
         private Integer productQuantity;
+        @SerializedName("productPrice")
+        @Expose
+        private Integer productPrice;
+        @SerializedName("productImage")
+        @Expose
+        private String productImage;
+        @SerializedName("productName")
+        @Expose
+        private String productName;
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public void setProductName(String productName) {
+            this.productName = productName;
+        }
+
+        public Integer getProductPrice() {
+            return productPrice;
+        }
+
+        public void setProductPrice(Integer productPrice) {
+            this.productPrice = productPrice;
+        }
+
+        public String getProductImage() {
+            return productImage;
+        }
+
+        public void setProductImage(String productImage) {
+            this.productImage = productImage;
+        }
 
         public Integer getProductId() {
             return productId;

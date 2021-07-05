@@ -60,6 +60,7 @@ public class ViewOrdersActivity extends AppCompatActivity {
     private LinearLayout retry;
     private LottieAnimationView lottieAnimationView;
     private MaterialButton buttonRetry;
+    private final String regex = "\\d+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +69,16 @@ public class ViewOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_orders);
         setToolbar(R.id.toolbar_top, R.id.back_button);
         findViewById();
-        setRecyclerView();
-    }
-
-    private void setRecyclerView() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         if (sharedPreferences.contains(user_previous_notification_size)) {
             String emailAddress = sharedPreferences.getString(user_email, "test@mail.com");
             String password = sharedPreferences.getString(user_password, "test1234");
             setSignInButton(emailAddress, password);
         }
+    }
+
+    private void setRecyclerView() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
 
         Logger.addLogAdapter(new AndroidLogAdapter());
         String getOrders = sharedPreferences.getString(user_orders, "null");
@@ -88,19 +89,45 @@ public class ViewOrdersActivity extends AppCompatActivity {
             String[] orders = getOrders.split(",");
             String[] dates = getDate.split(",");
             for (int i = 0; i < orders.length; i++){
-                if (!orders[i].equals("null")){
+                //!orders[i].equals("null") &&
+                if (orders[i].matches(regex)){
                     viewOrdersModelArrayList.add(new ViewOrdersModel(orders[i], dates[i]));
                 }
             }
         }
 
-        if (viewOrdersModelArrayList.size() == 0) {
+        for (ViewOrdersModel viewOrdersModel: viewOrdersModelArrayList){
+            String order = viewOrdersModel.getOrderNumber();
+            String date = viewOrdersModel.getOrderDate();
+            String trimOrder = order.trim();
+            //Log.d("SHAUARMADARI", "setRecyclerView: This is order :"+order+": This is date :"+date+":"+" "+order.equals("")+" "+order.isEmpty()+" trim: "+trimOrder.equals("")+" "+trimOrder.isEmpty()+" arr size: "+viewOrdersModelArrayList.size());
+        }
+
+        if (viewOrdersModelArrayList.size()!=0){
+            String order = viewOrdersModelArrayList.get(0).getOrderNumber();
+            Log.d("SHAUARMADARI", "setRecyclerView: "+order.equals(""));
+            if (order.equals("")){
+                recyclerView.setVisibility(View.GONE);
+                empty.setVisibility(View.VISIBLE);
+            }
+            else{
+                recyclerView.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.GONE);
+            }
+        }
+        else{
+           /* if (viewOrdersModelArrayList.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                empty.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                empty.setVisibility(View.GONE);
+            }    */
             recyclerView.setVisibility(View.GONE);
             empty.setVisibility(View.VISIBLE);
-        } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            empty.setVisibility(View.GONE);
         }
+
+
 
         viewOrderAdapter = new ViewOrderAdapter(viewOrdersModelArrayList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -116,6 +143,7 @@ public class ViewOrdersActivity extends AppCompatActivity {
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this, false).observe(this, userInfo -> {
+            setRecyclerView();
             if (userInfo.getContent()!=null){
                 retry.setVisibility(View.GONE);
                 lottieAnimationView.setVisibility(View.GONE);

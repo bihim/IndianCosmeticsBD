@@ -11,7 +11,7 @@
         android:id="@+id/recyclerview_categories_imageView"
         android:layout_width="@dimen/_76sdp"
         android:layout_height="@dimen/_76sdp"
-        android:src="@drawable/india"
+        android:src="@drawable/indian_products"
         app:civ_border_width="@dimen/_1sdp"
         app:civ_border_color="@color/greyLight"/>
 

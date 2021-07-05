@@ -22,6 +22,8 @@ import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.MainActivity
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_after_notification_size;
@@ -77,10 +79,10 @@ public class SignInActivity extends AppCompatActivity {
         userInfoViewModel.init();
         userInfoViewModel.getUserInfo(emailAddress, password, this, true).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
-            notifications.addAll(value.getNotifications());
             StringBuilder listCustomerOrders = new StringBuilder();
             StringBuilder listCustomerDate = new StringBuilder();
             if (value.getCustomerOrders().size() != 0) {
+                notifications.addAll(value.getNotifications());
                 for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
                     listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
                     listCustomerDate.append(customerOrder.getDate()).append(",");
@@ -123,9 +125,10 @@ public class SignInActivity extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignInActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                /*startActivity(new Intent(SignInActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 overridePendingTransition(0, 0);
-                finish();
+                finish();*/
+                onBackPressed();
             }
         });
         gotoRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +142,14 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSignInButton();
+                String emailAddress = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                if (emailAddress.equals("") || password.equals("")) {
+                    Toasty.error(SignInActivity.this, "Enter Fields", Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    setSignInButton();
+                }
+
                 Log.d("LOGININFO", "onClick: Clicked Hereee");
             }
         });
@@ -160,5 +170,10 @@ public class SignInActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.sign_in_email);
         passwordEditText = findViewById(R.id.sign_in_password);
         forgotButton = findViewById(R.id.sign_in_forgot_pass);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

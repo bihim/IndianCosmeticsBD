@@ -145,18 +145,21 @@ public class BkashOrderSubmitDialog {
                                         lottieAnimationView.setVisibility(View.GONE);
                                         textView.setVisibility(View.VISIBLE);
                                         textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                        dialog.setCancelable(true);
                                     }
                                 } else {
                                     linearLayout.setVisibility(View.GONE);
                                     lottieAnimationView.setVisibility(View.GONE);
                                     textView.setVisibility(View.VISIBLE);
                                     textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                    dialog.setCancelable(true);
                                 }
                             } else {
                                 linearLayout.setVisibility(View.GONE);
                                 lottieAnimationView.setVisibility(View.GONE);
                                 textView.setVisibility(View.VISIBLE);
                                 textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                dialog.setCancelable(true);
                             }
 
                         } else {
@@ -164,6 +167,7 @@ public class BkashOrderSubmitDialog {
                             lottieAnimationView.setVisibility(View.GONE);
                             textView.setVisibility(View.VISIBLE);
                             textView.setText(activity.getResources().getString(R.string.error_forgot));
+                            dialog.setCancelable(true);
                         }
 
                     }
@@ -174,6 +178,7 @@ public class BkashOrderSubmitDialog {
                         lottieAnimationView.setVisibility(View.GONE);
                         textView.setVisibility(View.VISIBLE);
                         textView.setText(activity.getResources().getString(R.string.error_forgot));
+                        dialog.setCancelable(true);
                     }
                 });
                 Logger.addLogAdapter(new AndroidLogAdapter());

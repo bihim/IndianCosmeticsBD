@@ -178,7 +178,7 @@
     <string name="payment_type">Cash on delivery</string>
     <string name="payment_status">Unverified</string>
     <string name="payment_status_text">Payment Status</string>
-    <string name="payment_trxn_id_text">Payment Transaction ID</string>
+    <string name="payment_trxn_id_text">Payment Transaction</string>
     <string name="payment_trxn_id">TxSer31Sasfgdas</string>
     <string name="print">Print Invoice</string>
     <string name="payment_info">Payment Information</string>

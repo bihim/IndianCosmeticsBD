@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.indiancosmeticsbd.app.Model.Category.CategorySelectedModel;
 import com.indiancosmeticsbd.app.Model.ProductCategories.ProductCategoriesAdapterModel;
 import com.indiancosmeticsbd.app.R;
@@ -48,7 +49,9 @@ public class ProductCategoriesAdapter extends RecyclerView.Adapter<ProductCatego
         ProductCategoriesAdapterModel selectedItem = categoriesArrayList.get(position);
         String title = titleText(selectedItem.getTitle());
         holder.textViewCategoryName.setText(title);
-        holder.circleImageViewCategoryPicture.setImageResource(selectedItem.getImageLink());
+        //holder.circleImageViewCategoryPicture.setImageResource(selectedItem.getImageLink());
+        Glide.with(context.getApplicationContext()).load(selectedItem.getImageLink()).into(holder.circleImageViewCategoryPicture);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

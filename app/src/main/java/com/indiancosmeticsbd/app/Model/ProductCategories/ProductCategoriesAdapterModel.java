@@ -4,9 +4,15 @@ import com.indiancosmeticsbd.app.R;
 
 public class ProductCategoriesAdapterModel {
     private final String title;
+    private String imageLink;
 
-    public ProductCategoriesAdapterModel(String title) {
+    /*public ProductCategoriesAdapterModel(String title) {
         this.title = title;
+    }*/
+
+    public ProductCategoriesAdapterModel(String title, String imageLink) {
+        this.title = title;
+        this.imageLink = imageLink;
     }
 
     public String getTitle() {
@@ -29,7 +35,7 @@ public class ProductCategoriesAdapterModel {
         return title;
     }
 
-    public int getImageLink() {
+    /*public int getImageLink() {
         switch (getTitle()) {
             case "indian products":
                 return R.drawable.india;
@@ -40,5 +46,13 @@ public class ProductCategoriesAdapterModel {
             default:
                 return R.drawable.keya;
         }
+    }*/
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

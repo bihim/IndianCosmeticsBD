@@ -73,7 +73,14 @@ public class CartActivity extends AppCompatActivity {
         buttonCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartActivity.this, OrderSubmitActivity.class));
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                if (sharedPreferences.contains(user_username)){
+                    startActivity(new Intent(CartActivity.this, OrderSubmitActivity.class));
+                }
+                else{
+                    startActivity(new Intent(CartActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                }
+
             }
         });
     }

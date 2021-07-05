@@ -353,6 +353,7 @@
                                     android:textColor="?textViewMainColor"/>
 
                                 <TextView
+                                    android:id="@+id/order_status_status"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/status3"
@@ -364,6 +365,7 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/order_status_description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/status2"
@@ -388,7 +390,8 @@
                         android:id="@+id/order_status_list_product_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/recyclerview_order_submit_products" />
+                        tools:listitem="@layout/recyclerview_order_submit_products"
+                        android:layout_marginBottom="@dimen/_50sdp"/>
 
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
@@ -415,7 +418,7 @@
 
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/print_invoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

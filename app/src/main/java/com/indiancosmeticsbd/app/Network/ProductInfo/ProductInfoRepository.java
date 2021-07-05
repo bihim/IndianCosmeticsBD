@@ -42,10 +42,6 @@ public class ProductInfoRepository
                 if (response.isSuccessful()){
                     if (response.body()!=null){
                         ProductInfo productInfo = response.body();
-                        Log.d("PRODUCT_DETAILS", "onResponse: response: "+productInfo.getStatus());
-                        Log.d("PRODUCT_DETAILS", "onResponse: response: "+productInfo.getErrorno());
-                        Log.d("PRODUCT_DETAILS", "onResponse: response: "+productInfo.getError());
-                        Log.d("PRODUCT_DETAILS", "onResponse: response: "+productInfo.getDescription());
                         if (productInfo.getStatus().equals("SUCCESS")){
                             productInfoMutableLiveData.setValue(response.body());
                             loadingDialog.dismissDialog();
