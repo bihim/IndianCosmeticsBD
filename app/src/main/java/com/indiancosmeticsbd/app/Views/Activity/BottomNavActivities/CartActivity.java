@@ -75,7 +75,9 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
                 if (sharedPreferences.contains(user_username)){
-                    startActivity(new Intent(CartActivity.this, OrderSubmitActivity.class));
+                    Intent intent = new Intent(CartActivity.this, OrderSubmitActivity.class);
+                    intent.putExtra("directOrder", false);
+                    startActivity(intent);
                 }
                 else{
                     startActivity(new Intent(CartActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));

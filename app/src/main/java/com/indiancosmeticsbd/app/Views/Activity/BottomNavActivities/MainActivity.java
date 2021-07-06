@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -151,17 +153,17 @@ public class MainActivity extends AppCompatActivity {
             productListViewModel.init();
             productListViewModel.getProductList(this, "main", getCategoryWiseView.getId(), "", "", "", "", "", true).observe(this, products -> {
                 dummyCardView.setVisibility(View.GONE);
-
                 recyclerViewCategoryWiseView.setAdapter(categoriesByViewAdapter2);
                 ArrayList<Products.Content> content = products.getContent();
                 ArrayList<ProductListModel> contentArrayList = new ArrayList<>();
-                //contentArrayList.clear();
                 Log.d("PRODUCTLISTTING", "setRecyclerView: " + getCategoryWiseView.getName());
+                Log.d("GETTINGSIZE", "setRecyclerViewCategoryWiseView2: size:"+content.size());
                 for (Products.Content contents : content) {
-                    //Log.d("PRODUCTLISTTING", "setRecyclerView: "+categoryWiseViewModel.getName()+" brand: "+contents.getBrand());
                     contentArrayList.add(new ProductListModel(contents.getId(), contents.getName(), contents.getBrand(), contents.getPrice(), contents.getViews(), contents.getStock(), contents.getDiscount(), contents.getThumbnail()));
                 }
-                categoryWiseViewModel2s.add(new CategoryWiseViewModel2(getCategoryWiseView.getId(), getCategoryWiseView.getName(), contentArrayList));
+                if (content.size()!=0){
+                    categoryWiseViewModel2s.add(new CategoryWiseViewModel2(getCategoryWiseView.getId(), getCategoryWiseView.getName(), contentArrayList));
+                }
                 if (contentArrayList.isEmpty()) {
                     recyclerViewCategoryWiseView.setVisibility(View.GONE);
                 } else {
@@ -285,11 +287,9 @@ public class MainActivity extends AppCompatActivity {
                 List<CategoryWiseViewModel> categoryWiseViewModelFirstTwo = categoryWiseViewModelArrayList.subList(0, 2);
                 List<CategoryWiseViewModel> categoryWiseViewModelLastItems = categoryWiseViewModelArrayList.subList(2, categoryWiseViewModelArrayList.size());
                 setRecyclerViewCategoryWiseView2(categoryWiseViewModelFirstTwo, R.id.main_category_wise_recyclerview);
-                setRecyclerViewCategoryWiseView2(categoryWiseViewModelLastItems, R.id.main_category_wise_recyclerview_after_mid);
-
-                /*for (String items : productChecking) {
-                    productCategoriesModelAdapterArrayList.add(new ProductCategoriesAdapterModel(items));
-                }*/
+                new Handler(Looper.getMainLooper()).postDelayed(() -> setRecyclerViewCategoryWiseView2(categoryWiseViewModelLastItems, R.id.main_category_wise_recyclerview_after_mid), 1000);
+                //setRecyclerViewCategoryWiseView2(categoryWiseViewModelLastItems, R.id.main_category_wise_recyclerview_after_mid);
+                Log.d("SIZEDATA", "setRecyclerViewProductCategories: 1:"+categoryWiseViewModelFirstTwo.size()+" 2:"+categoryWiseViewModelLastItems.size()+" 3:"+categoryWiseViewModelArrayList.size());
 
                 if (productCategoriesModelAdapterArrayList.isEmpty()) {
                     materialCardViewProductCategories.setVisibility(View.GONE);

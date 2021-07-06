@@ -33,6 +33,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART_DIRECT_ORDER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHOWBADGE;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_address;
@@ -64,13 +65,15 @@ public class OrderSubmitActivity extends AppCompatActivity {
         setRecyclerview();
 
         buttonSubmitCOD.setOnClickListener(v -> {
+            boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
             CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
-            codOrderSubmitDialog.showDialog();
+            codOrderSubmitDialog.showDialog(isDirectOrder);
         });
 
         buttonSubmitBkash.setOnClickListener(v -> {
             BkashOrderSubmitDialog bkashOrderSubmitDialog = new BkashOrderSubmitDialog(OrderSubmitActivity.this);
-            bkashOrderSubmitDialog.showDialog(totalPrice());
+            boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
+            bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder);
         });
     }
 
@@ -98,7 +101,15 @@ public class OrderSubmitActivity extends AppCompatActivity {
         Logger.addLogAdapter(new AndroidLogAdapter());
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
-        String json = sharedPreferences.getString(CART, "");
+        boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
+        String json = "";
+        if (isDirectOrder){
+            json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+        }
+        else{
+            json = sharedPreferences.getString(CART, "");
+        }
+        //String json = sharedPreferences.getString(CART, "");
         Logger.d("String: "+json);
         Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
         ArrayList<Cart> carts = gson.fromJson(json, type);

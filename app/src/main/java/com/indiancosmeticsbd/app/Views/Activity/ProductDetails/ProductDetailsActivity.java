@@ -36,6 +36,9 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.ProductInfo;
 import com.indiancosmeticsbd.app.Model.ProductDetails.ProductReviewAdapterModel;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.ViewModel.ProductInfoViewModel;
+import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.BottomNavActivities.CartActivity;
+import com.indiancosmeticsbd.app.Views.Activity.Orders.OrderSubmitActivity;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -47,10 +50,12 @@ import es.dmoral.toasty.Toasty;
 import per.wsj.library.AndRatingBar;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART_DIRECT_ORDER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.PRODUCT_IMAGE_BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WEBSITE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.WISHLIST;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.user_username;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -74,7 +79,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ProductReviewAdapter productReviewAdapter;
     private ArrayList<ProductReviewAdapterModel> productReviewAdapterModelArrayList;
 
-    private MaterialButton buttonPlus, buttonMinus, buttonAddToCart;
+    private MaterialButton buttonPlus, buttonMinus, buttonAddToCart, buttonOrderNow;
     private ImageButton imageButtonWishList, imageButtonShare;
 
     private AndRatingBar ratingBar;
@@ -114,7 +119,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setImageButtonWishList();
         //isWishlistAdded = productExistsWishList();
     }
-
 
     private void setQuantity(Integer stock) {
         //textViewCartText.setText(String.valueOf(quantity));
@@ -219,6 +223,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 setRecyclerViewRating(content.getProductReviews());
                 setSliderView(content.getAllImages());
                 setQuantity(content.getStock());
+
+                buttonOrderNow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addToCartDirectOrder(id, content.getBrand(), content.getName(), String.valueOf(content.getPrice()), String.valueOf(quantity), String.valueOf(content.getDiscount()), content.getAvailableSizes().get(selectedItemPosition), url, String.valueOf(content.getStock()));
+                        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                        if (sharedPreferences.contains(user_username)){
+                            Intent intent = new Intent(ProductDetailsActivity.this, OrderSubmitActivity.class);
+                            intent.putExtra("directOrder", true);
+                            startActivity(intent);
+                        }
+                        else{
+                            startActivity(new Intent(ProductDetailsActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                        }
+                    }
+                });
+
                 buttonAddToCart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -369,6 +390,59 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         //AddToCartModel addToCartModel = new AddToCartModel("100101", "200ml", "red", "100", "200tk", "www.facebook.com");
     }
+    private void addToCartDirectOrder(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl, String stock) {
+        SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        ArrayList<Cart> carts = new ArrayList<>();
+        carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
+        Gson gson = new Gson();
+        String json = gson.toJson(carts);
+        editor.putString(CART_DIRECT_ORDER, json);
+        /*if (productExists()){
+            Gson gson = new Gson();
+            String json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+            Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+            ArrayList<Cart> carts = gson.fromJson(json, type);
+            for (int i = 0; i < carts.size(); i++){
+                if (carts.get(i).getProductId().equals(id)){
+                    String updatedId = carts.get(i).getProductId();
+                    String updatedProductName = carts.get(i).getProductName();
+                    String updatedBrandName = carts.get(i).getBrandName();
+                    String updatedPrice = carts.get(i).getPrice();
+                    String updateQuantity = String.valueOf(quantity);
+                    String updatedDiscount = carts.get(i).getDiscount();
+                    String updatedSize = carts.get(i).getSize();
+                    String updatedImageUrl = carts.get(i).getImageUrl();
+                    String updatedStock = carts.get(i).getStock();
+                    carts.set(i, new Cart(updatedId, updatedBrandName, updatedProductName, updatedPrice, updateQuantity, updatedDiscount, updatedSize, updatedImageUrl, updatedStock));
+                }
+            }
+            String updatedJson = gson.toJson(carts);
+            editor.putString(CART_DIRECT_ORDER, updatedJson);
+        }
+        else{
+            String cartExists = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+            if (cartExists.equals("")){
+                ArrayList<Cart> carts = new ArrayList<>();
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
+                Gson gson = new Gson();
+                String json = gson.toJson(carts);
+                editor.putString(CART_DIRECT_ORDER, json);
+            }
+            else{
+                Gson gson = new Gson();
+                String json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+                Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
+                ArrayList<Cart> carts = gson.fromJson(json, type);
+                carts.add(new Cart(id, brandName, productName, price, quantity, discount, size, imageUrl, stock));
+                String addedJson = gson.toJson(carts);
+                editor.putString(CART_DIRECT_ORDER, addedJson);
+            }
+        }*/
+        editor.apply();
+
+        //AddToCartModel addToCartModel = new AddToCartModel("100101", "200ml", "red", "100", "200tk", "www.facebook.com");
+    }
 
     private void addToWishList(String id, String brandName, String productName, String price, String quantity, String discount, String size, String imageUrl, String stock) {
         SharedPreferences sharedPreferences = getSharedPreferences(WISHLIST, MODE_PRIVATE);
@@ -514,6 +588,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         sliderView = findViewById(R.id.imageSlider);
         lottieAnimationView = findViewById(R.id.animationView);
+        buttonOrderNow = findViewById(R.id.product_details_order_now);
 
     }
 

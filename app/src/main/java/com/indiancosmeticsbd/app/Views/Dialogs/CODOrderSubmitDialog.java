@@ -39,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART_DIRECT_ORDER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COD;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.ORDER_SUBMIT;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.SHARED_PREF_NAME;
@@ -55,7 +56,7 @@ public class CODOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog() {
+    public void showDialog(boolean isDirectOrder) {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -79,7 +80,7 @@ public class CODOrderSubmitDialog {
             SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
             String userToken = sharedPreferences.getString(user_token, "Null");
 
-            Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(), COD, "Null", "");
+            Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), COD, "Null", "");
             call.enqueue(new Callback<TransactionModel>() {
                 @Override
                 public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
@@ -114,6 +115,11 @@ public class CODOrderSubmitDialog {
                                     SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
                                     editorCart.clear();
                                     editorCart.apply();
+
+                                    SharedPreferences sharedPreferencesCartDirectOrder = activity.getSharedPreferences(CART_DIRECT_ORDER, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editorCartDirectOrder = sharedPreferencesCartDirectOrder.edit();
+                                    editorCartDirectOrder.clear();
+                                    editorCartDirectOrder.apply();
 
                                     dialog.setOnCancelListener(dialog -> {
                                         activity.startActivity(new Intent(activity, MainActivity.class));
@@ -157,15 +163,21 @@ public class CODOrderSubmitDialog {
                 }
             });
             Logger.addLogAdapter(new AndroidLogAdapter());
-            Logger.d("In Dialog"+getProducts());
+            //Logger.d("In Dialog"+getProducts());
         });
         dialog.show();
     }
 
-    private String getProducts(){
+    private String getProducts(boolean isDirectOrder){
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString(CART, "");
+        String json = "";
+        if (isDirectOrder){
+            json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+        }
+        else{
+            json = sharedPreferences.getString(CART, "");
+        }
         Type type = new TypeToken<ArrayList<Cart>>() {}.getType();
         ArrayList<Cart> carts = gson.fromJson(json, type);
         ArrayList<ProductOrderModels> productOrderModels = new ArrayList<>();

@@ -44,6 +44,7 @@ import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BASE_URL;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.BKASH;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.CART_DIRECT_ORDER;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COD;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COMPANY_MOBILE_3;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.ORDER_SUBMIT;
@@ -61,7 +62,7 @@ public class BkashOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog(int total) {
+    public void showDialog(int total, boolean isDirectOrder) {
         Logger.addLogAdapter(new AndroidLogAdapter());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -101,7 +102,7 @@ public class BkashOrderSubmitDialog {
                 SharedPreferences sharedPreferences1 = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 String userToken = sharedPreferences1.getString(user_token, "Null");
 
-                Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
+                Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
                 call.enqueue(new Callback<TransactionModel>() {
                     @Override
                     public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
@@ -134,6 +135,11 @@ public class BkashOrderSubmitDialog {
                                         SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
                                         editorCart.clear();
                                         editorCart.apply();
+
+                                        SharedPreferences sharedPreferencesCartDirectOrder = activity.getSharedPreferences(CART_DIRECT_ORDER, Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editorCartDirectOrder = sharedPreferencesCartDirectOrder.edit();
+                                        editorCartDirectOrder.clear();
+                                        editorCartDirectOrder.apply();
 
                                         dialog.setOnCancelListener(dialog -> {
                                             activity.startActivity(new Intent(activity, MainActivity.class));
@@ -182,17 +188,23 @@ public class BkashOrderSubmitDialog {
                     }
                 });
                 Logger.addLogAdapter(new AndroidLogAdapter());
-                Logger.d("In Dialog" + getProducts());
+                //Logger.d("In Dialog" + getProducts());
             }
         });
 
         dialog.show();
     }
 
-    private String getProducts() {
+    private String getProducts(boolean isDirectOrder) {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
-        String json = sharedPreferences.getString(CART, "");
+        String json = "";
+        if (isDirectOrder){
+            json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
+        }
+        else{
+            json = sharedPreferences.getString(CART, "");
+        }
         Type type = new TypeToken<ArrayList<Cart>>() {
         }.getType();
         ArrayList<Cart> carts = gson.fromJson(json, type);

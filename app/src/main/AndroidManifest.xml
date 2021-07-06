@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/logo_toolbar"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark"
+        android:screenOrientation="portrait"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustPan">
         <activity android:name=".Views.Activity.NoInternetActivity"></activity>
