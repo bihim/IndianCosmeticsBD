@@ -26,6 +26,7 @@ import com.indiancosmeticsbd.app.Model.ProductDetails.Cart;
 import com.indiancosmeticsbd.app.R;
 import com.indiancosmeticsbd.app.Views.Activity.Account.AccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Account.SignInActivity;
+import com.indiancosmeticsbd.app.Views.Activity.OrderDetailsWithoutAccountActivity;
 import com.indiancosmeticsbd.app.Views.Activity.Orders.OrderSubmitActivity;
 import com.indiancosmeticsbd.app.Views.Activity.ProductDetails.ProductDetailsActivity;
 
@@ -80,7 +81,10 @@ public class CartActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else{
-                    startActivity(new Intent(CartActivity.this, SignInActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                    Intent intent = new Intent(CartActivity.this, OrderDetailsWithoutAccountActivity.class);
+                    intent.putExtra("directOrder", false);
+                    startActivity(intent);
+                    //startActivity(new Intent(CartActivity.this, OrderDetailsWithoutAccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
                 }
 
             }

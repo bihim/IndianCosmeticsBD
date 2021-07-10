@@ -67,13 +67,13 @@ public class OrderSubmitActivity extends AppCompatActivity {
         buttonSubmitCOD.setOnClickListener(v -> {
             boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
             CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
-            codOrderSubmitDialog.showDialog(isDirectOrder);
+            codOrderSubmitDialog.showDialog(isDirectOrder, true, "", "", "");
         });
 
         buttonSubmitBkash.setOnClickListener(v -> {
             BkashOrderSubmitDialog bkashOrderSubmitDialog = new BkashOrderSubmitDialog(OrderSubmitActivity.this);
             boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
-            bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder);
+            bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder, true, "", "", "");
         });
     }
 

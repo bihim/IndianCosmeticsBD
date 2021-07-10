@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_back"
                 android:contentDescription="@string/content_description"
+                android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,105 +71,137 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:baselineAligned="false"
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:padding="@dimen/_12sdp">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="start"
-                            android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_amount"
+                            android:textColor="?textViewSecondaryColor"
+                            android:textSize="@dimen/_11ssp" />
 
-                            <TextView
-                                android:id="@+id/order_submit_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:text="@string/user_name"
-                                android:textColor="?textViewMainColor"
-                                android:textSize="@dimen/_14ssp"
-                                android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/order_submit_without_account_total_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:text="@string/total_tk"
+                            android:textColor="?textViewMainColor"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/user_phone_text"
-                                android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/delivery_amount"
+                            android:textColor="?textViewSecondaryColor"
+                            android:textSize="@dimen/_11ssp" />
 
-                            <TextView
-                                android:id="@+id/order_submit_phone_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:text="@string/user_phone"
-                                android:textColor="?textViewMainColor"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/user_address_text"
-                                android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp" />
-
-                            <TextView
-                                android:id="@+id/order_submit_address"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/user_address"
-                                android:textColor="?textViewMainColor"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/total_amount"
-                                android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp" />
-
-                            <TextView
-                                android:id="@+id/order_submit_total_amount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:text="@string/total_tk"
-                                android:textColor="?textViewMainColor"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/delivery_amount"
-                                android:textColor="?textViewSecondaryColor"
-                                android:textSize="@dimen/_11ssp" />
-
-                            <TextView
-                                android:id="@+id/order_submit_delivery_cost"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/total_tk"
-                                android:textColor="?textViewMainColor"
-                                android:textSize="@dimen/_11ssp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/order_submit_without_account_delivery_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/total_tk"
+                            android:textColor="?textViewMainColor"
+                            android:textSize="@dimen/_11ssp"
+                            android:textStyle="bold" />
                     </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
+                <RadioGroup
+                    android:id="@+id/order_submit_without_account_delivery_address_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/order_submit_without_account_delivery_address_inside"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/inside_dhaka"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_12ssp"
+                        android:checked="true"/>
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/order_submit_without_account_delivery_address_outside"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_weight="1"
+                        android:text="@string/outside_dhaka"
+                        android:textColor="?textViewMainColor"
+                        android:textSize="@dimen/_12ssp" />
+                </RadioGroup>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phoneTextInputField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?cardColor"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/order_without_account_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_call"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:drawableTint="?editIcon"
+                            android:gravity="start"
+                            android:hint="@string/mobileNumber"
+                            android:inputType="phone"
+                            android:textColorHint="?editIcon"
+                            android:textCursorDrawable="@null" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/addressTextInputField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?cardColor"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/order_without_account_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_address"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:drawableTint="?editIcon"
+                            android:gravity="start"
+                            android:hint="@string/enter_address"
+                            android:textColorHint="?editIcon"
+                            android:textCursorDrawable="@null" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
@@ -182,7 +214,7 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/order_submit_list_product_recyclerview"
+                    android:id="@+id/order_submit_without_account_list_product_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/recyclerview_order_submit_products" />
@@ -201,7 +233,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/submit_order_cod"
+                android:id="@+id/submit_without_account_order_cod"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -212,11 +244,11 @@
                 app:elevation="0dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/submit_order_bkash"
+                android:id="@+id/submit_order_without_account_bkash"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/bkash"
                 android:layout_weight="1"
+                android:text="@string/bkash"
                 android:textColor="@color/white"
                 app:backgroundTint="#DF146E"
                 app:cornerRadius="@dimen/_7sdp"

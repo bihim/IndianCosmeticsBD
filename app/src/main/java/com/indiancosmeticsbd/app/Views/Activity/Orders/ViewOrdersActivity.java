@@ -96,13 +96,6 @@ public class ViewOrdersActivity extends AppCompatActivity {
             }
         }
 
-        for (ViewOrdersModel viewOrdersModel: viewOrdersModelArrayList){
-            String order = viewOrdersModel.getOrderNumber();
-            String date = viewOrdersModel.getOrderDate();
-            String trimOrder = order.trim();
-            //Log.d("SHAUARMADARI", "setRecyclerView: This is order :"+order+": This is date :"+date+":"+" "+order.equals("")+" "+order.isEmpty()+" trim: "+trimOrder.equals("")+" "+trimOrder.isEmpty()+" arr size: "+viewOrdersModelArrayList.size());
-        }
-
         if (viewOrdersModelArrayList.size()!=0){
             String order = viewOrdersModelArrayList.get(0).getOrderNumber();
             Log.d("SHAUARMADARI", "setRecyclerView: "+order.equals(""));

@@ -188,4 +188,13 @@
     <string name="status2">Your order is not seen yet by any admin!</string>
     <string name="products">Products</string>
 
+    <!--Order Without Account-->
+    <string name="inside_dhaka">Inside Dhaka City</string>
+    <string name="outside_dhaka">Outside Dhaka City</string>
+    <string name="enter_address">Enter Full Address</string>
+
+    <!--OrderInfo-->
+    <string name="order_info">Enter Order Number</string>
+    <string name="order_info_toolbar">Enter Your Order Number</string>
+
 </resources>

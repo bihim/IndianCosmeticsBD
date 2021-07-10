@@ -62,7 +62,7 @@ public class BkashOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog(int total, boolean isDirectOrder) {
+    public void showDialog(int total, boolean isDirectOrder, boolean isAccountCreated, String mobileNumber, String orderLocation, String fullAddress) {
         Logger.addLogAdapter(new AndroidLogAdapter());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -78,6 +78,8 @@ public class BkashOrderSubmitDialog {
         LottieAnimationView lottieAnimationView = dialog.findViewById(R.id.forgot_loading);
 
         TextView textView = dialog.findViewById(R.id.sent_status_forgot_password);
+
+        MaterialButton materialButtonCancel = dialog.findViewById(R.id.bkash_cancel);
 
         SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String number = sharedPreferences.getString(COMPANY_MOBILE_3, "(Contact Helpline or Visit Website)");
@@ -102,7 +104,117 @@ public class BkashOrderSubmitDialog {
                 SharedPreferences sharedPreferences1 = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 String userToken = sharedPreferences1.getString(user_token, "Null");
 
-                Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
+                Call<TransactionModel> call;
+                if (isAccountCreated){
+                     call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, "", "", "" ,getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
+                }
+                else{
+                     call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, mobileNumber, orderLocation, fullAddress ,getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
+                }
+                call.enqueue(new Callback<TransactionModel>() {
+                    @Override
+                    public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
+                        dialog.setCancelable(true);
+                        if (response.isSuccessful()) {
+                            TransactionModel transactionModel = response.body();
+                            if (transactionModel != null) {
+                                if (transactionModel.getStatus().equals("SUCCESS")) {
+                                    if (transactionModel.getContent().getSuccess()) {
+                                        linearLayout.setVisibility(View.GONE);
+                                        lottieAnimationView.setVisibility(View.GONE);
+                                        textView.setVisibility(View.VISIBLE);
+                                        if (isAccountCreated){
+                                            textView.setText(activity.getResources().getString(R.string.order_confirmation));
+                                        }
+                                        else{
+                                            textView.setText("Your order ID: "+transactionModel.getContent().getOrderno()+"\nPlease take note of your order or take screenshot of it");
+                                        }
+                                        String orderNo = String.valueOf(transactionModel.getContent().getOrderno());
+                                        String userOrders = sharedPreferences1.getString(user_orders, "");
+                                        String userDates = sharedPreferences1.getString(user_date, "");
+
+                                        SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                        userOrders = userOrders + "," + orderNo;
+                                        Date cDate = new Date();
+                                        String fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(cDate);
+                                        userDates = userDates+","+fDate;
+                                        editor.putString(user_orders, userOrders);
+                                        editor.putString(user_date, userDates);
+                                        editor.apply();
+                                        Logger.d("Orders: "+userOrders+"\nDate: "+userDates);
+                                        Log.d("ORDERSUBMITTHINGS", "onResponse: ");
+                                        SharedPreferences sharedPreferencesCart = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
+                                        editorCart.clear();
+                                        editorCart.apply();
+
+                                        SharedPreferences sharedPreferencesCartDirectOrder = activity.getSharedPreferences(CART_DIRECT_ORDER, Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editorCartDirectOrder = sharedPreferencesCartDirectOrder.edit();
+                                        editorCartDirectOrder.clear();
+                                        editorCartDirectOrder.apply();
+
+                                        if (isAccountCreated){
+                                            materialButtonCancel.setVisibility(View.GONE);
+                                            dialog.setOnCancelListener(dialog -> {
+                                                activity.startActivity(new Intent(activity, MainActivity.class));
+                                                activity.finish();
+                                            });
+                                        }
+                                        else{
+                                            materialButtonCancel.setVisibility(View.VISIBLE);
+                                            dialog.setCancelable(false);
+                                            materialButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    activity.startActivity(new Intent(activity, MainActivity.class));
+                                                    activity.finish();
+                                                }
+                                            });
+                                        }
+
+                                    } else {
+                                        linearLayout.setVisibility(View.GONE);
+                                        lottieAnimationView.setVisibility(View.GONE);
+                                        textView.setVisibility(View.VISIBLE);
+                                        textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                        dialog.setCancelable(true);
+                                    }
+                                } else {
+                                    linearLayout.setVisibility(View.GONE);
+                                    lottieAnimationView.setVisibility(View.GONE);
+                                    textView.setVisibility(View.VISIBLE);
+                                    textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                    dialog.setCancelable(true);
+                                }
+                            } else {
+                                linearLayout.setVisibility(View.GONE);
+                                lottieAnimationView.setVisibility(View.GONE);
+                                textView.setVisibility(View.VISIBLE);
+                                textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                dialog.setCancelable(true);
+                            }
+
+                        } else {
+                            linearLayout.setVisibility(View.GONE);
+                            lottieAnimationView.setVisibility(View.GONE);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(activity.getResources().getString(R.string.error_forgot));
+                            dialog.setCancelable(true);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransactionModel> call, Throwable t) {
+                        linearLayout.setVisibility(View.GONE);
+                        lottieAnimationView.setVisibility(View.GONE);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(activity.getResources().getString(R.string.error_forgot));
+                        dialog.setCancelable(true);
+                    }
+                });
+
+                /*Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
                 call.enqueue(new Callback<TransactionModel>() {
                     @Override
                     public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
@@ -186,7 +298,7 @@ public class BkashOrderSubmitDialog {
                         textView.setText(activity.getResources().getString(R.string.error_forgot));
                         dialog.setCancelable(true);
                     }
-                });
+                });*/
                 Logger.addLogAdapter(new AndroidLogAdapter());
                 //Logger.d("In Dialog" + getProducts());
             }

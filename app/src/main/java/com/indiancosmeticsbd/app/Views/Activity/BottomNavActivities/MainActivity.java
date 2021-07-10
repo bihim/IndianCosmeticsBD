@@ -35,6 +35,7 @@ import com.indiancosmeticsbd.app.Adapter.BottomBannerAdapter;
 import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
+import com.indiancosmeticsbd.app.Views.Activity.OrderInfoActivity;
 import com.indiancosmeticsbd.app.Views.Dialogs.ExitDialog;
 import com.indiancosmeticsbd.app.Views.Dialogs.NumberDialog;
 import com.indiancosmeticsbd.app.Model.BannerSlider.BannerSliderModel;
@@ -422,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
                 if (sharedPreferences.contains(user_username)) {
                     startActivity(new Intent(MainActivity.this, ViewOrdersActivity.class));
                 } else {
-                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                    startActivity(new Intent(MainActivity.this, OrderInfoActivity.class));
                 }
             }
         });

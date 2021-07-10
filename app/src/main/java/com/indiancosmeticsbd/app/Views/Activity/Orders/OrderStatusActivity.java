@@ -45,6 +45,7 @@ public class OrderStatusActivity extends AppCompatActivity {
     private TextView textViewName, textViewPhone, textViewDeliveryAddress, textViewDeliveryDate, textViewTotalAmount, textViewDeliveryCost;
     private NestedScrollView nestedScrollView;
     private LinearLayout linearLayoutLoading;
+    private LinearLayout noOrderShow;
 
     private ImageView imageViewPaymentInfo;
     private TextView textViewPaymentType;
@@ -91,85 +92,96 @@ public class OrderStatusActivity extends AppCompatActivity {
             if (content!=null){
                 nestedScrollView.setVisibility(View.VISIBLE);
                 linearLayoutLoading.setVisibility(View.GONE);
-                textViewName.setText(content.getShippingInfo().getShippingName());
-                textViewDeliveryAddress.setText(content.getShippingInfo().getShippingAddress());
-                textViewPhone.setText(content.getShippingInfo().getShippingPhone());
-                textViewDeliveryCost.setText("৳"+content.getOrderSummery().getDeliveryCost());
-                double actualPrice = content.getOrderSummery().getDiscountTotal();
-                double discount = content.getOrderSummery().getTotalCostWithoutDiscount()*(actualPrice/100);
-                double discountPrice = content.getOrderSummery().getTotalCostWithoutDiscount()-discount;
-                textViewTotalAmount.setText("৳"+discountPrice);
-                try {
-                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    DateFormat outputFormat = new SimpleDateFormat("dd MMM, yyyy (hh:mm aa)", Locale.ENGLISH);
-                    Date date = inputFormat.parse(content.getOrderDate());
-                    String outputDateStr = outputFormat.format(date);
-                    textViewDeliveryDate.setText(outputDateStr);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
-                //Payment info
-                String paymentType = content.getPaymentInfo().getPaymentType();
-                String paymentTransactionId = content.getPaymentInfo().getPaymentTrxnId();
-                String paymentStatus = content.getPaymentInfo().getPaymentStatus();
-
-                if(paymentType.equals("bkash")){
-                    imageViewPaymentInfo.setImageResource(R.drawable.ic_bkash);
-                    textViewPaymentType.setText("Bkash");
-                    if (paymentTransactionId == null || paymentTransactionId.equals("null")){
-                        textViewTrnxId.setText("No Transaction ID given");
-                    }else{
-                        textViewTrnxId.setText(paymentTransactionId);
-                    }
+                if (content.getOrderNo() == 0){
+                    nestedScrollView.setVisibility(View.GONE);
+                    linearLayoutLoading.setVisibility(View.GONE);
+                    noOrderShow.setVisibility(View.VISIBLE);
                 }
                 else{
-                    imageViewPaymentInfo.setImageResource(R.drawable.ic_cash_on_delivery);
-                    textViewPaymentType.setText("Cash On Delivery");
-                    textViewTrnxId.setVisibility(View.GONE);
-                    textViewTrnxIdText.setVisibility(View.GONE);
-                }
+                    nestedScrollView.setVisibility(View.VISIBLE);
+                    linearLayoutLoading.setVisibility(View.GONE);
+                    noOrderShow.setVisibility(View.GONE);
 
-                if (paymentStatus.equals("Unverified")){
-                    textViewVerification.setText("Unverified");
-                    linearLayoutVerification.setBackgroundColor(getResources().getColor(R.color.forgotPassDark));
-                }
-                else{
-                    textViewVerification.setText("Verified");
-                    linearLayoutVerification.setBackgroundColor(Color.GREEN);
-                }
-
-                textViewOrderId.setText("Order no: "+content.getOrderNo());
-
-                //order status
-                textViewStatus.setText(content.getOrderStatus().getStatus());
-                textViewDescription.setText(content.getOrderStatus().getDescription());
-
-                extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(content.getInvoiceUrl()));
-                        startActivity(browserIntent);
+                    textViewName.setText(content.getShippingInfo().getShippingName());
+                    textViewDeliveryAddress.setText(content.getShippingInfo().getShippingAddress());
+                    textViewPhone.setText(content.getShippingInfo().getShippingPhone());
+                    textViewDeliveryCost.setText("৳"+content.getOrderSummery().getDeliveryCost());
+                    double actualPrice = content.getOrderSummery().getDiscountTotal();
+                    double discount = content.getOrderSummery().getTotalCostWithoutDiscount()*(actualPrice/100);
+                    double discountPrice = content.getOrderSummery().getTotalCostWithoutDiscount()-discount;
+                    textViewTotalAmount.setText("৳"+discountPrice);
+                    try {
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM, yyyy (hh:mm aa)", Locale.ENGLISH);
+                        Date date = inputFormat.parse(content.getOrderDate());
+                        String outputDateStr = outputFormat.format(date);
+                        textViewDeliveryDate.setText(outputDateStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                });
 
-                List<OrderStatusModel.Product> productList = content.getProducts();
-                carts = new ArrayList<>();
-                for (OrderStatusModel.Product product: productList){
-                    String id = String.valueOf(product.getProductId());
-                    String productImage = product.getProductImage().replace("thumb", "1");
-                    String price = String.valueOf(product.getProductPrice());
-                    String quantity = String.valueOf(product.getProductQuantity());
-                    String size = String.valueOf(product.getProductSize());
-                    String name = product.getProductName();
+                    //Payment info
+                    String paymentType = content.getPaymentInfo().getPaymentType();
+                    String paymentTransactionId = content.getPaymentInfo().getPaymentTrxnId();
+                    String paymentStatus = content.getPaymentInfo().getPaymentStatus();
 
-                    carts.add(new Cart(id, "Ordered Product", name, price, quantity, "0", size, productImage, "0"));
+                    if(paymentType.equals("bkash")){
+                        imageViewPaymentInfo.setImageResource(R.drawable.ic_bkash);
+                        textViewPaymentType.setText("Bkash");
+                        if (paymentTransactionId == null || paymentTransactionId.equals("null")){
+                            textViewTrnxId.setText("No Transaction ID given");
+                        }else{
+                            textViewTrnxId.setText(paymentTransactionId);
+                        }
+                    }
+                    else{
+                        imageViewPaymentInfo.setImageResource(R.drawable.ic_cash_on_delivery);
+                        textViewPaymentType.setText("Cash On Delivery");
+                        textViewTrnxId.setVisibility(View.GONE);
+                        textViewTrnxIdText.setVisibility(View.GONE);
+                    }
+
+                    if (paymentStatus.equals("Unverified")){
+                        textViewVerification.setText("Unverified");
+                        linearLayoutVerification.setBackgroundColor(getResources().getColor(R.color.forgotPassDark));
+                    }
+                    else{
+                        textViewVerification.setText("Verified");
+                        linearLayoutVerification.setBackgroundColor(Color.GREEN);
+                    }
+
+                    textViewOrderId.setText("Order no: "+content.getOrderNo());
+
+                    //order status
+                    textViewStatus.setText(content.getOrderStatus().getStatus());
+                    textViewDescription.setText(content.getOrderStatus().getDescription());
+
+                    extendedFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(content.getInvoiceUrl()));
+                            startActivity(browserIntent);
+                        }
+                    });
+
+                    List<OrderStatusModel.Product> productList = content.getProducts();
+                    carts = new ArrayList<>();
+                    for (OrderStatusModel.Product product: productList){
+                        String id = String.valueOf(product.getProductId());
+                        String productImage = product.getProductImage().replace("thumb", "1");
+                        String price = String.valueOf(product.getProductPrice());
+                        String quantity = String.valueOf(product.getProductQuantity());
+                        String size = String.valueOf(product.getProductSize());
+                        String name = product.getProductName();
+
+                        carts.add(new Cart(id, "Ordered Product", name, price, quantity, "0", size, productImage, "0"));
+                    }
+                    orderSubmitProductAdapter = new OrderSubmitProductAdapter(carts, this);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setAdapter(orderSubmitProductAdapter);
                 }
-                orderSubmitProductAdapter = new OrderSubmitProductAdapter(carts, this);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(orderSubmitProductAdapter);
-
 
             }
             else{
@@ -219,6 +231,7 @@ public class OrderStatusActivity extends AppCompatActivity {
         textViewDescription = findViewById(R.id.order_status_description);
         extendedFloatingActionButton = findViewById(R.id.print_invoice);
         recyclerView = findViewById(R.id.order_status_list_product_recyclerview);
+        noOrderShow = findViewById(R.id.no_order);
     }
 
     @Override

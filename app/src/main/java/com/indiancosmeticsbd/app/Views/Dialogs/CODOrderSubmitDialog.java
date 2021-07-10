@@ -56,13 +56,15 @@ public class CODOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog(boolean isDirectOrder) {
+    public void showDialog(boolean isDirectOrder, boolean isAccountCreated, String mobileNumber, String orderLocation, String fullAddress) {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_order_submit_cod);
         LinearLayout linearLayout = dialog.findViewById(R.id.forgot_email_layout);
         MaterialButton button = dialog.findViewById(R.id.cod_submit);
+
+        MaterialButton materialButtonCancel = dialog.findViewById(R.id.cod_cancel);
 
         LottieAnimationView lottieAnimationView = dialog.findViewById(R.id.forgot_loading);
 
@@ -79,8 +81,116 @@ public class CODOrderSubmitDialog {
             textView.setVisibility(View.GONE);
             SharedPreferences sharedPreferences = activity.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
             String userToken = sharedPreferences.getString(user_token, "Null");
+            Call<TransactionModel> call;
+            if (isAccountCreated){
+                call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, "", "", "", getProducts(isDirectOrder), COD, "Null", "");
 
-            Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), COD, "Null", "");
+            }
+            else{
+                call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, mobileNumber, orderLocation, fullAddress , getProducts(isDirectOrder), COD, "Null", "");
+            }
+            call.enqueue(new Callback<TransactionModel>() {
+                @Override
+                public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
+                    dialog.setCancelable(true);
+                    if (response.isSuccessful()) {
+                        TransactionModel transactionModel = response.body();
+                        if (transactionModel != null) {
+                            if (transactionModel.getStatus().equals("SUCCESS")) {
+                                if (transactionModel.getContent().getSuccess()) {
+                                    linearLayout.setVisibility(View.GONE);
+                                    lottieAnimationView.setVisibility(View.GONE);
+                                    textView.setVisibility(View.VISIBLE);
+                                    if (isAccountCreated){
+                                        textView.setText(activity.getResources().getString(R.string.order_confirmation));
+                                    }
+                                    else{
+                                        textView.setText("Your order ID: "+transactionModel.getContent().getOrderno()+"\nPlease take note of your order or take screenshot of it");
+                                    }
+
+
+                                    String orderNo = String.valueOf(transactionModel.getContent().getOrderno());
+                                    String userOrders = sharedPreferences.getString(user_orders, "");
+                                    String userDates = sharedPreferences.getString(user_date, "");
+
+
+                                    Date cDate = new Date();
+                                    String fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(cDate);
+                                    userDates = userDates+","+fDate;
+
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    userOrders = userOrders+","+orderNo;
+                                    editor.putString(user_orders, userOrders);
+                                    editor.putString(user_date, userDates);
+                                    editor.apply();
+
+
+                                    SharedPreferences sharedPreferencesCart = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editorCart = sharedPreferencesCart.edit();
+                                    editorCart.clear();
+                                    editorCart.apply();
+
+                                    SharedPreferences sharedPreferencesCartDirectOrder = activity.getSharedPreferences(CART_DIRECT_ORDER, Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editorCartDirectOrder = sharedPreferencesCartDirectOrder.edit();
+                                    editorCartDirectOrder.clear();
+                                    editorCartDirectOrder.apply();
+
+                                    if (isAccountCreated){
+                                        dialog.setOnCancelListener(dialog -> {
+                                            activity.startActivity(new Intent(activity, MainActivity.class));
+                                            activity.finish();
+                                        });
+                                    }
+                                    else{
+                                        materialButtonCancel.setVisibility(View.VISIBLE);
+                                        dialog.setCancelable(false);
+                                        materialButtonCancel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                activity.startActivity(new Intent(activity, MainActivity.class));
+                                                activity.finish();
+                                            }
+                                        });
+                                    }
+
+
+                                } else {
+                                    linearLayout.setVisibility(View.GONE);
+                                    lottieAnimationView.setVisibility(View.GONE);
+                                    textView.setVisibility(View.VISIBLE);
+                                    textView.setText(activity.getResources().getString(R.string.error_forgot));
+                                }
+                            } else {
+                                linearLayout.setVisibility(View.GONE);
+                                lottieAnimationView.setVisibility(View.GONE);
+                                textView.setVisibility(View.VISIBLE);
+                                textView.setText(activity.getResources().getString(R.string.error_forgot));
+                            }
+                        } else {
+                            linearLayout.setVisibility(View.GONE);
+                            lottieAnimationView.setVisibility(View.GONE);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(activity.getResources().getString(R.string.error_forgot));
+                        }
+
+                    } else {
+                        linearLayout.setVisibility(View.GONE);
+                        lottieAnimationView.setVisibility(View.GONE);
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(activity.getResources().getString(R.string.error_forgot));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<TransactionModel> call, Throwable t) {
+                    linearLayout.setVisibility(View.GONE);
+                    lottieAnimationView.setVisibility(View.GONE);
+                    textView.setVisibility(View.VISIBLE);
+                    textView.setText(activity.getResources().getString(R.string.error_forgot));
+                }
+            });
+            /*Call<TransactionModel> call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, getProducts(isDirectOrder), COD, "Null", "");
             call.enqueue(new Callback<TransactionModel>() {
                 @Override
                 public void onResponse(Call<TransactionModel> call, Response<TransactionModel> response) {
@@ -161,9 +271,8 @@ public class CODOrderSubmitDialog {
                     textView.setVisibility(View.VISIBLE);
                     textView.setText(activity.getResources().getString(R.string.error_forgot));
                 }
-            });
+            });*/
             Logger.addLogAdapter(new AndroidLogAdapter());
-            //Logger.d("In Dialog"+getProducts());
         });
         dialog.show();
     }
