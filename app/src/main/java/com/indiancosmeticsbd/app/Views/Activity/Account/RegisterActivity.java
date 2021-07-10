@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
         String userPassword = password.getText().toString();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
-        userInfoViewModel.getUserInfo(emailAddress, userPassword, this, true).observe(this, userInfo -> {
+        userInfoViewModel.getUserInfo(emailAddress, userPassword, this, true, false).observe(this, userInfo -> {
             UserInfo.Content value = userInfo.getContent();
             if (value!=null){
                 StringBuilder listCustomerOrders = new StringBuilder();

@@ -10,12 +10,13 @@
         android:icon="@mipmap/logo_toolbar"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_toolbar"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndianCosmeticsBD.Dark"
-        android:screenOrientation="portrait"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateVisible|adjustPan">
-        <activity android:name=".Views.Activity.NoInternetActivity"></activity>
+        <activity android:name=".Views.Activity.OrderDetailsWithoutAccountActivity"></activity>
+        <activity android:name=".Views.Activity.NoInternetActivity" />
         <activity android:name=".Views.Activity.Orders.OrderSubmitActivity" />
         <activity android:name=".Views.Activity.Orders.OrderStatusActivity" />
         <activity android:name=".Views.Activity.Orders.ViewOrdersActivity" />

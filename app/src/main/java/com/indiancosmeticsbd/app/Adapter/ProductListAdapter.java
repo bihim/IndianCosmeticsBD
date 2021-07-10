@@ -42,7 +42,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         ProductListModel selectedItem = productsArrayList.get(position);
         //String getUrl = "https://indiancosmeticsbd.com/"+selectedItem.getThumbnail().replace("thumbnail", "1");
         String getUrl = "https://indiancosmeticsbd.com/proimg/"+selectedItem.getId()+"/1.jpg";
-        Glide.with(context.getApplicationContext()).load(getUrl).placeholder(R.drawable.ic_no_image).into(holder.imageViewProductView);
+        Glide.with(context.getApplicationContext()).load(getUrl).placeholder(R.drawable.ic_picture).into(holder.imageViewProductView);
         holder.textViewProductName.setText(selectedItem.getName());
         holder.textViewProductBrand.setText("by "+selectedItem.getBrand());
         holder.textViewProductPrice.setText("৳"+selectedItem.getPrice());

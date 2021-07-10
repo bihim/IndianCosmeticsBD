@@ -31,7 +31,7 @@
                     android:layout_height="0dp"
                     android:text="@string/toolbar_main"
                     android:textColor="?textViewMainColor"
-                    android:textSize="@dimen/_18ssp"
+                    android:textSize="@dimen/_16ssp"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -272,20 +272,20 @@
                         android:id="@+id/banner_slider_bottom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        app:cardCornerRadius="@dimen/_15sdp"
                         app:cardElevation="0dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_130sdp"
                             android:gravity="center"
+                            android:background="?layoutColor"
                             android:orientation="vertical">
 
                             <com.smarteist.autoimageslider.SliderView
                                 android:id="@+id/imageSlider_bottom"
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 app:sliderAnimationDuration="600"
@@ -301,6 +301,14 @@
                                 app:sliderIndicatorUnselectedColor="#FFF"
                                 app:sliderScrollTimeInSec="1"
                                 app:sliderStartAutoCycle="true" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/main_bottom_recyclerview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                tools:listitem="@layout/recyclerview_bottom_banner"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                android:orientation="horizontal"/>
                         </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>

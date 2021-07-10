@@ -50,7 +50,7 @@ public class ProductCategoriesAdapter extends RecyclerView.Adapter<ProductCatego
         String title = titleText(selectedItem.getTitle());
         holder.textViewCategoryName.setText(title);
         //holder.circleImageViewCategoryPicture.setImageResource(selectedItem.getImageLink());
-        Glide.with(context.getApplicationContext()).load(selectedItem.getImageLink()).into(holder.circleImageViewCategoryPicture);
+        Glide.with(context.getApplicationContext()).load(selectedItem.getImageLink()).placeholder(R.drawable.logo).into(holder.circleImageViewCategoryPicture);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

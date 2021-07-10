@@ -38,7 +38,7 @@ public class CategoryAdapterModel
             case "hair products":
                 return R.drawable.ic_hair_products;
             default:
-                return R.drawable.ic_no_image;
+                return R.drawable.ic_cosmetics;
         }
     }
 }

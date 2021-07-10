@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -75,50 +77,59 @@ public class SignInActivity extends AppCompatActivity {
 
         String emailAddress = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
-        userInfoViewModel.init();
-        userInfoViewModel.getUserInfo(emailAddress, password, this, true).observe(this, userInfo -> {
-            UserInfo.Content value = userInfo.getContent();
-            StringBuilder listCustomerOrders = new StringBuilder();
-            StringBuilder listCustomerDate = new StringBuilder();
-            if (value.getCustomerOrders().size() != 0) {
-                notifications.addAll(value.getNotifications());
-                for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
-                    listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
-                    listCustomerDate.append(customerOrder.getDate()).append(",");
+
+        if (emailAddress.equals("")){
+            Toasty.error(this, "Enter email or phone number", Toasty.LENGTH_SHORT, true).show();
+        }
+        else if(password.equals("")){
+            Toasty.error(this, "Enter password", Toasty.LENGTH_SHORT, true).show();
+        }
+        else{
+            UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
+            userInfoViewModel.init();
+            userInfoViewModel.getUserInfo(emailAddress, password, this, true, true).observe(this, userInfo -> {
+                UserInfo.Content value = userInfo.getContent();
+                StringBuilder listCustomerOrders = new StringBuilder();
+                StringBuilder listCustomerDate = new StringBuilder();
+                if (value.getCustomerOrders().size() != 0) {
+                    notifications.addAll(value.getNotifications());
+                    for (UserInfo.CustomerOrder customerOrder : value.getCustomerOrders()) {
+                        listCustomerOrders.append(customerOrder.getOrderNo()).append(",");
+                        listCustomerDate.append(customerOrder.getDate()).append(",");
+                    }
                 }
-            }
 
-            int notificationSize = notifications.size();
-            String notification_json = gson.toJson(notifications);
+                int notificationSize = notifications.size();
+                String notification_json = gson.toJson(notifications);
 
-            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(user_id, value.getId());
-            editor.putString(user_username, value.getUsername());
-            editor.putString(user_password, password);
-            editor.putString(user_token, value.getToken());
-            editor.putString(user_first_name, value.getFirstName());
-            editor.putString(user_last_name, value.getLastName());
-            editor.putString(user_email, value.getEmail());
-            editor.putString(user_address, value.getAddress());
-            editor.putString(user_city, value.getCity());
-            editor.putString(user_district, value.getDistrict());
-            editor.putString(user_country, value.getCountry());
-            editor.putString(user_postalcode, value.getPostalcode());
-            editor.putString(user_mobile_number, value.getMobileNumber());
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(user_id, value.getId());
+                editor.putString(user_username, value.getUsername());
+                editor.putString(user_password, password);
+                editor.putString(user_token, value.getToken());
+                editor.putString(user_first_name, value.getFirstName());
+                editor.putString(user_last_name, value.getLastName());
+                editor.putString(user_email, value.getEmail());
+                editor.putString(user_address, value.getAddress());
+                editor.putString(user_city, value.getCity());
+                editor.putString(user_district, value.getDistrict());
+                editor.putString(user_country, value.getCountry());
+                editor.putString(user_postalcode, value.getPostalcode());
+                editor.putString(user_mobile_number, value.getMobileNumber());
 
-            /*Notification Part
-             * First time previous notification size will be 0 and new will assign to it.
-             * If it matches then no badge will show */
+                /*Notification Part
+                 * First time previous notification size will be 0 and new will assign to it.
+                 * If it matches then no badge will show */
 
-            editor.putInt(user_previous_notification_size, 0);
-            editor.putInt(user_after_notification_size, notificationSize);
-            editor.putString(user_notification, notification_json);
-            editor.putString(user_orders, listCustomerOrders.toString());
-            editor.putString(user_date, listCustomerDate.toString());
-            editor.apply();
-        });
+                editor.putInt(user_previous_notification_size, 0);
+                editor.putInt(user_after_notification_size, notificationSize);
+                editor.putString(user_notification, notification_json);
+                editor.putString(user_orders, listCustomerOrders.toString());
+                editor.putString(user_date, listCustomerDate.toString());
+                editor.apply();
+            });
+        }
     }
 
     private void buttonClicks() {

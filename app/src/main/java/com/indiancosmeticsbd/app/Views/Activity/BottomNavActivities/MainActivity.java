@@ -31,6 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
+import com.indiancosmeticsbd.app.Adapter.BottomBannerAdapter;
 import com.indiancosmeticsbd.app.Adapter.CategoryWise.CategoriesByViewAdapter;
 import com.indiancosmeticsbd.app.Adapter.ProductCategoriesAdapter;
 import com.indiancosmeticsbd.app.Adapter.SliderAdapterExample;
@@ -122,13 +123,41 @@ public class MainActivity extends AppCompatActivity {
         setBottomNavigationView();
         setSliderView(HOME_PAGE_TOP, R.id.imageSlider, R.id.banner_slider);
         setSliderView(HOME_PAGE_MIDDLE, R.id.imageSlider_mid, R.id.banner_slider_mid);
-        setSliderView(HOME_PAGE_BOTTOM, R.id.imageSlider_bottom, R.id.banner_slider_bottom);
+        //setSliderView(HOME_PAGE_BOTTOM, R.id.imageSlider_bottom, R.id.banner_slider_bottom);
+        setBottomBanner();
         setRecyclerViewProductCategories();
         themeSwitch();
         SHOWBADGE(this, CART, R.id.bottom_nav_cart, bottomNavigationView);
         SHOWBADGE(this, WISHLIST, R.id.bottom_nav_wishlist, bottomNavigationView);
         NOTIFICATION_SHOW(this, bottomNavigationView);
         testUserOrder();
+    }
+
+    private void setBottomBanner(){
+        MaterialCardView materialCardView = findViewById(R.id.banner_slider_bottom);
+        RecyclerView recyclerView = findViewById(R.id.main_bottom_recyclerview);
+        ArrayList<String> imageUrl = new ArrayList<>();
+        BottomBannerAdapter bottomBannerAdapter = new BottomBannerAdapter(imageUrl, this);
+        BannerSliderTopViewModel bannerSliderTopViewModel = new ViewModelProvider(this).get(BannerSliderTopViewModel.class);
+        bannerSliderTopViewModel.init();
+        bannerSliderTopViewModel.getBannerSlider(HOME_PAGE_BOTTOM).observe(this, bannerSliderModel -> {
+            if (bannerSliderModel == null) {
+                setBottomBanner();
+            } else {
+                List<BannerSliderModel.Content> contents = new ArrayList<>(bannerSliderModel.getContent());
+                for (BannerSliderModel.Content content : contents) {
+                    imageUrl.add(content.getImage());
+                    Log.d("BANNERSLIDE", "onResponse: content: " + content.getImage());
+                }
+                if (contents.isEmpty()) {
+                    materialCardView.setVisibility(View.GONE);
+                } else {
+                    materialCardView.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+            recyclerView.setAdapter(bottomBannerAdapter);
+        });
     }
 
     private void setRecyclerViewCategoryWiseView2(List<CategoryWiseViewModel> categoryWiseView2, int recyclerviewID) {
@@ -467,7 +496,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         ExitDialog exitDialog = new ExitDialog(this);
-
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
             exitDialog.dismissDialog();
@@ -475,7 +503,6 @@ public class MainActivity extends AppCompatActivity {
             //super.onBackPressed();
             exitDialog.showDialog();
         }
-
     }
 
     @Override

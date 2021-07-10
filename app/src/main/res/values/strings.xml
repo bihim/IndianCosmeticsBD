@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">IndianCosmeticsBD</string>
+    <string name="app_name">Indian Cosmetics BD</string>
 
 
     <string name="retry">Retry</string>
     <string name="retry_text">Oops! Retry to load</string>
 
     <!--Main Activity-->
-    <string name="toolbar_main">IndianCosmeticsBD</string>
+    <string name="toolbar_main">Indian Cosmetics BD</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="our_categories">Our Categories</string>
@@ -42,7 +42,7 @@
     <string name="nav_rate_us">Rate Us</string>
 
     <!--Sign in activity-->
-    <string name="email">Enter Email</string>
+    <string name="email">Enter Email or Phone Number</string>
     <string name="password">Enter Password</string>
     <string name="forgot_pass">Forgot Password?</string>
     <string name="sign_in">Sign In</string>

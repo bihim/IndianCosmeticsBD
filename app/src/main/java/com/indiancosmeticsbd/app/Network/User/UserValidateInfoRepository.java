@@ -19,6 +19,7 @@ import retrofit2.Response;
 
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.API_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COLUMN_TYPE;
+import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.COLUMN_TYPE_TOKEN;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.USER_INFO;
 import static com.indiancosmeticsbd.app.GlobalValue.GlobalValue.USER_VALIDATE;
 
@@ -37,7 +38,7 @@ public class UserValidateInfoRepository {
         userValidateInfoApi = RetrofitService.createService(UserValidateInfoApi.class);
     }
 
-    public MutableLiveData<UserInfo> getUserInfo(Activity activity, String username, String password, boolean isComingFromSignIn) {
+    public MutableLiveData<UserInfo> getUserInfo(Activity activity, String username, String password, boolean isComingFromSignIn, boolean isSignIn) {
         MutableLiveData<UserInfo> userInfoLiveData = new MutableLiveData<>();
         LoadingDialog loadingDialog = new LoadingDialog(activity);
         if (isComingFromSignIn){
@@ -51,42 +52,86 @@ public class UserValidateInfoRepository {
                     if (response.body()!=null){
                         UserValidate userValidate = response.body();
                         //boolean content = userValidate.getContent();
+                        UserValidate.Content content = response.body().getContent();
                         String status = userValidate.getStatus();
                         if (status.equals("SUCCESS")){
-                            userValidateInfoApi.getUserInfo(API_TOKEN, USER_INFO, COLUMN_TYPE, username).enqueue(new Callback<UserInfo>() {
-                                @Override
-                                public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                                    if (response.isSuccessful()) {
-                                        if (isComingFromSignIn){
-                                            loadingDialog.dismissDialog();
-                                        }
-                                        if (response.body()!=null){
-                                            UserInfo userInfo = response.body();
-                                            String status = userInfo.getStatus();
-                                            if (status.equals("SUCCESS")){
-                                                userInfoLiveData.setValue(response.body());
-                                                Log.d("LOGININFO", "onResponse: I am here success");
+                            if (content.getSuccess()){
+                                if (isSignIn){
+                                    userValidateInfoApi.getUserInfo(API_TOKEN, USER_INFO, COLUMN_TYPE_TOKEN, content.getToken()).enqueue(new Callback<UserInfo>() {
+                                        @Override
+                                        public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                            if (response.isSuccessful()) {
                                                 if (isComingFromSignIn){
-                                                    Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
-                                                    activity.startActivity(new Intent(activity, AccountActivity.class));
-                                                    activity.finish();
+                                                    loadingDialog.dismissDialog();
                                                 }
+                                                if (response.body()!=null){
+                                                    UserInfo userInfo = response.body();
+                                                    String status = userInfo.getStatus();
+                                                    if (status.equals("SUCCESS")){
+                                                        userInfoLiveData.setValue(response.body());
+                                                        Log.d("LOGININFO", "onResponse: I am here success");
+                                                        if (isComingFromSignIn){
+                                                            Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
+                                                            activity.startActivity(new Intent(activity, AccountActivity.class));
+                                                            activity.finish();
+                                                        }
 
-                                            }
-                                            else{
+                                                    }
+                                                    else{
+                                                        userInfoLiveData.setValue(null);
+                                                    }
+                                                }
+                                            } else {
                                                 userInfoLiveData.setValue(null);
                                             }
                                         }
-                                    } else {
-                                        userInfoLiveData.setValue(null);
-                                    }
-                                }
 
-                                @Override
-                                public void onFailure(Call<UserInfo> call, Throwable t) {
-                                    userInfoLiveData.setValue(null);
+                                        @Override
+                                        public void onFailure(Call<UserInfo> call, Throwable t) {
+                                            userInfoLiveData.setValue(null);
+                                        }
+                                    });
                                 }
-                            });
+                                else{
+                                    userValidateInfoApi.getUserInfo(API_TOKEN, USER_INFO, COLUMN_TYPE, username).enqueue(new Callback<UserInfo>() {
+                                        @Override
+                                        public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                            if (response.isSuccessful()) {
+                                                if (isComingFromSignIn){
+                                                    loadingDialog.dismissDialog();
+                                                }
+                                                if (response.body()!=null){
+                                                    UserInfo userInfo = response.body();
+                                                    String status = userInfo.getStatus();
+                                                    if (status.equals("SUCCESS")){
+                                                        userInfoLiveData.setValue(response.body());
+                                                        Log.d("LOGININFO", "onResponse: I am here success");
+                                                        if (isComingFromSignIn){
+                                                            Toasty.success(activity, "Logged In", Toasty.LENGTH_LONG).show();
+                                                            activity.startActivity(new Intent(activity, AccountActivity.class));
+                                                            activity.finish();
+                                                        }
+
+                                                    }
+                                                    else{
+                                                        userInfoLiveData.setValue(null);
+                                                    }
+                                                }
+                                            } else {
+                                                userInfoLiveData.setValue(null);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<UserInfo> call, Throwable t) {
+                                            userInfoLiveData.setValue(null);
+                                        }
+                                    });
+                                }
+                            }
+                            else{
+                                Toasty.error(activity, "Username or Password is not valid", Toasty.LENGTH_LONG).show();
+                            }
                         }
                         else{
                             Toasty.error(activity, "Username or Password is not valid", Toasty.LENGTH_LONG).show();

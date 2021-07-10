@@ -121,7 +121,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         List<UserInfo.Notification> notifications = new ArrayList<>();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
-        userInfoViewModel.getUserInfo(emailAddress, password, this, false).observe(this, userInfo -> {
+        userInfoViewModel.getUserInfo(emailAddress, password, this, false, false).observe(this, userInfo -> {
             if (userInfo.getContent()!=null){
                 buttonRetry.setVisibility(View.GONE);
                 UserInfo.Content value = userInfo.getContent();

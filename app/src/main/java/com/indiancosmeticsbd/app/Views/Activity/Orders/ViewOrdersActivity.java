@@ -142,7 +142,7 @@ public class ViewOrdersActivity extends AppCompatActivity {
         List<UserInfo.Notification> notifications = new ArrayList<>();
         UserInfoViewModel userInfoViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
         userInfoViewModel.init();
-        userInfoViewModel.getUserInfo(emailAddress, password, this, false).observe(this, userInfo -> {
+        userInfoViewModel.getUserInfo(emailAddress, password, this, false, false).observe(this, userInfo -> {
             setRecyclerView();
             if (userInfo.getContent()!=null){
                 retry.setVisibility(View.GONE);

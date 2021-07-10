@@ -51,7 +51,7 @@ public class ProductListAdapterForCategoryWiseAdapter extends RecyclerView.Adapt
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         ProductListModel selectedItem = productsArrayList.get(position);
         String getUrl = "https://indiancosmeticsbd.com/proimg/"+selectedItem.getId()+"/1.jpg";
-        Glide.with(context.getApplicationContext()).load(getUrl).placeholder(R.drawable.ic_no_image).into(holder.imageViewProductView);
+        Glide.with(context.getApplicationContext()).load(getUrl).placeholder(R.drawable.ic_picture).into(holder.imageViewProductView);
         holder.textViewProductName.setText(selectedItem.getName());
         holder.textViewProductBrand.setText("by "+selectedItem.getBrand());
         holder.textViewProductPrice.setText("৳"+selectedItem.getPrice());
