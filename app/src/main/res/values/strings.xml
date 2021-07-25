@@ -172,7 +172,7 @@
     <!--Order Status-->
     <string name="order_status_name">Order Status</string>
     <string name="delivery_date_text">1st May, 2021 (12:45PM)</string>
-    <string name="delivery_date">Delivery Date</string>
+    <string name="delivery_date">Order Date</string>
     <string name="content_description">This is content description</string>
     <string name="payment_type_text">Payment Type</string>
     <string name="payment_type">Cash on delivery</string>
@@ -192,6 +192,7 @@
     <string name="inside_dhaka">Inside Dhaka City</string>
     <string name="outside_dhaka">Outside Dhaka City</string>
     <string name="enter_address">Enter Full Address</string>
+    <string name="enter_name">Enter FullName</string>
 
     <!--OrderInfo-->
     <string name="order_info">Enter Order Number</string>

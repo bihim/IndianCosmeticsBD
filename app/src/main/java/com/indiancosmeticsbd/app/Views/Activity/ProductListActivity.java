@@ -61,7 +61,7 @@ public class ProductListActivity extends AppCompatActivity {
         productListAdapter = new ProductListAdapter(contentArrayList, this);
         productListViewModel = new ViewModelProvider(this).get(ProductListViewModel.class);
         productListViewModel.init();
-        productListViewModel.getProductList(this, "header", categoryId, "", "", "", "", "", false).observe(this, products -> {
+        productListViewModel.getProductList(this, "main", categoryId, "", "", "", "", "", false).observe(this, products -> {
             ArrayList<Products.Content> content = products.getContent();
             for (Products.Content contents: content){
                 Log.d("PRODUCTLISTTING", "setRecyclerView: "+contents.getName());
@@ -89,12 +89,7 @@ public class ProductListActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(toolbarId);
         setSupportActionBar(toolbar);
         ImageButton backButton = findViewById(backButtonId);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(v -> onBackPressed());
 
     }
 }

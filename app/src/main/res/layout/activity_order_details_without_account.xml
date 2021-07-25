@@ -147,6 +147,39 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nameTextInputField"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?cardColor"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/order_without_account_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_user"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:drawableTint="?editIcon"
+                            android:gravity="start"
+                            android:hint="@string/enter_name"
+                            android:inputType="text"
+                            android:textColorHint="?editIcon"
+                            android:textCursorDrawable="@null" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="0dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/phoneTextInputField"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"

@@ -62,7 +62,7 @@ public class BkashOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog(int total, boolean isDirectOrder, boolean isAccountCreated, String mobileNumber, String orderLocation, String fullAddress) {
+    public void showDialog(int total, boolean isDirectOrder, boolean isAccountCreated, String fullName, String mobileNumber, String orderLocation, String fullAddress) {
         Logger.addLogAdapter(new AndroidLogAdapter());
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -109,7 +109,7 @@ public class BkashOrderSubmitDialog {
                      call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, "", "", "" ,getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
                 }
                 else{
-                     call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, mobileNumber, orderLocation, fullAddress ,getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
+                     call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, fullName, mobileNumber, orderLocation, fullAddress ,getProducts(isDirectOrder), BKASH, textInputEditTextBkashNumber.getText().toString(), textInputEditTextBkashTransaction.getText().toString());
                 }
                 call.enqueue(new Callback<TransactionModel>() {
                     @Override
@@ -163,12 +163,9 @@ public class BkashOrderSubmitDialog {
                                         else{
                                             materialButtonCancel.setVisibility(View.VISIBLE);
                                             dialog.setCancelable(false);
-                                            materialButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    activity.startActivity(new Intent(activity, MainActivity.class));
-                                                    activity.finish();
-                                                }
+                                            materialButtonCancel.setOnClickListener(v1 -> {
+                                                activity.startActivity(new Intent(activity, MainActivity.class));
+                                                activity.finish();
                                             });
                                         }
 
@@ -310,7 +307,7 @@ public class BkashOrderSubmitDialog {
     private String getProducts(boolean isDirectOrder) {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
-        String json = "";
+        String json;
         if (isDirectOrder){
             json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
         }

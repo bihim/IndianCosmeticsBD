@@ -43,7 +43,7 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
     private MaterialButton buttonSubmitBkash;
     private OrderSubmitProductAdapter orderSubmitProductAdapter;
     private ArrayList<Cart> cartArrayList;
-    private TextInputEditText textInputEditTextPhone, textInputEditTextAddress;
+    private TextInputEditText textInputEditTextPhone, textInputEditTextAddress, textInputEditTextName;
     private RadioGroup radioGroup;
     private String deliveryLocation = "Inside Dhaka City";
 
@@ -61,17 +61,14 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
             deliveryLocation = "Inside Dhaka City";
         }
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.order_submit_without_account_delivery_address_inside){
-                    deliveryLocation = "Inside Dhaka City";
-                    textViewDelivery.setText("৳70");
-                }
-                else{
-                    deliveryLocation = "Outside Dhaka City";
-                    textViewDelivery.setText("৳150");
-                }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.order_submit_without_account_delivery_address_inside){
+                deliveryLocation = "Inside Dhaka City";
+                textViewDelivery.setText("৳70");
+            }
+            else{
+                deliveryLocation = "Outside Dhaka City";
+                textViewDelivery.setText("৳150");
             }
         });
 
@@ -83,11 +80,15 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
             else if(textInputEditTextAddress.getText() == null || TextUtils.isEmpty(textInputEditTextAddress.getText()) || textInputEditTextAddress.getText().toString().equals("")){
                 Toasty.error(OrderDetailsWithoutAccountActivity.this, "Enter Address", Toasty.LENGTH_SHORT, true).show();
             }
+            else if(textInputEditTextName.getText() == null || TextUtils.isEmpty(textInputEditTextName.getText()) || textInputEditTextName.getText().toString().equals("")){
+                Toasty.error(OrderDetailsWithoutAccountActivity.this, "Enter FullName", Toasty.LENGTH_SHORT, true).show();
+            }
             else{
                 String phone = textInputEditTextPhone.getText().toString();
                 String address = textInputEditTextAddress.getText().toString();
+                String fullName = textInputEditTextName.getText().toString();
                 CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderDetailsWithoutAccountActivity.this);
-                codOrderSubmitDialog.showDialog(isDirectOrder, false, phone, deliveryLocation, address);
+                codOrderSubmitDialog.showDialog(isDirectOrder, false, fullName, phone, deliveryLocation, address);
             }
 
         });
@@ -100,11 +101,15 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
             else if(textInputEditTextAddress.getText() == null || TextUtils.isEmpty(textInputEditTextAddress.getText()) || textInputEditTextAddress.getText().toString().equals("")){
                 Toasty.error(OrderDetailsWithoutAccountActivity.this, "Enter Address", Toasty.LENGTH_SHORT, true).show();
             }
+            else if(textInputEditTextName.getText() == null || TextUtils.isEmpty(textInputEditTextName.getText()) || textInputEditTextName.getText().toString().equals("")){
+                Toasty.error(OrderDetailsWithoutAccountActivity.this, "Enter FullName", Toasty.LENGTH_SHORT, true).show();
+            }
             else{
                 String phone = textInputEditTextPhone.getText().toString();
                 String address = textInputEditTextAddress.getText().toString();
+                String fullName = textInputEditTextName.getText().toString();
                 BkashOrderSubmitDialog bkashOrderSubmitDialog = new BkashOrderSubmitDialog(OrderDetailsWithoutAccountActivity.this);
-                bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder, false, phone, deliveryLocation, address);
+                bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder, false, fullName, phone, deliveryLocation, address);
             }
 
         });
@@ -136,7 +141,7 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
-        String json = "";
+        String json;
         if (isDirectOrder){
             json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
         }
@@ -177,6 +182,7 @@ public class OrderDetailsWithoutAccountActivity extends AppCompatActivity {
         buttonSubmitBkash = findViewById(R.id.submit_order_without_account_bkash);
         textInputEditTextPhone = findViewById(R.id.order_without_account_phone);
         textInputEditTextAddress = findViewById(R.id.order_without_account_address);
+        textInputEditTextName = findViewById(R.id.order_without_account_name);
         radioGroup = findViewById(R.id.order_submit_without_account_delivery_address_group);
     }
 }

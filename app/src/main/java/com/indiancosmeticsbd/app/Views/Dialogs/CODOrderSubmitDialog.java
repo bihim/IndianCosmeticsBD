@@ -56,13 +56,33 @@ public class CODOrderSubmitDialog {
         dialog = new Dialog(activity);
     }
 
-    public void showDialog(boolean isDirectOrder, boolean isAccountCreated, String mobileNumber, String orderLocation, String fullAddress) {
+    public void showDialog(boolean isDirectOrder, boolean isAccountCreated, String fullName, String mobileNumber, String orderLocation, String fullAddress) {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_order_submit_cod);
         LinearLayout linearLayout = dialog.findViewById(R.id.forgot_email_layout);
         MaterialButton button = dialog.findViewById(R.id.cod_submit);
+
+        TextView textViewName = dialog.findViewById(R.id.cod_name);
+        TextView textViewAddress = dialog.findViewById(R.id.cod_address);
+        TextView textViewPhone = dialog.findViewById(R.id.cod_number);
+
+        if (!isAccountCreated){
+            textViewName.setVisibility(View.VISIBLE);
+            textViewAddress.setVisibility(View.VISIBLE);
+            textViewPhone.setVisibility(View.VISIBLE);
+            textViewName.setText("Name: "+fullName);
+            textViewAddress.setText("Address: "+fullAddress);
+            textViewPhone.setText("Phone: "+mobileNumber);
+            button.setText("Confirm");
+        }
+        else{
+            textViewName.setVisibility(View.GONE);
+            textViewAddress.setVisibility(View.GONE);
+            textViewPhone.setVisibility(View.GONE);
+            button.setText("Submit");
+        }
 
         MaterialButton materialButtonCancel = dialog.findViewById(R.id.cod_cancel);
 
@@ -87,7 +107,7 @@ public class CODOrderSubmitDialog {
 
             }
             else{
-                call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, userToken, mobileNumber, orderLocation, fullAddress , getProducts(isDirectOrder), COD, "Null", "");
+                call = transactionApi.getCODInfo(API_TOKEN, ORDER_SUBMIT, fullName, mobileNumber, orderLocation, fullAddress , getProducts(isDirectOrder), COD, "Null", "");
             }
             call.enqueue(new Callback<TransactionModel>() {
                 @Override
@@ -144,12 +164,9 @@ public class CODOrderSubmitDialog {
                                     else{
                                         materialButtonCancel.setVisibility(View.VISIBLE);
                                         dialog.setCancelable(false);
-                                        materialButtonCancel.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                activity.startActivity(new Intent(activity, MainActivity.class));
-                                                activity.finish();
-                                            }
+                                        materialButtonCancel.setOnClickListener(v1 -> {
+                                            activity.startActivity(new Intent(activity, MainActivity.class));
+                                            activity.finish();
                                         });
                                     }
 
@@ -280,7 +297,7 @@ public class CODOrderSubmitDialog {
     private String getProducts(boolean isDirectOrder){
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = activity.getSharedPreferences(CART, Context.MODE_PRIVATE);
-        String json = "";
+        String json;
         if (isDirectOrder){
             json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
         }

@@ -67,13 +67,13 @@ public class OrderSubmitActivity extends AppCompatActivity {
         buttonSubmitCOD.setOnClickListener(v -> {
             boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
             CODOrderSubmitDialog codOrderSubmitDialog = new CODOrderSubmitDialog(OrderSubmitActivity.this);
-            codOrderSubmitDialog.showDialog(isDirectOrder, true, "", "", "");
+            codOrderSubmitDialog.showDialog(isDirectOrder, true, "", "", "", "");
         });
 
         buttonSubmitBkash.setOnClickListener(v -> {
             BkashOrderSubmitDialog bkashOrderSubmitDialog = new BkashOrderSubmitDialog(OrderSubmitActivity.this);
             boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
-            bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder, true, "", "", "");
+            bkashOrderSubmitDialog.showDialog(totalPrice(), isDirectOrder, true, "", "", "","");
         });
     }
 
@@ -102,7 +102,7 @@ public class OrderSubmitActivity extends AppCompatActivity {
         Gson gson = new Gson();
         SharedPreferences sharedPreferences = getSharedPreferences(CART, MODE_PRIVATE);
         boolean isDirectOrder = getIntent().getBooleanExtra("directOrder", false);
-        String json = "";
+        String json;
         if (isDirectOrder){
             json = sharedPreferences.getString(CART_DIRECT_ORDER, "");
         }
